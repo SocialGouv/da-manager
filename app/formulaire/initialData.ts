@@ -174,24 +174,28 @@ export const initialData: DAData = {
   },
   cadre5_ArchitectureActeurs: {
     description: "",
-    schemaActeurs: "",
+    schemaActeursJSON: "",
+    schemaActeursImage: "",
     acteursConsommateurs: [],
     acteursFournisseurs: [],
   },
   cadre6_ArchitectureFonctionnelle: {
     description: "",
-    schemaArchitectureFonctionnelle: "",
+    schemaArchitectureFonctionnelleJSON: "",
+    schemaArchitectureFonctionnelleImage: "",
     blocsFonctionnels: [],
     conventionFlux: "",
   },
   cadre7_ArchitectureApplicative: {
     description: "",
-    schemaArchitectureApplicative: "",
+    schemaArchitectureApplicativeJSON: "",
+    schemaArchitectureApplicativeImage: "",
     pilesComposants: [],
   },
   cadre8_ArchitectureTechnique: {
     description: "",
-    schemaArchitectureTechnique: "",
+    schemaArchitectureTechniqueJSON: "",
+    schemaArchitectureTechniqueImage: "",
     notes: "",
   },
   cadre9_ServeursComposants: {

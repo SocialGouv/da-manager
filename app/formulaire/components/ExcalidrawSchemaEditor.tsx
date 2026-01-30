@@ -106,7 +106,7 @@ export default function ExcalidrawSchemaEditor({
     }
   };
 
-  // Charger les données initiales si elles existent
+  // Charger les données initiales si elles existent (pour les mises à jour après le mount)
   useEffect(() => {
     if (excalidrawAPI && initialData && initialData.trim() !== "" && !hasGenerated) {
       try {
@@ -148,6 +148,7 @@ export default function ExcalidrawSchemaEditor({
       <div style={{ height: "calc(100% - 70px)" }}>
         <Excalidraw
           excalidrawAPI={(api: any) => setExcalidrawAPI(api)}
+          initialData={initialData && initialData.trim() !== "" ? JSON.parse(initialData) : undefined}
           UIOptions={{
             canvasActions: {
               loadScene: false,

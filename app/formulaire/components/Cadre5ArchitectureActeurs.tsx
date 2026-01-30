@@ -16,13 +16,14 @@ export default function Cadre5ArchitectureActeurs({ daData, setDAData }: CadrePr
       <ExcalidrawSchemaEditor
         cadreData={daData.cadre5_ArchitectureActeurs}
         cadreType={5}
-        initialData={daData.cadre5_ArchitectureActeurs.schemaActeurs}
+        initialData={daData.cadre5_ArchitectureActeurs.schemaActeursJSON}
         onSave={(jsonData, imageData) => {
           setDAData({
             ...daData,
             cadre5_ArchitectureActeurs: {
               ...daData.cadre5_ArchitectureActeurs,
-              schemaActeurs: jsonData,
+              schemaActeursJSON: jsonData,
+              schemaActeursImage: imageData,
             },
           });
         }}

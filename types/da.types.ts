@@ -300,7 +300,8 @@ export interface TraitementAutomatise {
 
 export interface Cadre5_ArchitectureActeurs {
   description: string;
-  schemaActeurs: string; // URL ou base64 du schéma
+  schemaActeursJSON: string; // JSON Excalidraw pour édition
+  schemaActeursImage: string; // PNG base64 pour affichage/export PDF
   acteursConsommateurs: ActeurSI[];
   acteursFournisseurs: ActeurSI[];
 }
@@ -317,7 +318,8 @@ export interface ActeurSI {
 
 export interface Cadre6_ArchitectureFonctionnelle {
   description: string;
-  schemaArchitectureFonctionnelle: string; // URL ou base64 du schéma
+  schemaArchitectureFonctionnelleJSON: string; // JSON Excalidraw pour édition
+  schemaArchitectureFonctionnelleImage: string; // PNG base64 pour affichage/export PDF
   blocsFonctionnels: BlocFonctionnel[];
   conventionFlux: string;
 }
@@ -334,7 +336,8 @@ export interface BlocFonctionnel {
 
 export interface Cadre7_ArchitectureApplicative {
   description: string;
-  schemaArchitectureApplicative: string; // URL ou base64 du schéma
+  schemaArchitectureApplicativeJSON: string; // JSON Excalidraw pour édition
+  schemaArchitectureApplicativeImage: string; // PNG base64 pour affichage/export PDF
   pilesComposants: PileComposants[];
 }
 
@@ -349,7 +352,8 @@ export interface PileComposants {
 
 export interface Cadre8_ArchitectureTechnique {
   description: string;
-  schemaArchitectureTechnique: string; // URL ou base64 du schéma (mode logique)
+  schemaArchitectureTechniqueJSON: string; // JSON Excalidraw pour édition
+  schemaArchitectureTechniqueImage: string; // PNG base64 pour affichage/export PDF
   notes: string;
 }
 
