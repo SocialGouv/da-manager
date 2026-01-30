@@ -15,8 +15,9 @@ export default function Cadre6ArchitectureFonctionnelle({ daData, setDAData }: C
       <h2 className="fr-h2">Cadre 6 : Architecture Fonctionnelle du SI</h2>
 
       {/* Description */}
-      <Input.TextArea
+      <Input
         label="Description de l'architecture fonctionnelle"
+        textArea
         nativeTextAreaProps={{
           id: "cadre6-description",
           rows: 6,
@@ -52,8 +53,9 @@ export default function Cadre6ArchitectureFonctionnelle({ daData, setDAData }: C
       />
 
       {/* Convention de flux */}
-      <Input.TextArea
+      <Input
         label="Convention de flux"
+        textArea
         nativeTextAreaProps={{
           id: "cadre6-convention",
           rows: 3,
