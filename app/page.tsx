@@ -65,14 +65,25 @@ export default async function Home() {
                           <td className="fr-col--xs" style={{ textAlign: 'right' }}>{new Date(da.dateCreation).toLocaleDateString("fr-FR")}</td>
                           <td className="fr-col--xs" style={{ textAlign: 'right' }}>{new Date(da.dateModification).toLocaleDateString("fr-FR")}</td>
                           <td className="fr-col--sm">
-                            <Button
-                              linkProps={{ href: `/formulaire/${da.id}` }}
-                              size="small"
-                              iconId="fr-icon-edit-line"
-                              iconPosition="left"
-                            >
-                              Éditer
-                            </Button>
+                            <div style={{ display: 'flex', gap: '0.5rem' }}>
+                              <Button
+                                linkProps={{ href: `/formulaire/${da.id}` }}
+                                size="small"
+                                iconId="fr-icon-edit-line"
+                                iconPosition="left"
+                              >
+                                Éditer
+                              </Button>
+                              <Button
+                                linkProps={{ href: `/api/export-pdf/${da.id}`, target: "_blank" }}
+                                size="small"
+                                priority="secondary"
+                                iconId="fr-icon-download-line"
+                                iconPosition="left"
+                              >
+                                PDF
+                              </Button>
+                            </div>
                           </td>
                         </tr>
                       ))}
