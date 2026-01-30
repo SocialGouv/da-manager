@@ -5,6 +5,7 @@ import type { DAData } from "@/types/da.types";
 import { initialData } from "./initialData";
 import { Stepper } from "@codegouvfr/react-dsfr/Stepper";
 import { Button } from "@codegouvfr/react-dsfr/Button";
+import { SideMenu } from "@codegouvfr/react-dsfr/SideMenu";
 import Cadre1ProjetActeurs from "./components/Cadre1ProjetActeurs";
 import Cadre2FonctionnalitesDonnees from "./components/Cadre2FonctionnalitesDonnees";
 import Cadre3ContraintesVolumetrie from "./components/Cadre3ContraintesVolumetrie";
@@ -28,10 +29,9 @@ export default function FormulaireDA() {
       const response = await fetch('/example-data.json');
       const exampleData = await response.json();
       setDAData(exampleData);
-      alert('Données d\'exemple chargées avec succès !');
+      console.log('✅ Données d\'exemple chargées avec succès !');
     } catch (error) {
-      console.error('Erreur lors du chargement des données:', error);
-      alert('Erreur lors du chargement des données d\'exemple');
+      console.error('❌ Erreur lors du chargement des données:', error);
     }
   };
 
@@ -64,9 +64,40 @@ export default function FormulaireDA() {
     }
   };
 
+  const handleMenuItemClick = (stepId: number) => {
+    return (e: React.MouseEvent) => {
+      e.preventDefault();
+      setCurrentStep(stepId);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+  };
+
+  // Créer les items du menu
+  const menuItems = steps.map((step) => ({
+    text: `${step.id}. ${step.title}`,
+    isActive: currentStep === step.id,
+    linkProps: {
+      href: "#",
+      onClick: handleMenuItemClick(step.id),
+    },
+  }));
+
   return (
-    <main className="fr-container fr-my-6w">
-      <h1 className="fr-h1">Formulaire Document d&apos;Architecture (DA)</h1>
+    <>
+      {/* Menu latéral sticky flottant */}
+      <div style={{ position: 'fixed', left: 0, top: 0, zIndex: 1000, width: '300px' }}>
+        <SideMenu
+          title="Navigation DA"
+          burgerMenuButtonText="Navigation"
+          items={menuItems}
+          sticky={true}
+          fullHeight={true}
+          align="left"
+        />
+      </div>
+
+      <main className="fr-container fr-my-6w">
+        <h1 className="fr-h1">Formulaire Document d&apos;Architecture (DA)</h1>
       <p className="fr-text--sm fr-mb-2w">
         Remplissez tous les champs du Document d&apos;Architecture
       </p>
@@ -184,5 +215,6 @@ export default function FormulaireDA() {
         </pre>
       </details>
     </main>
+    </>
   );
 }

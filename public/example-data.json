@@ -197,7 +197,7 @@
   },
   "cadre5_ArchitectureActeurs": {
     "description": "Le portail RH est utilisé par les agents (consultation), les managers (validation) et les gestionnaires RH (administration). Il s'interface avec le SI Paie en tant que consommateur et avec l'annuaire LDAP en tant que fournisseur.",
-    "schemaActeurs": "https://exemple.com/schemas/architecture-acteurs.png",
+    "schemaActeurs": "",
     "acteursConsommateurs": [
       { "nom": "Agent", "type": "Humain (IHM)", "description": "Consulte ses données RH, demande des congés" },
       { "nom": "Manager", "type": "Humain (IHM)", "description": "Valide les demandes de son équipe" },

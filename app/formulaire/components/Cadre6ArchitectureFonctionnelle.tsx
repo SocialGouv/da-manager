@@ -1,3 +1,5 @@
+"use client";
+
 import { Input } from "@codegouvfr/react-dsfr/Input";
 import { Select } from "@codegouvfr/react-dsfr/Select";
 import { Button } from "@codegouvfr/react-dsfr/Button";
@@ -80,7 +82,6 @@ export default function Cadre6ArchitectureFonctionnelle({ daData, setDAData }: C
           <Input
             key={`nom-${index}`}
             label=""
-            hideLabel
             nativeInputProps={{
               type: "text",
               value: bloc.nom,
@@ -100,7 +101,6 @@ export default function Cadre6ArchitectureFonctionnelle({ daData, setDAData }: C
           <Input
             key={`usages-${index}`}
             label=""
-            hideLabel
             nativeInputProps={{
               type: "text",
               value: bloc.usages,
@@ -120,7 +120,6 @@ export default function Cadre6ArchitectureFonctionnelle({ daData, setDAData }: C
           <Select
             key={`typeActeurs-${index}`}
             label=""
-            hideLabel
             nativeSelectProps={{
               value: bloc.typeActeurs,
               onChange: (e) => {

@@ -102,8 +102,7 @@ export default function ExcalidrawSchemaEditor({
       };
       reader.readAsDataURL(blob);
     } catch (error) {
-      console.error("Erreur lors de la sauvegarde:", error);
-      alert("Erreur lors de la sauvegarde du schéma");
+      console.error("❌ Erreur lors de la sauvegarde du schéma:", error);
     }
   };
 
