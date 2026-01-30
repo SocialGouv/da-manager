@@ -1,0 +1,45 @@
+/* Extend DSFR Stepper to support more than 8 steps */
+.fr-stepper__steps[data-fr-steps="9"] {
+  --steps: 9;
+  --step-width: calc(100% / 9);
+}
+
+.fr-stepper__steps[data-fr-steps="10"] {
+  --steps: 10;
+  --step-width: calc(100% / 10);
+}
+
+.fr-stepper__steps[data-fr-steps="11"] {
+  --steps: 11;
+  --step-width: calc(100% / 11);
+}
+
+.fr-stepper__steps[data-fr-steps="12"] {
+  --steps: 12;
+  --step-width: calc(100% / 12);
+}
+
+/* Hide "next step" details when on the last step */
+.fr-stepper .fr-stepper__steps[data-fr-steps="9"][data-fr-current-step="9"] + .fr-stepper__details,
+.fr-stepper .fr-stepper__steps[data-fr-steps="10"][data-fr-current-step="10"] + .fr-stepper__details,
+.fr-stepper .fr-stepper__steps[data-fr-steps="11"][data-fr-current-step="11"] + .fr-stepper__details,
+.fr-stepper .fr-stepper__steps[data-fr-steps="12"][data-fr-current-step="12"] + .fr-stepper__details {
+  display: none;
+}
+
+/* Add current step CSS variables for steps 9-12 */
+.fr-stepper__steps[data-fr-current-step="9"] {
+  --current-step: 9;
+}
+
+.fr-stepper__steps[data-fr-current-step="10"] {
+  --current-step: 10;
+}
+
+.fr-stepper__steps[data-fr-current-step="11"] {
+  --current-step: 11;
+}
+
+.fr-stepper__steps[data-fr-current-step="12"] {
+  --current-step: 12;
+}

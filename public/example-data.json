@@ -1,0 +1,310 @@
+{
+  "cadre1_ProjetActeurs": {
+    "nomDuProjet": "Portail de Gestion des Ressources Humaines",
+    "contexteProjetApplicatif": "Développement d'un portail web moderne pour la gestion centralisée des ressources humaines du ministère, remplaçant plusieurs applications legacy disparates.",
+    "objectifsProjetApplicatif": "- Centraliser la gestion des données RH\n- Simplifier les processus administratifs\n- Améliorer l'expérience utilisateur\n- Réduire les coûts de maintenance",
+    "enjeuxProjetApplicatif": "- Modernisation du SI RH\n- Conformité RGPD\n- Optimisation des processus métiers\n- Satisfaction des agents",
+    "planningProjet": [
+      { "version": "V1", "date": "2026-06-15", "commentaires": "MVP - Gestion des congés et absences" },
+      { "version": "V2", "date": "2026-12-20", "commentaires": "Paie et gestion administrative" },
+      { "version": "V3", "date": "2027-06-30", "commentaires": "Formation et évaluation" }
+    ],
+    "acteursDuProjet": [
+      { "role": "MOA", "nom": "Dupont Marie", "fonction": "Chef de projet MOA", "entite": "DRH" },
+      { "role": "AMOA", "nom": "Martin Jean", "fonction": "AMOA Senior", "entite": "DRH/SI" },
+      { "role": "ETUDE", "nom": "Bernard Sophie", "fonction": "Analyste fonctionnel", "entite": "ESN Consulting" },
+      { "role": "MOE", "nom": "Durand Paul", "fonction": "Chef de projet MOE", "entite": "DSI" },
+      { "role": "AMOE", "nom": "Petit Claire", "fonction": "Architecte technique", "entite": "DSI/Architecture" },
+      { "role": "INTEGRATEUR", "nom": "Moreau Thomas", "fonction": "Lead Developer", "entite": "ESN TechCorp" },
+      { "role": "ARCHITECTE SI", "nom": "Roux Antoine", "fonction": "Architecte SI", "entite": "DSI/Architecture" },
+      { "role": "INTEGRATION", "nom": "Blanc Julie", "fonction": "Responsable intégration", "entite": "DSI/Integration" },
+      { "role": "PRODUCTION", "nom": "Noir Marc", "fonction": "Responsable production", "entite": "DSI/Production" }
+    ],
+    "acteursMetiersDuSIApplicatif": [
+      { "profilsActeurs": "Gestionnaire RH", "nombreUtilisateursM": "50", "nombreUtilisateursR": "0", "nombreUtilisateursE": "0", "nombreUtilisateursP": "0" },
+      { "profilsActeurs": "Manager", "nombreUtilisateursM": "200", "nombreUtilisateursR": "0", "nombreUtilisateursE": "0", "nombreUtilisateursP": "0" },
+      { "profilsActeurs": "Agent", "nombreUtilisateursM": "2500", "nombreUtilisateursR": "0", "nombreUtilisateursE": "0", "nombreUtilisateursP": "0" },
+      { "profilsActeurs": "Administrateur", "nombreUtilisateursM": "5", "nombreUtilisateursR": "0", "nombreUtilisateursE": "0", "nombreUtilisateursP": "0" }
+    ]
+  },
+  "cadre2_FonctionnalitesDonnees": {
+    "fonctionnalitesDuSIApplicatif": [
+      { "fonctionnalite": "Gestion des congés", "M": true, "R": false, "E": false, "P": false },
+      { "fonctionnalite": "Gestion des absences", "M": true, "R": false, "E": false, "P": false },
+      { "fonctionnalite": "Consultation des fiches de paie", "M": true, "R": false, "E": false, "P": false },
+      { "fonctionnalite": "Gestion des formations", "M": true, "R": false, "E": false, "P": false },
+      { "fonctionnalite": "Entretiens annuels", "M": true, "R": false, "E": false, "P": false }
+    ],
+    "donneesMetierDuSIApplicatif": [
+      { "donnee": "Identité agent", "M": true, "R": false, "E": false, "P": false },
+      { "donnee": "Contrat de travail", "M": true, "R": false, "E": false, "P": false },
+      { "donnee": "Congés/absences", "M": true, "R": false, "E": false, "P": false },
+      { "donnee": "Évaluations", "M": true, "R": false, "E": false, "P": false }
+    ],
+    "fichiersMetiersDuSIApplicatif": [
+      { "fichier": "Justificatif absence", "M": true, "R": false, "E": false, "P": false },
+      { "fichier": "Bulletin de paie", "M": true, "R": false, "E": false, "P": false },
+      { "fichier": "Certificat médical", "M": true, "R": false, "E": false, "P": false }
+    ],
+    "referentielsDonneesHorsSI": [
+      { "referentiel": "Annuaire LDAP", "modeEchange": "LDAP", "siSource": "Active Directory", "M": true, "R": false, "E": false, "P": false },
+      { "referentiel": "Structure organisationnelle", "modeEchange": "API REST", "siSource": "SI Organigramme", "M": true, "R": false, "E": false, "P": false }
+    ],
+    "sensibiliteDesDonnees": {
+      "NIR": "Très sensible",
+      "medicales": "Très sensible",
+      "viePrivee": "Sensible",
+      "etatCivil": "Sensible",
+      "identite": "Sensible",
+      "viePersonnelle": "",
+      "biometrique": "",
+      "vieProfessionnelle": "Sensible",
+      "mecanismeFraude": "",
+      "mouvementsSalariaux": "Sensible",
+      "santeEconomique": "",
+      "patrimoine": "",
+      "appartenanceSyndicale": "Très sensible",
+      "justice": "",
+      "adressePostale": "Sensible",
+      "faillesVulnerabilite": "",
+      "publicDonnees": "",
+      "editoriaux": "",
+      "publicationExtranet": "",
+      "campagneDeCom": "",
+      "statistiquesPubliables": "",
+      "autres": "Données bancaires (IBAN) : Très sensible"
+    },
+    "servicesUtilisesParApplication": [
+      { "service": "Messagerie (Exchange)", "modeEchange": "SMTP", "siSource": "Exchange Server", "M": true, "R": false, "E": false, "P": false },
+      { "service": "Annuaire (Active directory)", "modeEchange": "LDAP", "siSource": "AD Domain", "M": true, "R": false, "E": false, "P": false },
+      { "service": "SIG (ArcGIS)", "modeEchange": "", "siSource": "", "M": false, "R": false, "E": false, "P": false },
+      { "service": "Décisionnel (BI)", "modeEchange": "API REST", "siSource": "Tableau Server", "M": true, "R": false, "E": false, "P": false },
+      { "service": "Transfert de fichiers (CFT)", "modeEchange": "", "siSource": "", "M": false, "R": false, "E": false, "P": false }
+    ]
+  },
+  "cadre3_ContraintesVolumetrie": {
+    "contraintesLegales": "- Respect du RGPD\n- Conservation des données de paie pendant 5 ans\n- Archivage des dossiers RH pendant 50 ans après départ de l'agent",
+    "contraintesMetiers": "- Disponibilité 24/7 pour consultation des fiches de paie\n- Traitement des demandes de congés sous 48h\n- Export mensuel pour la paie",
+    "dependancesAvecDautresSI": [
+      { "systemeInformation": "SI Paie", "fournisseur": false, "consommateur": true },
+      { "systemeInformation": "Annuaire LDAP", "fournisseur": true, "consommateur": false },
+      { "systemeInformation": "SI Formation", "fournisseur": true, "consommateur": true }
+    ],
+    "dependancesAvecLePosteDeTravail": "Navigateur web moderne (Chrome, Firefox, Edge) version N ou N-1. Pas de client lourd nécessaire.",
+    "niveauUtilisabiliteSecuriteEnModeTablette": {
+      "modeConnecte": "Moyen",
+      "modeDeconnecte": "Néant",
+      "precisions": "Consultation des plannings et validation des demandes de congés possible sur tablette en mode connecté"
+    },
+    "niveauUtilisabiliteSecuriteEnModeSmartphone": {
+      "modeConnecte": "Faible",
+      "modeDeconnecte": "Néant",
+      "precisions": "Consultation uniquement (fiches de paie, planning)"
+    },
+    "mobile": {
+      "tabletteMinistere": 20,
+      "tablettePersonnel": 0,
+      "smartphoneMinistere": 50,
+      "smartphonePersonnel": 0
+    },
+    "volumetrieDonneesDuSIApplicatif": {
+      "d1_NombreEnregistrementsARecuperer": "15000",
+      "d2_NombreEnregistrementsParAn": "500",
+      "d3_TailleMoyenneEnregistrementKO": "50",
+      "d4_NombreAnneesEnregistrementsEnBaseBDD": "5",
+      "d5_VolumeBDDInitialGO": "0.715",
+      "d6_VolumeBDDActuelGO": "0.024",
+      "d7_VolumeBDDTotalGO": "0.835",
+      "commentaires": "Calculs basés sur 3000 agents actifs et historique de 5 ans"
+    },
+    "volumetrieFichiersDuSIApplicatif": {
+      "f1_NombreDeFichiersARecuperer": "50000",
+      "f2_NombreDeFichiersParAn": "10000",
+      "f3_TailleMoyenneDunFichierMO": "2",
+      "f4_NombreAnneesFichiersEnFileSystemFS": "5",
+      "f5_VolumeFSInitialGO": "97.66",
+      "f6_VolumeFSActuelGO": "19.53",
+      "f7_VolumeFSTotalGO": "195.31"
+    },
+    "reductionVolumeDonneesEtFichiers": {
+      "purgeDonneesDansBDDApplicatif": false,
+      "purgeFichiersDansFSApplicatif": false,
+      "archivageDonneesHorsApplicatif": true,
+      "archivageFichiersHorsApplicatif": true
+    }
+  },
+  "cadre4_ExigencesContextuelles": {
+    "echelleDICT_EBIOS_1a4_GlobalSI": {
+      "exigenceDisponibilite_NiveauFront": 3,
+      "exigenceDisponibilite_PrecisionsFront": "Service disponible 24/7, tolérance panne < 4h",
+      "exigenceDisponibilite_NiveauBack": 3,
+      "exigenceDisponibilite_PrecisionsBack": "Base de données en cluster avec réplication",
+      "exigenceIntegrite_NiveauFront": 4,
+      "exigenceIntegrite_PrecisionsFront": "Validation côté client et serveur, journalisation complète",
+      "exigenceIntegrite_NiveauBack": 4,
+      "exigenceIntegrite_PrecisionsBack": "Transactions ACID, contrôles d'intégrité référentielle",
+      "exigenceConfidentialite_NiveauFront": 4,
+      "exigenceConfidentialite_PrecisionsFront": "Chiffrement HTTPS, authentification forte MFA",
+      "exigenceConfidentialite_NiveauBack": 4,
+      "exigenceConfidentialite_PrecisionsBack": "Chiffrement des données au repos, cloisonnement réseau",
+      "exigenceTracabilite_NiveauFront": 3,
+      "exigenceTracabilite_PrecisionsFront": "Logs applicatifs de toutes les actions utilisateur",
+      "exigenceTracabilite_NiveauBack": 4,
+      "exigenceTracabilite_PrecisionsBack": "Audit trail complet, conservation 3 ans"
+    },
+    "echelleIMPACT_EBIOS_GlobalSI": {
+      "domaine": "RH - Gestion du personnel",
+      "niveau": "Important",
+      "description": "Impact majeur sur la gestion administrative du personnel en cas d'indisponibilité"
+    },
+    "exigencePREUVE_ParFonctionnalite": [
+      { "fonctionnalite": "Gestion des congés", "descriptionExigencePreuve": "Traçabilité des demandes, validations et refus avec horodatage et identité du valideur" },
+      { "fonctionnalite": "Consultation fiches de paie", "descriptionExigencePreuve": "Logs d'accès avec authentification forte" }
+    ],
+    "exigencesSurLesAccesUtilisateurs": "- Authentification via SSO (Active Directory)\n- MFA obligatoire pour les administrateurs\n- Gestion des habilitations par profils\n- Revue trimestrielle des droits d'accès",
+    "exigenceDisponibilite": "Disponibilité 99.5% hors maintenance programmée (plage de 2h le dimanche 2h-4h)",
+    "exigenceIntegrite": "Aucune perte ou altération de données. Mécanismes de détection d'anomalies en temps réel.",
+    "exigenceConfidentialite": "Données RH accessibles uniquement selon le principe du moindre privilège. Chiffrement end-to-end.",
+    "exigenceTracabilite": "Conservation des logs pendant 3 ans. Traçabilité complète des actions critiques (création/modification/suppression).",
+    "garantieDeService": {
+      "planDeContinuiteActivite_PCA": "Oui - Site de secours à 50km",
+      "planDeRepriseActivite_PRA": "Oui - RPO 4h, RTO 8h",
+      "perteDeDonneesNonAdmissible": "PDMA = 4 heures",
+      "dureMaximaleInterruptionAdmissible_DMIA": "DMIA = 8 heures"
+    },
+    "periodesApplicatives": [
+      { "periode": "Standard", "dateDebut": "", "dateFin": "", "nuc_NombreUtilisateursConnectes": "300", "nrs_NombreRequetesSimultaneesParSec": "50" },
+      { "periode": "Critique", "dateDebut": "", "dateFin": "", "nuc_NombreUtilisateursConnectes": "800", "nrs_NombreRequetesSimultaneesParSec": "150" },
+      { "periode": "Charge", "dateDebut": "", "dateFin": "", "nuc_NombreUtilisateursConnectes": "1200", "nrs_NombreRequetesSimultaneesParSec": "250" }
+    ],
+    "tempsDeReponse": {
+      "affichagePageAccueil_PeriodeStandard": "< 1s",
+      "affichagePageAccueil_PeriodeDeCharge": "< 2s",
+      "affichagePageSimple_PeriodeStandard": "< 2s",
+      "affichagePageSimple_PeriodeDeCharge": "< 3s",
+      "affichagePageComplexe_PeriodeStandard": "< 3s",
+      "affichagePageComplexe_PeriodeDeCharge": "< 5s",
+      "traitementRequeteSimple_PeriodeStandard": "< 500ms",
+      "traitementRequeteSimple_PeriodeDeCharge": "< 1s",
+      "traitementRequeteComplexe_PeriodeStandard": "< 5s",
+      "traitementRequeteComplexe_PeriodeDeCharge": "< 10s",
+      "precisions": "Mesures côté serveur. Temps de réponse réseau non inclus."
+    },
+    "traitementsAutomatises": [
+      { "batchsApplicatifs": "Export paie mensuel", "plage": "1er jour du mois 00h-02h", "frequence": "Mensuel", "impactMetier": "Bloquant si échec", "impactCharge": "Charge élevée DB" },
+      { "batchsApplicatifs": "Synchronisation annuaire", "plage": "Quotidien 23h-00h", "frequence": "Quotidien", "impactMetier": "Modéré", "impactCharge": "Faible" }
+    ]
+  },
+  "cadre5_ArchitectureActeurs": {
+    "description": "Le portail RH est utilisé par les agents (consultation), les managers (validation) et les gestionnaires RH (administration). Il s'interface avec le SI Paie en tant que consommateur et avec l'annuaire LDAP en tant que fournisseur.",
+    "schemaActeurs": "https://exemple.com/schemas/architecture-acteurs.png",
+    "acteursConsommateurs": [
+      { "nom": "Agent", "type": "Humain (IHM)", "description": "Consulte ses données RH, demande des congés" },
+      { "nom": "Manager", "type": "Humain (IHM)", "description": "Valide les demandes de son équipe" },
+      { "nom": "Gestionnaire RH", "type": "Humain (IHM)", "description": "Administre les données RH" }
+    ],
+    "acteursFournisseurs": [
+      { "nom": "SI Paie", "type": "SI (WS/API)", "description": "Fournit les données de paie via API REST" },
+      { "nom": "Annuaire LDAP", "type": "SI (WS/API)", "description": "Fournit l'authentification et les données d'identité" }
+    ]
+  },
+  "cadre6_ArchitectureFonctionnelle": {
+    "description": "Architecture 3-tiers classique avec couche présentation (frontend React), couche métier (backend Node.js) et couche données (PostgreSQL).",
+    "schemaArchitectureFonctionnelle": "https://exemple.com/schemas/architecture-fonctionnelle.png",
+    "blocsFonctionnels": [
+      { "nom": "Gestion des congés", "usages": "Demande, validation, consultation", "typeActeurs": "IHM" },
+      { "nom": "Gestion de la paie", "usages": "Consultation fiches de paie", "typeActeurs": "IHM" },
+      { "nom": "Interface SI Paie", "usages": "Récupération données paie", "typeActeurs": "WS/API" },
+      { "nom": "Authentification", "usages": "SSO via LDAP", "typeActeurs": "WS/API" }
+    ],
+    "conventionFlux": "Flèches entrantes = données fournies au SI. Flèches sortantes = données consommées depuis un SI externe."
+  },
+  "cadre7_ArchitectureApplicative": {
+    "description": "Stack technique moderne : Frontend React, Backend Node.js/Express, BDD PostgreSQL, Cache Redis, Stockage fichiers MinIO.",
+    "schemaArchitectureApplicative": "https://exemple.com/schemas/architecture-applicative.png",
+    "pilesComposants": [
+      { "fonctionnalite": "Frontend Web", "composants": ["React 18", "TypeScript", "Material-UI", "React Router"] },
+      { "fonctionnalite": "Backend API", "composants": ["Node.js 20", "Express", "TypeORM", "Passport.js"] },
+      { "fonctionnalite": "Base de données", "composants": ["PostgreSQL 15", "Redis 7"] },
+      { "fonctionnalite": "Stockage fichiers", "composants": ["MinIO", "S3 compatible"] }
+    ]
+  },
+  "cadre8_ArchitectureTechnique": {
+    "description": "Déploiement sur infrastructure cloud avec haute disponibilité. Load balancer en frontal, cluster applicatif, base de données en réplication primaire-secondaire.",
+    "schemaArchitectureTechnique": "https://exemple.com/schemas/architecture-technique.png",
+    "notes": "Les numéros de flux (1-10) correspondent à la matrice des flux du cadre 10."
+  },
+  "cadre9_ServeursComposants": {
+    "serveurs": [
+      {
+        "nomServeur": "FE-WEB-01",
+        "type": "Container",
+        "role": "Frontend React",
+        "vCPU": 2,
+        "ramGO": 4,
+        "composantsLogiciels": [
+          { "categorie": "Runtime", "composant": "Node.js", "version": "20.11", "role": "Serveur HTTP" },
+          { "categorie": "Framework", "composant": "React", "version": "18.2", "role": "UI Framework" },
+          { "categorie": "Proxy", "composant": "Nginx", "version": "1.25", "role": "Reverse proxy" }
+        ]
+      },
+      {
+        "nomServeur": "BE-API-01",
+        "type": "Container",
+        "role": "Backend API",
+        "vCPU": 4,
+        "ramGO": 8,
+        "composantsLogiciels": [
+          { "categorie": "Runtime", "composant": "Node.js", "version": "20.11", "role": "Application server" },
+          { "categorie": "Framework", "composant": "Express", "version": "4.18", "role": "API Framework" },
+          { "categorie": "ORM", "composant": "TypeORM", "version": "0.3", "role": "Database ORM" }
+        ]
+      },
+      {
+        "nomServeur": "DB-PG-01",
+        "type": "Machine Virtuelle",
+        "role": "Base de données principale",
+        "vCPU": 8,
+        "ramGO": 32,
+        "composantsLogiciels": [
+          { "categorie": "Database", "composant": "PostgreSQL", "version": "15.5", "role": "SGBD relationnel" },
+          { "categorie": "Monitoring", "composant": "pgAdmin", "version": "4.x", "role": "Administration BDD" }
+        ]
+      }
+    ]
+  },
+  "cadre10_MatricesFlux": {
+    "fluxApplicatifs": [
+      { "numeroFlux": "F1", "source": "FE-WEB-01", "destination": "BE-API-01", "protocole": "HTTPS/443", "commentaires": "API REST frontend vers backend" },
+      { "numeroFlux": "F2", "source": "BE-API-01", "destination": "DB-PG-01", "protocole": "PostgreSQL/5432", "commentaires": "Connexion base de données" },
+      { "numeroFlux": "F3", "source": "BE-API-01", "destination": "LDAP-AD", "protocole": "LDAPS/636", "commentaires": "Authentification LDAP" },
+      { "numeroFlux": "F4", "source": "BE-API-01", "destination": "SI-PAIE", "protocole": "HTTPS/443", "commentaires": "Récupération données paie" },
+      { "numeroFlux": "F5", "source": "BE-API-01", "destination": "CACHE-REDIS", "protocole": "Redis/6379", "commentaires": "Cache applicatif" }
+    ]
+  },
+  "cadre11_Dimensionnement": {
+    "justificationsPDMA_DMIA_Performances": {
+      "perteDeDonneesMaximaleAdmissible": "PDMA de 4h justifiée par : sauvegardes incrémentales toutes les 4h + réplication temps réel vers site secondaire.",
+      "dureeMaximaleInterruptionAdmissible": "DMIA de 8h justifiée par : criticité moyenne du service (consultation possible différée), temps de bascule vers site de secours estimé à 6h.",
+      "performancesApplicatives": "Objectif < 2s pour 95% des requêtes. Architecture scalable horizontalement (ajout containers frontend/backend). Cache Redis pour requêtes fréquentes."
+    },
+    "justificationsAllocationsRessourcesMaterielles": {
+      "nombreCPU": "Total 14 vCPU : 2x2 vCPU frontend (charge faible), 2x4 vCPU backend (traitements métier), 1x8 vCPU database (charge élevée).",
+      "nombreServeurs": "6 serveurs : 2 frontend (HA), 2 backend (HA), 1 database primaire, 1 database secondaire (réplication).",
+      "detailsCalculs": "Dimensionnement basé sur charge maximale de 1200 utilisateurs simultanés. Ratio observé : 1 vCPU backend pour 300 utilisateurs. Marge de 30% pour pics de charge."
+    }
+  },
+  "cadre12_URLs": {
+    "urls": [
+      { "libelleURL": "https://rh.ministere.gouv.fr/", "acteurAppelant": "Agent/Manager/Gestionnaire RH", "ressourceAppelee": "Frontend React", "fonctionnaliteOuServiceFourni": "Page d'accueil portail RH", "donneesTransitent": "Session utilisateur", "precisions": "URL publique avec redirection SSO" },
+      { "libelleURL": "https://rh.ministere.gouv.fr/api/conges", "acteurAppelant": "Frontend React", "ressourceAppelee": "Backend API", "fonctionnaliteOuServiceFourni": "API Gestion des congés", "donneesTransitent": "Demandes de congés JSON", "precisions": "API REST CRUD" },
+      { "libelleURL": "https://rh.ministere.gouv.fr/api/paie", "acteurAppelant": "Frontend React", "ressourceAppelee": "Backend API", "fonctionnaliteOuServiceFourni": "API Consultation paie", "donneesTransitent": "Fiches de paie PDF/JSON", "precisions": "Lecture seule" }
+    ]
+  },
+  "annexe_SuiviChangements": {
+    "versionnage": "1.0.0",
+    "changements": [
+      { "version": "1.0.0", "date": "2026-01-30", "demandeurChangement": "DRH", "rapporteurChangement": "Chef de projet MOA", "descriptionDetaillee": "Version initiale du DA pour le portail RH. Cadres 1 à 12 complétés." }
+    ]
+  }
+}
