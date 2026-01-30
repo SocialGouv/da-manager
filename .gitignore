@@ -42,3 +42,7 @@ next-env.d.ts
 
 DA Modèle document architecture à remplir.docx
 da-export-exemple.pdf
+
+# Environment variables
+.env.local
+.env*.local
