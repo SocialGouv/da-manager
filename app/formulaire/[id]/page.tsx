@@ -127,14 +127,18 @@ export default function FormulaireDA() {
         backgroundColor: 'var(--background-default-grey)',
         display: 'flex',
         flexDirection: 'column',
-        borderRight: 'none'
+        borderRight: 'none',
+        position: 'sticky',
+        top: 0,
+        height: '100vh',
+        overflowY: 'auto'
       }}>
         <div style={{ padding: '1rem 1rem 1rem 1.5rem' }}>
           <Link href="/" className="fr-btn fr-btn--tertiary fr-btn--sm fr-btn--icon-left fr-icon-arrow-left-line">
             Retour à la liste
           </Link>
         </div>
-        <div style={{ flex: 1, overflowY: 'auto' }}>
+        <div style={{ flex: 1 }}>
           <nav className="fr-sidemenu" aria-label="Menu latéral">
             <div className="fr-sidemenu__inner">
               <div className="fr-sidemenu__title" style={{ paddingLeft: '1.5rem' }}>
