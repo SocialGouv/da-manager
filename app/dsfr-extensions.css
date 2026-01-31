@@ -202,3 +202,8 @@
   cursor: default;
 }
 
+/* Input en gras pour les lignes de total */
+.fr-table td input.fr-input--bold {
+  font-weight: bold;
+}
+

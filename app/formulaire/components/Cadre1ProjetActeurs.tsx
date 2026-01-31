@@ -500,28 +500,48 @@ export default function Cadre1ProjetActeurs({ daData, setDAData }: CadreProps) {
                   <tr>
                     <td><strong>Total utilisateurs</strong></td>
                     <td className="fr-bg-red">
-                      {daData.cadre1_ProjetActeurs.acteursMetiersDuSIApplicatif.reduce(
-                        (sum, item) => sum + (parseInt(item.nombreUtilisateursM) || 0),
-                        0
-                      )}
+                      <input
+                        className="fr-input fr-input--bold"
+                        type="number"
+                        value={daData.cadre1_ProjetActeurs.acteursMetiersDuSIApplicatif.reduce(
+                          (sum, item) => sum + (parseInt(item.nombreUtilisateursM) || 0),
+                          0
+                        )}
+                        readOnly
+                      />
                     </td>
                     <td className="fr-bg-orange">
-                      {daData.cadre1_ProjetActeurs.acteursMetiersDuSIApplicatif.reduce(
-                        (sum, item) => sum + (parseInt(item.nombreUtilisateursR) || 0),
-                        0
-                      )}
+                      <input
+                        className="fr-input fr-input--bold"
+                        type="number"
+                        value={daData.cadre1_ProjetActeurs.acteursMetiersDuSIApplicatif.reduce(
+                          (sum, item) => sum + (parseInt(item.nombreUtilisateursR) || 0),
+                          0
+                        )}
+                        readOnly
+                      />
                     </td>
                     <td className="fr-bg-yellow">
-                      {daData.cadre1_ProjetActeurs.acteursMetiersDuSIApplicatif.reduce(
-                        (sum, item) => sum + (parseInt(item.nombreUtilisateursE) || 0),
-                        0
-                      )}
+                      <input
+                        className="fr-input fr-input--bold"
+                        type="number"
+                        value={daData.cadre1_ProjetActeurs.acteursMetiersDuSIApplicatif.reduce(
+                          (sum, item) => sum + (parseInt(item.nombreUtilisateursE) || 0),
+                          0
+                        )}
+                        readOnly
+                      />
                     </td>
                     <td className="fr-bg-green">
-                      {daData.cadre1_ProjetActeurs.acteursMetiersDuSIApplicatif.reduce(
-                        (sum, item) => sum + (parseInt(item.nombreUtilisateursP) || 0),
-                        0
-                      )}
+                      <input
+                        className="fr-input fr-input--bold"
+                        type="number"
+                        value={daData.cadre1_ProjetActeurs.acteursMetiersDuSIApplicatif.reduce(
+                          (sum, item) => sum + (parseInt(item.nombreUtilisateursP) || 0),
+                          0
+                        )}
+                        readOnly
+                      />
                     </td>
                     <td></td>
                   </tr>
