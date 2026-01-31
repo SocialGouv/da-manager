@@ -81,7 +81,10 @@ Each DA has 12 "cadres" (sections), managed as separate components in `app/formu
 
 **DSFR Components:**
 - Uses French government design components (Button, Input, Stepper, SideMenu, etc.)
-- Custom styling extensions in `app/dsfr-extensions.css`
+- Always refer to DSFR documentation befor creating a component
+- Always use DSFR componant, never create custom componant
+- Never try to modify DSFR componant behaviour by adding custom styles or classes
+- Custom styling extensions in `app/dsfr-extensions.css` but try to avoid using custom CSS
 - DSFR provider wraps the entire app in layout.tsx
 
 **Dynamic Imports:**

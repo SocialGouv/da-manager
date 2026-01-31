@@ -101,24 +101,47 @@
 }
 
 
-/* Adapter les inputs dans les tableaux au thème */
+/* Adapter les inputs dans les tableaux pour un style "cellule éditable" */
 .fr-table td .fr-input-group {
   margin-bottom: 0;
 }
 
+/* Enlever le padding des cellules qui contiennent des inputs */
+.fr-table td:has(input.fr-input) {
+  padding: 0 4px;
+}
+
 .fr-table td input.fr-input {
-  background-color: var(--background-default-grey);
-  color: var(--text-default-grey);
-  border-color: var(--border-default-grey);
+  /* Rendre l'input transparent et sans bordure */
+  background-color: transparent;
+  border: 2px solid transparent;
+  border-radius: 0;
+
+  /* Prendre tout l'espace de la cellule */
+  width: 100%;
+  min-height: 100%;
+
+  /* Hériter la couleur du texte */
+  color: inherit;
+
+  /* Enlever l'outline par défaut */
+  outline: none;
+
+  /* Enlever les ombres */
+  box-shadow: none;
 }
 
 .fr-table td input.fr-input:focus {
-  background-color: var(--background-default-grey);
+  /* Bordure bleue au focus - le padding reste constant */
+  background-color: transparent;
   border-color: var(--border-plain-blue-france);
+  outline: none;
+  box-shadow: none;
 }
 
 .fr-table td input.fr-input[readonly] {
-  background-color: var(--background-contrast-info) !important;
-  color: var(--text-default-grey) !important;
+  background-color: transparent;
+  color: inherit;
+  cursor: default;
 }
 

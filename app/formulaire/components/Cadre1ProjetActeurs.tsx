@@ -1,5 +1,4 @@
 import type { DAData } from "@/types/da.types";
-import Input from "@codegouvfr/react-dsfr/Input";
 import Button from "@codegouvfr/react-dsfr/Button";
 
 interface CadreProps {
@@ -12,80 +11,74 @@ export default function Cadre1ProjetActeurs({ daData, setDAData }: CadreProps) {
     <div>
       {/* Nom du projet applicatif */}
       <h3 className="fr-h3 fr-mt-4w">Nom du projet applicatif</h3>
-      <Input
-        label=""
-        nativeInputProps={{
-          id: "nomDuProjet",
-          value: daData.cadre1_ProjetActeurs.nomDuProjet,
-          onChange: (e) =>
-            setDAData({
-              ...daData,
-              cadre1_ProjetActeurs: {
-                ...daData.cadre1_ProjetActeurs,
-                nomDuProjet: e.target.value,
-              },
-            })
-        }}
+      <input
+        className="fr-input"
+        id="nomDuProjet"
+        type="text"
+        value={daData.cadre1_ProjetActeurs.nomDuProjet}
+        onChange={(e) =>
+          setDAData({
+            ...daData,
+            cadre1_ProjetActeurs: {
+              ...daData.cadre1_ProjetActeurs,
+              nomDuProjet: e.target.value,
+            },
+          })
+        }
       />
 
       {/* Contexte projet applicatif */}
       <h3 className="fr-h3 fr-mt-6w">Contexte projet applicatif</h3>
-      <Input
-        label=""
-        textArea
-        nativeTextAreaProps={{
-          id: "contexteProjetApplicatif",
-          rows: 5,
-          value: daData.cadre1_ProjetActeurs.contexteProjetApplicatif,
-          onChange: (e) =>
-            setDAData({
-              ...daData,
-              cadre1_ProjetActeurs: {
-                ...daData.cadre1_ProjetActeurs,
-                contexteProjetApplicatif: e.target.value,
-              },
-            })
-        }}
+      <textarea
+        className="fr-input"
+        id="contexteProjetApplicatif"
+        rows={5}
+        value={daData.cadre1_ProjetActeurs.contexteProjetApplicatif}
+        onChange={(e) =>
+          setDAData({
+            ...daData,
+            cadre1_ProjetActeurs: {
+              ...daData.cadre1_ProjetActeurs,
+              contexteProjetApplicatif: e.target.value,
+            },
+          })
+        }
       />
 
       {/* Enjeux projet applicatif */}
       <h3 className="fr-h3 fr-mt-6w">Enjeux projet applicatif</h3>
-      <Input
-        label=""
-        textArea
-        nativeTextAreaProps={{
-          id: "enjeuxProjetApplicatif",
-          rows: 5,
-          value: daData.cadre1_ProjetActeurs.enjeuxProjetApplicatif,
-          onChange: (e) =>
-            setDAData({
-              ...daData,
-              cadre1_ProjetActeurs: {
-                ...daData.cadre1_ProjetActeurs,
-                enjeuxProjetApplicatif: e.target.value,
-              },
-            })
-        }}
+      <textarea
+        className="fr-input"
+        id="enjeuxProjetApplicatif"
+        rows={5}
+        value={daData.cadre1_ProjetActeurs.enjeuxProjetApplicatif}
+        onChange={(e) =>
+          setDAData({
+            ...daData,
+            cadre1_ProjetActeurs: {
+              ...daData.cadre1_ProjetActeurs,
+              enjeuxProjetApplicatif: e.target.value,
+            },
+          })
+        }
       />
 
       {/* Objectifs projet applicatif */}
       <h3 className="fr-h3 fr-mt-6w">Objectifs projet applicatif</h3>
-      <Input
-        label=""
-        textArea
-        nativeTextAreaProps={{
-          id: "objectifsProjetApplicatif",
-          rows: 5,
-          value: daData.cadre1_ProjetActeurs.objectifsProjetApplicatif,
-          onChange: (e) =>
-            setDAData({
-              ...daData,
-              cadre1_ProjetActeurs: {
-                ...daData.cadre1_ProjetActeurs,
-                objectifsProjetApplicatif: e.target.value,
-              },
-            })
-        }}
+      <textarea
+        className="fr-input"
+        id="objectifsProjetApplicatif"
+        rows={5}
+        value={daData.cadre1_ProjetActeurs.objectifsProjetApplicatif}
+        onChange={(e) =>
+          setDAData({
+            ...daData,
+            cadre1_ProjetActeurs: {
+              ...daData.cadre1_ProjetActeurs,
+              objectifsProjetApplicatif: e.target.value,
+            },
+          })
+        }
       />
 
       {/* Planning projet */}
@@ -107,60 +100,57 @@ export default function Cadre1ProjetActeurs({ daData, setDAData }: CadreProps) {
                 <tbody>
                   {daData.cadre1_ProjetActeurs.planningProjet.map((item, index) => (
                     <tr key={index}>
-                      <td style={{ backgroundColor: 'var(--background-contrast-info)', padding: '0.5rem' }}>
-                        <Input
-                          label=""
-                          nativeInputProps={{
-                            value: item.version,
-                            onChange: (e) => {
-                              const newPlanning = [...daData.cadre1_ProjetActeurs.planningProjet];
-                              newPlanning[index].version = e.target.value;
-                              setDAData({
-                                ...daData,
-                                cadre1_ProjetActeurs: {
-                                  ...daData.cadre1_ProjetActeurs,
-                                  planningProjet: newPlanning,
-                                },
-                              });
-                            }
+                      <td style={{ backgroundColor: 'var(--background-contrast-info)' }}>
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={item.version}
+                          onChange={(e) => {
+                            const newPlanning = [...daData.cadre1_ProjetActeurs.planningProjet];
+                            newPlanning[index].version = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre1_ProjetActeurs: {
+                                ...daData.cadre1_ProjetActeurs,
+                                planningProjet: newPlanning,
+                              },
+                            });
                           }}
                         />
                       </td>
                       <td>
-                        <Input
-                          label=""
-                          nativeInputProps={{
-                            value: item.date,
-                            onChange: (e) => {
-                              const newPlanning = [...daData.cadre1_ProjetActeurs.planningProjet];
-                              newPlanning[index].date = e.target.value;
-                              setDAData({
-                                ...daData,
-                                cadre1_ProjetActeurs: {
-                                  ...daData.cadre1_ProjetActeurs,
-                                  planningProjet: newPlanning,
-                                },
-                              });
-                            }
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={item.date}
+                          onChange={(e) => {
+                            const newPlanning = [...daData.cadre1_ProjetActeurs.planningProjet];
+                            newPlanning[index].date = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre1_ProjetActeurs: {
+                                ...daData.cadre1_ProjetActeurs,
+                                planningProjet: newPlanning,
+                              },
+                            });
                           }}
                         />
                       </td>
                       <td>
-                        <Input
-                          label=""
-                          nativeInputProps={{
-                            value: item.commentaires,
-                            onChange: (e) => {
-                              const newPlanning = [...daData.cadre1_ProjetActeurs.planningProjet];
-                              newPlanning[index].commentaires = e.target.value;
-                              setDAData({
-                                ...daData,
-                                cadre1_ProjetActeurs: {
-                                  ...daData.cadre1_ProjetActeurs,
-                                  planningProjet: newPlanning,
-                                },
-                              });
-                            }
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={item.commentaires}
+                          onChange={(e) => {
+                            const newPlanning = [...daData.cadre1_ProjetActeurs.planningProjet];
+                            newPlanning[index].commentaires = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre1_ProjetActeurs: {
+                                ...daData.cadre1_ProjetActeurs,
+                                planningProjet: newPlanning,
+                              },
+                            });
                           }}
                         />
                       </td>
@@ -241,79 +231,75 @@ export default function Cadre1ProjetActeurs({ daData, setDAData }: CadreProps) {
                 <tbody>
                   {daData.cadre1_ProjetActeurs.acteursDuProjet.map((item, index) => (
                     <tr key={index}>
-                      <td style={{ backgroundColor: 'var(--background-contrast-info)', padding: '0.5rem' }}>
-                        <Input
-                          label=""
-                          nativeInputProps={{
-                            value: item.role,
-                            onChange: (e) => {
-                              const newActeurs = [...daData.cadre1_ProjetActeurs.acteursDuProjet];
-                              newActeurs[index].role = e.target.value;
-                              setDAData({
-                                ...daData,
-                                cadre1_ProjetActeurs: {
-                                  ...daData.cadre1_ProjetActeurs,
-                                  acteursDuProjet: newActeurs,
-                                },
-                              });
-                            }
+                      <td style={{ backgroundColor: 'var(--background-contrast-info)' }}>
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={item.role}
+                          onChange={(e) => {
+                            const newActeurs = [...daData.cadre1_ProjetActeurs.acteursDuProjet];
+                            newActeurs[index].role = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre1_ProjetActeurs: {
+                                ...daData.cadre1_ProjetActeurs,
+                                acteursDuProjet: newActeurs,
+                              },
+                            });
                           }}
                         />
                       </td>
                       <td>
-                        <Input
-                          label=""
-                          nativeInputProps={{
-                            value: item.nom,
-                            onChange: (e) => {
-                              const newActeurs = [...daData.cadre1_ProjetActeurs.acteursDuProjet];
-                              newActeurs[index].nom = e.target.value;
-                              setDAData({
-                                ...daData,
-                                cadre1_ProjetActeurs: {
-                                  ...daData.cadre1_ProjetActeurs,
-                                  acteursDuProjet: newActeurs,
-                                },
-                              });
-                            }
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={item.nom}
+                          onChange={(e) => {
+                            const newActeurs = [...daData.cadre1_ProjetActeurs.acteursDuProjet];
+                            newActeurs[index].nom = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre1_ProjetActeurs: {
+                                ...daData.cadre1_ProjetActeurs,
+                                acteursDuProjet: newActeurs,
+                              },
+                            });
                           }}
                         />
                       </td>
                       <td>
-                        <Input
-                          label=""
-                          nativeInputProps={{
-                            value: item.fonction,
-                            onChange: (e) => {
-                              const newActeurs = [...daData.cadre1_ProjetActeurs.acteursDuProjet];
-                              newActeurs[index].fonction = e.target.value;
-                              setDAData({
-                                ...daData,
-                                cadre1_ProjetActeurs: {
-                                  ...daData.cadre1_ProjetActeurs,
-                                  acteursDuProjet: newActeurs,
-                                },
-                              });
-                            }
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={item.fonction}
+                          onChange={(e) => {
+                            const newActeurs = [...daData.cadre1_ProjetActeurs.acteursDuProjet];
+                            newActeurs[index].fonction = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre1_ProjetActeurs: {
+                                ...daData.cadre1_ProjetActeurs,
+                                acteursDuProjet: newActeurs,
+                              },
+                            });
                           }}
                         />
                       </td>
                       <td>
-                        <Input
-                          label=""
-                          nativeInputProps={{
-                            value: item.entite,
-                            onChange: (e) => {
-                              const newActeurs = [...daData.cadre1_ProjetActeurs.acteursDuProjet];
-                              newActeurs[index].entite = e.target.value;
-                              setDAData({
-                                ...daData,
-                                cadre1_ProjetActeurs: {
-                                  ...daData.cadre1_ProjetActeurs,
-                                  acteursDuProjet: newActeurs,
-                                },
-                              });
-                            }
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={item.entite}
+                          onChange={(e) => {
+                            const newActeurs = [...daData.cadre1_ProjetActeurs.acteursDuProjet];
+                            newActeurs[index].entite = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre1_ProjetActeurs: {
+                                ...daData.cadre1_ProjetActeurs,
+                                acteursDuProjet: newActeurs,
+                              },
+                            });
                           }}
                         />
                       </td>
@@ -400,102 +386,93 @@ export default function Cadre1ProjetActeurs({ daData, setDAData }: CadreProps) {
                 <tbody>
                   {daData.cadre1_ProjetActeurs.acteursMetiersDuSIApplicatif.map((item, index) => (
                     <tr key={index}>
-                      <td style={{ backgroundColor: 'var(--background-contrast-info)', padding: '0.5rem' }}>
-                        <Input
-                          label=""
-                          nativeInputProps={{
-                            value: item.profilsActeurs,
-                            onChange: (e) => {
-                              const newActeurs = [...daData.cadre1_ProjetActeurs.acteursMetiersDuSIApplicatif];
-                              newActeurs[index].profilsActeurs = e.target.value;
-                              setDAData({
-                                ...daData,
-                                cadre1_ProjetActeurs: {
-                                  ...daData.cadre1_ProjetActeurs,
-                                  acteursMetiersDuSIApplicatif: newActeurs,
-                                },
-                              });
-                            }
+                      <td style={{ backgroundColor: 'var(--background-contrast-info)' }}>
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={item.profilsActeurs}
+                          onChange={(e) => {
+                            const newActeurs = [...daData.cadre1_ProjetActeurs.acteursMetiersDuSIApplicatif];
+                            newActeurs[index].profilsActeurs = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre1_ProjetActeurs: {
+                                ...daData.cadre1_ProjetActeurs,
+                                acteursMetiersDuSIApplicatif: newActeurs,
+                              },
+                            });
                           }}
                         />
                       </td>
-                      <td style={{ backgroundColor: '#ffcccc', padding: '0.5rem' }}>
-                        <Input
-                          label=""
-                          nativeInputProps={{
-                            type: "number",
-                            value: item.nombreUtilisateursM,
-                            onChange: (e) => {
-                              const newActeurs = [...daData.cadre1_ProjetActeurs.acteursMetiersDuSIApplicatif];
-                              newActeurs[index].nombreUtilisateursM = e.target.value;
-                              setDAData({
-                                ...daData,
-                                cadre1_ProjetActeurs: {
-                                  ...daData.cadre1_ProjetActeurs,
-                                  acteursMetiersDuSIApplicatif: newActeurs,
-                                },
-                              });
-                            }
+                      <td style={{ backgroundColor: '#ffcccc' }}>
+                        <input
+                          className="fr-input"
+                          type="number"
+                          value={item.nombreUtilisateursM}
+                          onChange={(e) => {
+                            const newActeurs = [...daData.cadre1_ProjetActeurs.acteursMetiersDuSIApplicatif];
+                            newActeurs[index].nombreUtilisateursM = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre1_ProjetActeurs: {
+                                ...daData.cadre1_ProjetActeurs,
+                                acteursMetiersDuSIApplicatif: newActeurs,
+                              },
+                            });
                           }}
                         />
                       </td>
-                      <td style={{ backgroundColor: '#ffe5cc', padding: '0.5rem' }}>
-                        <Input
-                          label=""
-                          nativeInputProps={{
-                            type: "number",
-                            value: item.nombreUtilisateursR,
-                            onChange: (e) => {
-                              const newActeurs = [...daData.cadre1_ProjetActeurs.acteursMetiersDuSIApplicatif];
-                              newActeurs[index].nombreUtilisateursR = e.target.value;
-                              setDAData({
-                                ...daData,
-                                cadre1_ProjetActeurs: {
-                                  ...daData.cadre1_ProjetActeurs,
-                                  acteursMetiersDuSIApplicatif: newActeurs,
-                                },
-                              });
-                            }
+                      <td style={{ backgroundColor: '#ffe5cc' }}>
+                        <input
+                          className="fr-input"
+                          type="number"
+                          value={item.nombreUtilisateursR}
+                          onChange={(e) => {
+                            const newActeurs = [...daData.cadre1_ProjetActeurs.acteursMetiersDuSIApplicatif];
+                            newActeurs[index].nombreUtilisateursR = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre1_ProjetActeurs: {
+                                ...daData.cadre1_ProjetActeurs,
+                                acteursMetiersDuSIApplicatif: newActeurs,
+                              },
+                            });
                           }}
                         />
                       </td>
-                      <td style={{ backgroundColor: '#ffffcc', padding: '0.5rem' }}>
-                        <Input
-                          label=""
-                          nativeInputProps={{
-                            type: "number",
-                            value: item.nombreUtilisateursE,
-                            onChange: (e) => {
-                              const newActeurs = [...daData.cadre1_ProjetActeurs.acteursMetiersDuSIApplicatif];
-                              newActeurs[index].nombreUtilisateursE = e.target.value;
-                              setDAData({
-                                ...daData,
-                                cadre1_ProjetActeurs: {
-                                  ...daData.cadre1_ProjetActeurs,
-                                  acteursMetiersDuSIApplicatif: newActeurs,
-                                },
-                              });
-                            }
+                      <td style={{ backgroundColor: '#ffffcc' }}>
+                        <input
+                          className="fr-input"
+                          type="number"
+                          value={item.nombreUtilisateursE}
+                          onChange={(e) => {
+                            const newActeurs = [...daData.cadre1_ProjetActeurs.acteursMetiersDuSIApplicatif];
+                            newActeurs[index].nombreUtilisateursE = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre1_ProjetActeurs: {
+                                ...daData.cadre1_ProjetActeurs,
+                                acteursMetiersDuSIApplicatif: newActeurs,
+                              },
+                            });
                           }}
                         />
                       </td>
-                      <td style={{ backgroundColor: '#ccffcc', padding: '0.5rem' }}>
-                        <Input
-                          label=""
-                          nativeInputProps={{
-                            type: "number",
-                            value: item.nombreUtilisateursP,
-                            onChange: (e) => {
-                              const newActeurs = [...daData.cadre1_ProjetActeurs.acteursMetiersDuSIApplicatif];
-                              newActeurs[index].nombreUtilisateursP = e.target.value;
-                              setDAData({
-                                ...daData,
-                                cadre1_ProjetActeurs: {
-                                  ...daData.cadre1_ProjetActeurs,
-                                  acteursMetiersDuSIApplicatif: newActeurs,
-                                },
-                              });
-                            }
+                      <td style={{ backgroundColor: '#ccffcc' }}>
+                        <input
+                          className="fr-input"
+                          type="number"
+                          value={item.nombreUtilisateursP}
+                          onChange={(e) => {
+                            const newActeurs = [...daData.cadre1_ProjetActeurs.acteursMetiersDuSIApplicatif];
+                            newActeurs[index].nombreUtilisateursP = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre1_ProjetActeurs: {
+                                ...daData.cadre1_ProjetActeurs,
+                                acteursMetiersDuSIApplicatif: newActeurs,
+                              },
+                            });
                           }}
                         />
                       </td>
