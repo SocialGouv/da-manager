@@ -1,8 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Button } from "@codegouvfr/react-dsfr/Button";
-import { useIsDark } from "@codegouvfr/react-dsfr/useIsDark";
+import { useState, useEffect, useSyncExternalStore } from "react";
 import dynamic from "next/dynamic";
 import "@excalidraw/excalidraw/index.css";
 import type {
@@ -37,6 +35,25 @@ interface ExcalidrawSchemaEditorProps {
   onCancel: () => void;
 }
 
+// Hook personnalisé pour détecter le mode sombre avec useSyncExternalStore
+function useDarkMode() {
+  const subscribe = (callback: () => void) => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQuery.addEventListener('change', callback);
+    return () => mediaQuery.removeEventListener('change', callback);
+  };
+
+  const getSnapshot = () => {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  };
+
+  const getServerSnapshot = () => {
+    return false;
+  };
+
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+}
+
 export default function ExcalidrawSchemaEditor({
   cadreData,
   cadreType,
@@ -44,7 +61,7 @@ export default function ExcalidrawSchemaEditor({
   onSave,
   onCancel
 }: ExcalidrawSchemaEditorProps) {
-  const { isDark } = useIsDark();
+  const isDark = useDarkMode();
   const [excalidrawAPI, setExcalidrawAPI] = useState<any>(null);
   const [hasGenerated, setHasGenerated] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -178,29 +195,27 @@ export default function ExcalidrawSchemaEditor({
       }}
     >
       <div style={{ display: "flex", gap: "1rem", alignItems: "center", flexWrap: "wrap" }}>
-        <Button
-          size="small"
+        <button
+          className="fr-btn fr-btn--sm fr-icon-refresh-line fr-btn--icon-left"
+          type="button"
           onClick={generateTemplate}
-          iconId="fr-icon-refresh-line"
         >
           Générer le template depuis les données
-        </Button>
-        <Button
-          size="small"
-          priority="primary"
+        </button>
+        <button
+          className="fr-btn fr-btn--sm fr-icon-save-line fr-btn--icon-left"
+          type="button"
           onClick={handleSave}
-          iconId="fr-icon-save-line"
         >
           Sauvegarder le schéma
-        </Button>
-        <Button
-          size="small"
+        </button>
+        <button
+          className={`fr-btn fr-btn--sm ${isFullscreen ? "fr-icon-close-line fr-btn--secondary" : "fr-icon-fullscreen-line"} fr-btn--icon-left`}
+          type="button"
           onClick={() => setIsFullscreen(!isFullscreen)}
-          iconId={isFullscreen ? "fr-icon-close-line" : "fr-icon-fullscreen-line"}
-          priority={isFullscreen ? "secondary" : undefined}
         >
           {isFullscreen ? "Fermer plein écran" : "Plein écran"}
-        </Button>
+        </button>
       </div>
     </div>
   );
@@ -244,11 +259,12 @@ export default function ExcalidrawSchemaEditor({
           <h3 className="fr-h3" style={{ margin: 0 }}>
             Édition plein écran - Cadre {cadreType}
           </h3>
-          <Button
-            priority="tertiary no outline"
-            iconId="fr-icon-close-line"
+          <button
+            className="fr-btn fr-btn--tertiary-no-outline fr-icon-close-line"
+            type="button"
             onClick={() => setIsFullscreen(false)}
             title="Fermer"
+            aria-label="Fermer"
           />
         </div>
       )}

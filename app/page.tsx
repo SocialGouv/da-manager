@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
-import Button from "@codegouvfr/react-dsfr/Button";
 import Image from "next/image";
+import Link from "next/link";
 import { auth } from "@/auth";
 import ProConnectLoginButton from "./components/ProConnectLoginButton";
 
@@ -43,14 +43,10 @@ export default async function Home() {
             </p>
 
             {session?.user ? (
-              <Button
-                linkProps={{ href: "/formulaire/new" }}
-                size="large"
-                iconId="fr-icon-add-line"
-                iconPosition="left"
-              >
+              <Link href="/formulaire/new" className="fr-btn fr-btn--lg">
+                <span className="fr-icon-add-line" aria-hidden="true"></span>
                 Créer un nouveau DA
-              </Button>
+              </Link>
             ) : (
               <ProConnectLoginButton />
             )}
@@ -96,23 +92,14 @@ export default async function Home() {
                               <td className="fr-col--xs" style={{ textAlign: 'right' }}>{new Date(da.dateModification).toLocaleDateString("fr-FR")}</td>
                               <td className="fr-col--sm" style={{ textAlign: 'right' }}>
                                 <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
-                                  <Button
-                                    linkProps={{ href: `/formulaire/${da.id}` }}
-                                    size="small"
-                                    iconId="fr-icon-edit-line"
-                                    iconPosition="left"
-                                  >
+                                  <Link href={`/formulaire/${da.id}`} className="fr-btn fr-btn--sm">
+                                    <span className="fr-icon-edit-line" aria-hidden="true"></span>
                                     Éditer
-                                  </Button>
-                                  <Button
-                                    linkProps={{ href: `/api/export-pdf/${da.id}`, target: "_blank" }}
-                                    size="small"
-                                    priority="secondary"
-                                    iconId="fr-icon-download-line"
-                                    iconPosition="left"
-                                  >
+                                  </Link>
+                                  <Link href={`/api/export-pdf/${da.id}`} target="_blank" className="fr-btn fr-btn--sm fr-btn--secondary">
+                                    <span className="fr-icon-download-line" aria-hidden="true"></span>
                                     PDF
-                                  </Button>
+                                  </Link>
                                 </div>
                               </td>
                             </tr>

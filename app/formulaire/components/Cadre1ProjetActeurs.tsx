@@ -1,5 +1,4 @@
 import type { DAData } from "@/types/da.types";
-import Button from "@codegouvfr/react-dsfr/Button";
 
 interface CadreProps {
   daData: DAData;
@@ -155,10 +154,9 @@ export default function Cadre1ProjetActeurs({ daData, setDAData }: CadreProps) {
                         />
                       </td>
                       <td style={{ textAlign: 'right' }}>
-                        <Button
-                          priority="tertiary no outline"
-                          size="medium"
-                          iconId="fr-icon-close-line"
+                        <button
+                          className="fr-btn fr-btn--tertiary-no-outline"
+                          type="button"
                           title="Supprimer"
                           onClick={() => {
                             const newPlanning = daData.cadre1_ProjetActeurs.planningProjet.filter((_, i) => i !== index);
@@ -170,7 +168,9 @@ export default function Cadre1ProjetActeurs({ daData, setDAData }: CadreProps) {
                               },
                             });
                           }}
-                        />
+                        >
+                          <span className="fr-icon-close-line" aria-hidden="true"></span>
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -304,10 +304,9 @@ export default function Cadre1ProjetActeurs({ daData, setDAData }: CadreProps) {
                         />
                       </td>
                       <td style={{ textAlign: 'right' }}>
-                        <Button
-                          priority="tertiary no outline"
-                          size="medium"
-                          iconId="fr-icon-close-line"
+                        <button
+                          className="fr-btn fr-btn--tertiary-no-outline"
+                          type="button"
                           title="Supprimer"
                           onClick={() => {
                             const newActeurs = daData.cadre1_ProjetActeurs.acteursDuProjet.filter((_, i) => i !== index);
@@ -319,7 +318,9 @@ export default function Cadre1ProjetActeurs({ daData, setDAData }: CadreProps) {
                               },
                             });
                           }}
-                        />
+                        >
+                          <span className="fr-icon-close-line" aria-hidden="true"></span>
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -477,10 +478,9 @@ export default function Cadre1ProjetActeurs({ daData, setDAData }: CadreProps) {
                         />
                       </td>
                       <td style={{ textAlign: 'right' }}>
-                        <Button
-                          priority="tertiary no outline"
-                          size="medium"
-                          iconId="fr-icon-close-line"
+                        <button
+                          className="fr-btn fr-btn--tertiary-no-outline"
+                          type="button"
                           title="Supprimer"
                           onClick={() => {
                             const newActeurs = daData.cadre1_ProjetActeurs.acteursMetiersDuSIApplicatif.filter((_, i) => i !== index);
@@ -492,7 +492,9 @@ export default function Cadre1ProjetActeurs({ daData, setDAData }: CadreProps) {
                               },
                             });
                           }}
-                        />
+                        >
+                          <span className="fr-icon-close-line" aria-hidden="true"></span>
+                        </button>
                       </td>
                     </tr>
                   ))}

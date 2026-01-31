@@ -5,8 +5,6 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import type { DAData } from "@/types/da.types";
 import { initialData } from "../initialData";
-import { Stepper } from "@codegouvfr/react-dsfr/Stepper";
-import Button from "@codegouvfr/react-dsfr/Button";
 import Cadre1ProjetActeurs from "../components/Cadre1ProjetActeurs";
 import Cadre2FonctionnalitesDonnees from "../components/Cadre2FonctionnalitesDonnees";
 import Cadre3ContraintesVolumetrie from "../components/Cadre3ContraintesVolumetrie";
@@ -170,12 +168,18 @@ export default function FormulaireDA() {
       )}
 
       {/* Stepper */}
-      <Stepper
-        currentStep={currentStep}
-        stepCount={12}
-        title={steps[currentStep - 1].title}
-        nextTitle={currentStep < 12 ? steps[currentStep].title : undefined}
-      />
+      <nav className="fr-stepper" role="navigation" aria-label="Étapes">
+        <h2 className="fr-stepper__title">
+          {steps[currentStep - 1].title}
+          <span className="fr-stepper__state">Étape {currentStep} sur 12</span>
+        </h2>
+        <div className="fr-stepper__steps" data-fr-current-step={currentStep} data-fr-steps={12}></div>
+        {currentStep < 12 && (
+          <p className="fr-stepper__details">
+            <span className="fr-text--bold">Étape suivante :</span> {steps[currentStep].title}
+          </p>
+        )}
+      </nav>
 
       {/* Content */}
       <div className="fr-mt-4w">
@@ -242,24 +246,22 @@ export default function FormulaireDA() {
 
       {/* Navigation buttons */}
       <div className="fr-mt-4w fr-mb-4w" style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Button
-          priority="secondary"
-          iconId="fr-icon-arrow-left-line"
-          iconPosition="left"
+        <button
+          className="fr-btn fr-btn--secondary fr-btn--icon-left fr-icon-arrow-left-line"
+          type="button"
           onClick={handlePrevious}
           disabled={currentStep === 1}
         >
           Précédent
-        </Button>
-        <Button
-          priority="secondary"
-          iconId="fr-icon-arrow-right-line"
-          iconPosition="right"
+        </button>
+        <button
+          className="fr-btn fr-btn--secondary fr-btn--icon-right fr-icon-arrow-right-line"
+          type="button"
           onClick={handleNext}
           disabled={currentStep === 12}
         >
           Suivant
-        </Button>
+        </button>
       </div>
 
       {/* Debug: Afficher les données actuelles */}

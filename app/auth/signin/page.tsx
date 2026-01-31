@@ -1,5 +1,4 @@
 import { signIn } from "@/auth";
-import Button from "@codegouvfr/react-dsfr/Button";
 
 export default function SignIn() {
   return (
@@ -17,14 +16,12 @@ export default function SignIn() {
                 await signIn("proconnect", { redirectTo: "/" });
               }}
             >
-              <Button
+              <button
                 type="submit"
-                size="large"
-                iconId="fr-icon-account-circle-fill"
-                iconPosition="left"
+                className="fr-btn fr-btn--lg fr-btn--icon-left fr-icon-account-circle-fill"
               >
                 Se connecter avec ProConnect
-              </Button>
+              </button>
             </form>
           </div>
         </div>

@@ -19,7 +19,7 @@ export async function GET(
 
     // Générer le PDF
     const stream = await renderToStream(
-      createElement(DADocument, { data: daData })
+      createElement(DADocument, { data: daData }) as any
     );
 
     // Retourner le PDF

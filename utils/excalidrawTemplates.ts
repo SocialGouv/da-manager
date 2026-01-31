@@ -6,7 +6,8 @@ import type {
   Cadre8_ArchitectureTechnique,
   Cadre10_MatricesFlux
 } from "@/types/da.types";
-import type { ExcalidrawElement } from "@excalidraw/excalidraw/types/element/types";
+// @ts-ignore - Excalidraw types
+type ExcalidrawElement = any;
 
 /**
  * Génère un template Excalidraw pour le Cadre 5 - Architecture Acteurs

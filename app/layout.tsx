@@ -1,6 +1,6 @@
 import { DsfrHeadBase } from "@codegouvfr/react-dsfr/next-app-router/DsfrHead";
-import { DsfrProviderBase, StartDsfrOnHydration } from "@codegouvfr/react-dsfr/next-app-router/DsfrProvider";
 import { createGetHtmlAttributes } from "@codegouvfr/react-dsfr/next-app-router/getHtmlAttributes";
+import { ClientDsfrProvider } from "./components/ClientDsfrProvider";
 import HeaderWithAuth from "./components/HeaderWithAuth";
 import { defaultColorScheme } from "./defaultColorScheme";
 import Link from "next/link";
@@ -34,11 +34,10 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <DsfrProviderBase lang={lang}>
-          <StartDsfrOnHydration />
+        <ClientDsfrProvider lang={lang}>
           <HeaderWithAuth />
           {children}
-        </DsfrProviderBase>
+        </ClientDsfrProvider>
       </body>
     </html>
   );

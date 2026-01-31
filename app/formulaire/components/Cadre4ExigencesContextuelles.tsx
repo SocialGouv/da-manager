@@ -1,6 +1,3 @@
-import { Input } from "@codegouvfr/react-dsfr/Input";
-import { Button } from "@codegouvfr/react-dsfr/Button";
-import { Table } from "@codegouvfr/react-dsfr/Table";
 import type { DAData } from "@/types/da.types";
 
 interface CadreProps {
@@ -18,14 +15,16 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
       <h4 className="fr-h4 fr-mt-4w">Disponibilité</h4>
       <div className="fr-grid-row fr-grid-row--gutters">
         <div className="fr-col-3">
-          <Input
-            label="Niveau Front (1-4)"
-            nativeInputProps={{
-              type: "number",
-              min: 1,
-              max: 4,
-              value: daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceDisponibilite_NiveauFront,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="dispo-front">Niveau Front (1-4)</label>
+            <input
+              className="fr-input"
+              type="number"
+              id="dispo-front"
+              min={1}
+              max={4}
+              value={daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceDisponibilite_NiveauFront}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -35,17 +34,20 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       exigenceDisponibilite_NiveauFront: parseInt(e.target.value) || 1,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
         <div className="fr-col-9">
-          <Input
-            label="Précisions Front"
-            nativeInputProps={{
-              type: "text",
-              value: daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceDisponibilite_PrecisionsFront,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="dispo-front-prec">Précisions Front</label>
+            <input
+              className="fr-input"
+              type="text"
+              id="dispo-front-prec"
+              value={daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceDisponibilite_PrecisionsFront}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -55,19 +57,22 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       exigenceDisponibilite_PrecisionsFront: e.target.value,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
         <div className="fr-col-3">
-          <Input
-            label="Niveau Back (1-4)"
-            nativeInputProps={{
-              type: "number",
-              min: 1,
-              max: 4,
-              value: daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceDisponibilite_NiveauBack,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="dispo-back">Niveau Back (1-4)</label>
+            <input
+              className="fr-input"
+              type="number"
+              id="dispo-back"
+              min={1}
+              max={4}
+              value={daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceDisponibilite_NiveauBack}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -77,17 +82,20 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       exigenceDisponibilite_NiveauBack: parseInt(e.target.value) || 1,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
         <div className="fr-col-9">
-          <Input
-            label="Précisions Back"
-            nativeInputProps={{
-              type: "text",
-              value: daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceDisponibilite_PrecisionsBack,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="dispo-back-prec">Précisions Back</label>
+            <input
+              className="fr-input"
+              type="text"
+              id="dispo-back-prec"
+              value={daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceDisponibilite_PrecisionsBack}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -97,23 +105,26 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       exigenceDisponibilite_PrecisionsBack: e.target.value,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
       </div>
 
       <h4 className="fr-h4 fr-mt-4w">Intégrité</h4>
       <div className="fr-grid-row fr-grid-row--gutters">
         <div className="fr-col-3">
-          <Input
-            label="Niveau Front (1-4)"
-            nativeInputProps={{
-              type: "number",
-              min: 1,
-              max: 4,
-              value: daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceIntegrite_NiveauFront,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="integrite-front">Niveau Front (1-4)</label>
+            <input
+              className="fr-input"
+              type="number"
+              id="integrite-front"
+              min={1}
+              max={4}
+              value={daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceIntegrite_NiveauFront}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -123,17 +134,20 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       exigenceIntegrite_NiveauFront: parseInt(e.target.value) || 1,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
         <div className="fr-col-9">
-          <Input
-            label="Précisions Front"
-            nativeInputProps={{
-              type: "text",
-              value: daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceIntegrite_PrecisionsFront,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="integrite-front-prec">Précisions Front</label>
+            <input
+              className="fr-input"
+              type="text"
+              id="integrite-front-prec"
+              value={daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceIntegrite_PrecisionsFront}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -143,19 +157,22 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       exigenceIntegrite_PrecisionsFront: e.target.value,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
         <div className="fr-col-3">
-          <Input
-            label="Niveau Back (1-4)"
-            nativeInputProps={{
-              type: "number",
-              min: 1,
-              max: 4,
-              value: daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceIntegrite_NiveauBack,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="integrite-back">Niveau Back (1-4)</label>
+            <input
+              className="fr-input"
+              type="number"
+              id="integrite-back"
+              min={1}
+              max={4}
+              value={daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceIntegrite_NiveauBack}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -165,17 +182,20 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       exigenceIntegrite_NiveauBack: parseInt(e.target.value) || 1,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
         <div className="fr-col-9">
-          <Input
-            label="Précisions Back"
-            nativeInputProps={{
-              type: "text",
-              value: daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceIntegrite_PrecisionsBack,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="integrite-back-prec">Précisions Back</label>
+            <input
+              className="fr-input"
+              type="text"
+              id="integrite-back-prec"
+              value={daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceIntegrite_PrecisionsBack}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -185,23 +205,26 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       exigenceIntegrite_PrecisionsBack: e.target.value,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
       </div>
 
       <h4 className="fr-h4 fr-mt-4w">Confidentialité</h4>
       <div className="fr-grid-row fr-grid-row--gutters">
         <div className="fr-col-3">
-          <Input
-            label="Niveau Front (1-4)"
-            nativeInputProps={{
-              type: "number",
-              min: 1,
-              max: 4,
-              value: daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceConfidentialite_NiveauFront,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="confid-front">Niveau Front (1-4)</label>
+            <input
+              className="fr-input"
+              type="number"
+              id="confid-front"
+              min={1}
+              max={4}
+              value={daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceConfidentialite_NiveauFront}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -211,17 +234,20 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       exigenceConfidentialite_NiveauFront: parseInt(e.target.value) || 1,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
         <div className="fr-col-9">
-          <Input
-            label="Précisions Front"
-            nativeInputProps={{
-              type: "text",
-              value: daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceConfidentialite_PrecisionsFront,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="confid-front-prec">Précisions Front</label>
+            <input
+              className="fr-input"
+              type="text"
+              id="confid-front-prec"
+              value={daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceConfidentialite_PrecisionsFront}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -231,19 +257,22 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       exigenceConfidentialite_PrecisionsFront: e.target.value,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
         <div className="fr-col-3">
-          <Input
-            label="Niveau Back (1-4)"
-            nativeInputProps={{
-              type: "number",
-              min: 1,
-              max: 4,
-              value: daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceConfidentialite_NiveauBack,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="confid-back">Niveau Back (1-4)</label>
+            <input
+              className="fr-input"
+              type="number"
+              id="confid-back"
+              min={1}
+              max={4}
+              value={daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceConfidentialite_NiveauBack}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -253,17 +282,20 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       exigenceConfidentialite_NiveauBack: parseInt(e.target.value) || 1,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
         <div className="fr-col-9">
-          <Input
-            label="Précisions Back"
-            nativeInputProps={{
-              type: "text",
-              value: daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceConfidentialite_PrecisionsBack,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="confid-back-prec">Précisions Back</label>
+            <input
+              className="fr-input"
+              type="text"
+              id="confid-back-prec"
+              value={daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceConfidentialite_PrecisionsBack}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -273,23 +305,26 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       exigenceConfidentialite_PrecisionsBack: e.target.value,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
       </div>
 
       <h4 className="fr-h4 fr-mt-4w">Traçabilité</h4>
       <div className="fr-grid-row fr-grid-row--gutters">
         <div className="fr-col-3">
-          <Input
-            label="Niveau Front (1-4)"
-            nativeInputProps={{
-              type: "number",
-              min: 1,
-              max: 4,
-              value: daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceTracabilite_NiveauFront,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="trace-front">Niveau Front (1-4)</label>
+            <input
+              className="fr-input"
+              type="number"
+              id="trace-front"
+              min={1}
+              max={4}
+              value={daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceTracabilite_NiveauFront}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -299,17 +334,20 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       exigenceTracabilite_NiveauFront: parseInt(e.target.value) || 1,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
         <div className="fr-col-9">
-          <Input
-            label="Précisions Front"
-            nativeInputProps={{
-              type: "text",
-              value: daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceTracabilite_PrecisionsFront,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="trace-front-prec">Précisions Front</label>
+            <input
+              className="fr-input"
+              type="text"
+              id="trace-front-prec"
+              value={daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceTracabilite_PrecisionsFront}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -319,19 +357,22 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       exigenceTracabilite_PrecisionsFront: e.target.value,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
         <div className="fr-col-3">
-          <Input
-            label="Niveau Back (1-4)"
-            nativeInputProps={{
-              type: "number",
-              min: 1,
-              max: 4,
-              value: daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceTracabilite_NiveauBack,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="trace-back">Niveau Back (1-4)</label>
+            <input
+              className="fr-input"
+              type="number"
+              id="trace-back"
+              min={1}
+              max={4}
+              value={daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceTracabilite_NiveauBack}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -341,17 +382,20 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       exigenceTracabilite_NiveauBack: parseInt(e.target.value) || 1,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
         <div className="fr-col-9">
-          <Input
-            label="Précisions Back"
-            nativeInputProps={{
-              type: "text",
-              value: daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceTracabilite_PrecisionsBack,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="trace-back-prec">Précisions Back</label>
+            <input
+              className="fr-input"
+              type="text"
+              id="trace-back-prec"
+              value={daData.cadre4_ExigencesContextuelles.echelleDICT_EBIOS_1a4_GlobalSI.exigenceTracabilite_PrecisionsBack}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -361,9 +405,10 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       exigenceTracabilite_PrecisionsBack: e.target.value,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
       </div>
 
@@ -371,12 +416,14 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
       <h3 className="fr-h3 fr-mt-6w">Echelle IMPACT EBIOS – global SI</h3>
       <div className="fr-grid-row fr-grid-row--gutters">
         <div className="fr-col-6">
-          <Input
-            label="Domaine"
-            nativeInputProps={{
-              type: "text",
-              value: daData.cadre4_ExigencesContextuelles.echelleIMPACT_EBIOS_GlobalSI.domaine,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="impact-domaine">Domaine</label>
+            <input
+              className="fr-input"
+              type="text"
+              id="impact-domaine"
+              value={daData.cadre4_ExigencesContextuelles.echelleIMPACT_EBIOS_GlobalSI.domaine}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -386,17 +433,20 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       domaine: e.target.value,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
         <div className="fr-col-6">
-          <Input
-            label="Niveau"
-            nativeInputProps={{
-              type: "text",
-              value: daData.cadre4_ExigencesContextuelles.echelleIMPACT_EBIOS_GlobalSI.niveau,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="impact-niveau">Niveau</label>
+            <input
+              className="fr-input"
+              type="text"
+              id="impact-niveau"
+              value={daData.cadre4_ExigencesContextuelles.echelleIMPACT_EBIOS_GlobalSI.niveau}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -406,18 +456,20 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       niveau: e.target.value,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
         <div className="fr-col-12">
-          <Input
-            label="Description"
-            textArea
-            nativeTextAreaProps={{
-              rows: 3,
-              value: daData.cadre4_ExigencesContextuelles.echelleIMPACT_EBIOS_GlobalSI.description,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="impact-description">Description</label>
+            <textarea
+              className="fr-input"
+              id="impact-description"
+              rows={3}
+              value={daData.cadre4_ExigencesContextuelles.echelleIMPACT_EBIOS_GlobalSI.description}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -427,18 +479,20 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       description: e.target.value,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
         <div className="fr-col-12">
-          <Input
-            label="Contexte applicatif"
-            textArea
-            nativeTextAreaProps={{
-              rows: 3,
-              value: daData.cadre4_ExigencesContextuelles.echelleIMPACT_EBIOS_GlobalSI.contexteApplicatif,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="impact-contexte">Contexte applicatif</label>
+            <textarea
+              className="fr-input"
+              id="impact-contexte"
+              rows={3}
+              value={daData.cadre4_ExigencesContextuelles.echelleIMPACT_EBIOS_GlobalSI.contexteApplicatif}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -448,9 +502,10 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       contexteApplicatif: e.target.value,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
       </div>
 
@@ -459,95 +514,126 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
       <p className="fr-text--sm">
         Les exigences de preuves se traduisent sur : la traçabilité des actions, l'authentification des utilisateurs, l'imputabilité du responsable de l'action
       </p>
-      <Table
-        headers={["Fonctionnalité", "Description Exigence Preuve", "Actions"]}
-        data={daData.cadre4_ExigencesContextuelles.exigencePREUVE_ParFonctionnalite.map((item, index) => [
-          <Input
-            key={`fonc-${index}`}
-            nativeInputProps={{
-              type: "text",
-              value: item.fonctionnalite,
-              onChange: (e) => {
-                const newItems = [...daData.cadre4_ExigencesContextuelles.exigencePREUVE_ParFonctionnalite];
-                newItems[index].fonctionnalite = e.target.value;
-                setDAData({
-                  ...daData,
-                  cadre4_ExigencesContextuelles: {
-                    ...daData.cadre4_ExigencesContextuelles,
-                    exigencePREUVE_ParFonctionnalite: newItems,
-                  },
-                });
-              },
-            }}
-          />,
-          <Input
-            key={`desc-${index}`}
-            nativeInputProps={{
-              type: "text",
-              value: item.descriptionExigencePreuve,
-              onChange: (e) => {
-                const newItems = [...daData.cadre4_ExigencesContextuelles.exigencePREUVE_ParFonctionnalite];
-                newItems[index].descriptionExigencePreuve = e.target.value;
-                setDAData({
-                  ...daData,
-                  cadre4_ExigencesContextuelles: {
-                    ...daData.cadre4_ExigencesContextuelles,
-                    exigencePREUVE_ParFonctionnalite: newItems,
-                  },
-                });
-              },
-            }}
-          />,
-          <Button
-            key={`btn-${index}`}
-            priority="secondary"
-            size="small"
-            onClick={() => {
-              const newItems = daData.cadre4_ExigencesContextuelles.exigencePREUVE_ParFonctionnalite.filter(
-                (_, i) => i !== index
-              );
-              setDAData({
-                ...daData,
-                cadre4_ExigencesContextuelles: {
-                  ...daData.cadre4_ExigencesContextuelles,
-                  exigencePREUVE_ParFonctionnalite: newItems,
-                },
-              });
-            }}
-          >
-            Supprimer
-          </Button>
-        ])}
-      />
-      <Button
-        size="small"
-        className="fr-mt-2w"
-        onClick={() => {
-          setDAData({
-            ...daData,
-            cadre4_ExigencesContextuelles: {
-              ...daData.cadre4_ExigencesContextuelles,
-              exigencePREUVE_ParFonctionnalite: [
-                ...daData.cadre4_ExigencesContextuelles.exigencePREUVE_ParFonctionnalite,
-                { fonctionnalite: "", descriptionExigencePreuve: "" },
-              ],
-            },
-          });
-        }}
-      >
-        + Ajouter une exigence preuve
-      </Button>
+      <div className="fr-table fr-table--no-caption fr-table--bordered">
+        <div className="fr-table__wrapper">
+          <div className="fr-table__container">
+            <div className="fr-table__content">
+              <table>
+                <caption>Exigence PREUVE par fonctionnalité</caption>
+                <thead>
+                  <tr>
+                    <th scope="col" className="fr-col--lg">Fonctionnalité</th>
+                    <th scope="col" className="fr-col--lg">Description Exigence Preuve</th>
+                    <th scope="col" className="fr-col--xs" style={{ textAlign: 'right' }}></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {daData.cadre4_ExigencesContextuelles.exigencePREUVE_ParFonctionnalite.map((item, index) => (
+                    <tr key={index}>
+                      <td>
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={item.fonctionnalite}
+                          onChange={(e) => {
+                            const newItems = [...daData.cadre4_ExigencesContextuelles.exigencePREUVE_ParFonctionnalite];
+                            newItems[index].fonctionnalite = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre4_ExigencesContextuelles: {
+                                ...daData.cadre4_ExigencesContextuelles,
+                                exigencePREUVE_ParFonctionnalite: newItems,
+                              },
+                            });
+                          }}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={item.descriptionExigencePreuve}
+                          onChange={(e) => {
+                            const newItems = [...daData.cadre4_ExigencesContextuelles.exigencePREUVE_ParFonctionnalite];
+                            newItems[index].descriptionExigencePreuve = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre4_ExigencesContextuelles: {
+                                ...daData.cadre4_ExigencesContextuelles,
+                                exigencePREUVE_ParFonctionnalite: newItems,
+                              },
+                            });
+                          }}
+                        />
+                      </td>
+                      <td style={{ textAlign: 'right' }}>
+                        <button
+                          className="fr-btn fr-btn--sm fr-btn--secondary"
+                          type="button"
+                          onClick={() => {
+                            const newItems = daData.cadre4_ExigencesContextuelles.exigencePREUVE_ParFonctionnalite.filter(
+                              (_, i) => i !== index
+                            );
+                            setDAData({
+                              ...daData,
+                              cadre4_ExigencesContextuelles: {
+                                ...daData.cadre4_ExigencesContextuelles,
+                                exigencePREUVE_ParFonctionnalite: newItems,
+                              },
+                            });
+                          }}
+                        >
+                          Supprimer
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div className="fr-table__footer">
+          <div className="fr-table__footer--end">
+            <ul className="fr-btns-group fr-btns-group--right fr-btns-group--inline-reverse fr-btns-group--inline-md">
+              <li>
+                <button
+                  className="fr-btn fr-btn--secondary"
+                  type="button"
+                  onClick={() => {
+                    setDAData({
+                      ...daData,
+                      cadre4_ExigencesContextuelles: {
+                        ...daData.cadre4_ExigencesContextuelles,
+                        exigencePREUVE_ParFonctionnalite: [
+                          ...daData.cadre4_ExigencesContextuelles.exigencePREUVE_ParFonctionnalite,
+                          { fonctionnalite: "", descriptionExigencePreuve: "" },
+                        ],
+                      },
+                    });
+                  }}
+                >
+                  <span className="fr-icon-add-line" aria-hidden="true"></span>
+                  Ajouter une exigence preuve
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
       {/* Garantie de service */}
       <h3 className="fr-h3 fr-mt-6w">Garantie de service</h3>
       <div className="fr-grid-row fr-grid-row--gutters">
         <div className="fr-col-6">
-          <Input
-            label="Plan de Continuité d'Activité (PCA)"
-            nativeInputProps={{
-              type: "text",
-              value: daData.cadre4_ExigencesContextuelles.garantieDeService.planDeContinuiteActivite_PCA,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="pca">Plan de Continuité d&apos;Activité (PCA)</label>
+            <input
+              className="fr-input"
+              type="text"
+              id="pca"
+              value={daData.cadre4_ExigencesContextuelles.garantieDeService.planDeContinuiteActivite_PCA}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -557,17 +643,20 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       planDeContinuiteActivite_PCA: e.target.value,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
         <div className="fr-col-6">
-          <Input
-            label="Plan de Reprise d'Activité (PRA)"
-            nativeInputProps={{
-              type: "text",
-              value: daData.cadre4_ExigencesContextuelles.garantieDeService.planDeRepriseActivite_PRA,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="pra">Plan de Reprise d&apos;Activité (PRA)</label>
+            <input
+              className="fr-input"
+              type="text"
+              id="pra"
+              value={daData.cadre4_ExigencesContextuelles.garantieDeService.planDeRepriseActivite_PRA}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -577,17 +666,20 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       planDeRepriseActivite_PRA: e.target.value,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
         <div className="fr-col-6">
-          <Input
-            label="Perte de Données Maximale Admissible (PDMA)"
-            nativeInputProps={{
-              type: "text",
-              value: daData.cadre4_ExigencesContextuelles.garantieDeService.perteDeDonneesNonAdmissible,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="pdma">Perte de Données Maximale Admissible (PDMA)</label>
+            <input
+              className="fr-input"
+              type="text"
+              id="pdma"
+              value={daData.cadre4_ExigencesContextuelles.garantieDeService.perteDeDonneesNonAdmissible}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -597,17 +689,20 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       perteDeDonneesNonAdmissible: e.target.value,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
         <div className="fr-col-6">
-          <Input
-            label="Durée Maximale d'Interruption Admissible (DMIA)"
-            nativeInputProps={{
-              type: "text",
-              value: daData.cadre4_ExigencesContextuelles.garantieDeService.dureMaximaleInterruptionAdmissible_DMIA,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="dmia">Durée Maximale d&apos;Interruption Admissible (DMIA)</label>
+            <input
+              className="fr-input"
+              type="text"
+              id="dmia"
+              value={daData.cadre4_ExigencesContextuelles.garantieDeService.dureMaximaleInterruptionAdmissible_DMIA}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -617,18 +712,20 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       dureMaximaleInterruptionAdmissible_DMIA: e.target.value,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
         <div className="fr-col-12">
-          <Input
-            label="Impact Métier en cas de perte de données"
-            textArea
-            nativeTextAreaProps={{
-              rows: 3,
-              value: daData.cadre4_ExigencesContextuelles.garantieDeService.impactMetierEnCasDePerteDeDonnees,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="impact-perte">Impact Métier en cas de perte de données</label>
+            <textarea
+              className="fr-input"
+              id="impact-perte"
+              rows={3}
+              value={daData.cadre4_ExigencesContextuelles.garantieDeService.impactMetierEnCasDePerteDeDonnees}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -638,18 +735,20 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       impactMetierEnCasDePerteDeDonnees: e.target.value,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
         <div className="fr-col-12">
-          <Input
-            label="Impact Métier en cas de défaillance service"
-            textArea
-            nativeTextAreaProps={{
-              rows: 3,
-              value: daData.cadre4_ExigencesContextuelles.garantieDeService.impactMetierEnCasDeDefaillanceService,
-              onChange: (e) =>
+          <div className="fr-input-group">
+            <label className="fr-label" htmlFor="impact-defaillance">Impact Métier en cas de défaillance service</label>
+            <textarea
+              className="fr-input"
+              id="impact-defaillance"
+              rows={3}
+              value={daData.cadre4_ExigencesContextuelles.garantieDeService.impactMetierEnCasDeDefaillanceService}
+              onChange={(e) =>
                 setDAData({
                   ...daData,
                   cadre4_ExigencesContextuelles: {
@@ -659,9 +758,10 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                       impactMetierEnCasDeDefaillanceService: e.target.value,
                     },
                   },
-                }),
-            }}
-          />
+                })
+              }
+            />
+          </div>
         </div>
       </div>
 
@@ -670,356 +770,413 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
       <p className="fr-text--sm">
         NUC = Nombre Utilisateurs Connectés | NRS = Nombre Requêtes Simultanées
       </p>
-      <Table
-        headers={["Période", "Date Début", "Date Fin", "NUC", "NRS", "Actions"]}
-        data={daData.cadre4_ExigencesContextuelles.periodesApplicatives.map((item, index) => [
-          <Input
-            key={`periode-${index}`}
-            nativeInputProps={{
-              type: "text",
-              placeholder: "Standard/Critique/Charge",
-              value: item.periode,
-              onChange: (e) => {
-                const newItems = [...daData.cadre4_ExigencesContextuelles.periodesApplicatives];
-                newItems[index].periode = e.target.value;
-                setDAData({
-                  ...daData,
-                  cadre4_ExigencesContextuelles: {
-                    ...daData.cadre4_ExigencesContextuelles,
-                    periodesApplicatives: newItems,
-                  },
-                });
-              },
-            }}
-          />,
-          <Input
-            key={`dateDebut-${index}`}
-            nativeInputProps={{
-              type: "date",
-              value: item.dateDebut,
-              onChange: (e) => {
-                const newItems = [...daData.cadre4_ExigencesContextuelles.periodesApplicatives];
-                newItems[index].dateDebut = e.target.value;
-                setDAData({
-                  ...daData,
-                  cadre4_ExigencesContextuelles: {
-                    ...daData.cadre4_ExigencesContextuelles,
-                    periodesApplicatives: newItems,
-                  },
-                });
-              },
-            }}
-          />,
-          <Input
-            key={`dateFin-${index}`}
-            nativeInputProps={{
-              type: "date",
-              value: item.dateFin,
-              onChange: (e) => {
-                const newItems = [...daData.cadre4_ExigencesContextuelles.periodesApplicatives];
-                newItems[index].dateFin = e.target.value;
-                setDAData({
-                  ...daData,
-                  cadre4_ExigencesContextuelles: {
-                    ...daData.cadre4_ExigencesContextuelles,
-                    periodesApplicatives: newItems,
-                  },
-                });
-              },
-            }}
-          />,
-          <Input
-            key={`nuc-${index}`}
-            nativeInputProps={{
-              type: "text",
-              value: item.nuc_NombreUtilisateursConnectes,
-              onChange: (e) => {
-                const newItems = [...daData.cadre4_ExigencesContextuelles.periodesApplicatives];
-                newItems[index].nuc_NombreUtilisateursConnectes = e.target.value;
-                setDAData({
-                  ...daData,
-                  cadre4_ExigencesContextuelles: {
-                    ...daData.cadre4_ExigencesContextuelles,
-                    periodesApplicatives: newItems,
-                  },
-                });
-              },
-            }}
-          />,
-          <Input
-            key={`nrs-${index}`}
-            nativeInputProps={{
-              type: "text",
-              value: item.nrs_NombreRequetesSimultaneesParSec,
-              onChange: (e) => {
-                const newItems = [...daData.cadre4_ExigencesContextuelles.periodesApplicatives];
-                newItems[index].nrs_NombreRequetesSimultaneesParSec = e.target.value;
-                setDAData({
-                  ...daData,
-                  cadre4_ExigencesContextuelles: {
-                    ...daData.cadre4_ExigencesContextuelles,
-                    periodesApplicatives: newItems,
-                  },
-                });
-              },
-            }}
-          />,
-          <Button
-            key={`btn-${index}`}
-            priority="secondary"
-            size="small"
-            onClick={() => {
-              const newItems = daData.cadre4_ExigencesContextuelles.periodesApplicatives.filter(
-                (_, i) => i !== index
-              );
-              setDAData({
-                ...daData,
-                cadre4_ExigencesContextuelles: {
-                  ...daData.cadre4_ExigencesContextuelles,
-                  periodesApplicatives: newItems,
-                },
-              });
-            }}
-          >
-            Supprimer
-          </Button>
-        ])}
-      />
-      <Button
-        size="small"
-        className="fr-mt-2w"
-        onClick={() => {
-          setDAData({
-            ...daData,
-            cadre4_ExigencesContextuelles: {
-              ...daData.cadre4_ExigencesContextuelles,
-              periodesApplicatives: [
-                ...daData.cadre4_ExigencesContextuelles.periodesApplicatives,
-                {
-                  periode: "",
-                  dateDebut: "",
-                  dateFin: "",
-                  nuc_NombreUtilisateursConnectes: "",
-                  nrs_NombreRequetesSimultaneesParSec: "",
-                },
-              ],
-            },
-          });
-        }}
-      >
-        + Ajouter une période
-      </Button>
+      <div className="fr-table fr-table--no-caption fr-table--bordered">
+        <div className="fr-table__wrapper">
+          <div className="fr-table__container">
+            <div className="fr-table__content">
+              <table>
+                <caption>Périodes applicatives</caption>
+                <thead>
+                  <tr>
+                    <th scope="col" className="fr-col--md">Période</th>
+                    <th scope="col" className="fr-col--md">Date Début</th>
+                    <th scope="col" className="fr-col--md">Date Fin</th>
+                    <th scope="col" className="fr-col--sm">NUC</th>
+                    <th scope="col" className="fr-col--sm">NRS</th>
+                    <th scope="col" className="fr-col--xs" style={{ textAlign: 'right' }}></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {daData.cadre4_ExigencesContextuelles.periodesApplicatives.map((item, index) => (
+                    <tr key={index}>
+                      <td>
+                        <input
+                          className="fr-input"
+                          type="text"
+                          placeholder="Standard/Critique/Charge"
+                          value={item.periode}
+                          onChange={(e) => {
+                            const newItems = [...daData.cadre4_ExigencesContextuelles.periodesApplicatives];
+                            newItems[index].periode = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre4_ExigencesContextuelles: {
+                                ...daData.cadre4_ExigencesContextuelles,
+                                periodesApplicatives: newItems,
+                              },
+                            });
+                          }}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          className="fr-input"
+                          type="date"
+                          value={item.dateDebut}
+                          onChange={(e) => {
+                            const newItems = [...daData.cadre4_ExigencesContextuelles.periodesApplicatives];
+                            newItems[index].dateDebut = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre4_ExigencesContextuelles: {
+                                ...daData.cadre4_ExigencesContextuelles,
+                                periodesApplicatives: newItems,
+                              },
+                            });
+                          }}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          className="fr-input"
+                          type="date"
+                          value={item.dateFin}
+                          onChange={(e) => {
+                            const newItems = [...daData.cadre4_ExigencesContextuelles.periodesApplicatives];
+                            newItems[index].dateFin = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre4_ExigencesContextuelles: {
+                                ...daData.cadre4_ExigencesContextuelles,
+                                periodesApplicatives: newItems,
+                              },
+                            });
+                          }}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={item.nuc_NombreUtilisateursConnectes}
+                          onChange={(e) => {
+                            const newItems = [...daData.cadre4_ExigencesContextuelles.periodesApplicatives];
+                            newItems[index].nuc_NombreUtilisateursConnectes = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre4_ExigencesContextuelles: {
+                                ...daData.cadre4_ExigencesContextuelles,
+                                periodesApplicatives: newItems,
+                              },
+                            });
+                          }}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={item.nrs_NombreRequetesSimultaneesParSec}
+                          onChange={(e) => {
+                            const newItems = [...daData.cadre4_ExigencesContextuelles.periodesApplicatives];
+                            newItems[index].nrs_NombreRequetesSimultaneesParSec = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre4_ExigencesContextuelles: {
+                                ...daData.cadre4_ExigencesContextuelles,
+                                periodesApplicatives: newItems,
+                              },
+                            });
+                          }}
+                        />
+                      </td>
+                      <td style={{ textAlign: 'right' }}>
+                        <button
+                          className="fr-btn fr-btn--sm fr-btn--secondary"
+                          type="button"
+                          onClick={() => {
+                            const newItems = daData.cadre4_ExigencesContextuelles.periodesApplicatives.filter(
+                              (_, i) => i !== index
+                            );
+                            setDAData({
+                              ...daData,
+                              cadre4_ExigencesContextuelles: {
+                                ...daData.cadre4_ExigencesContextuelles,
+                                periodesApplicatives: newItems,
+                              },
+                            });
+                          }}
+                        >
+                          Supprimer
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div className="fr-table__footer">
+          <div className="fr-table__footer--end">
+            <ul className="fr-btns-group fr-btns-group--right fr-btns-group--inline-reverse fr-btns-group--inline-md">
+              <li>
+                <button
+                  className="fr-btn fr-btn--secondary"
+                  type="button"
+                  onClick={() => {
+                    setDAData({
+                      ...daData,
+                      cadre4_ExigencesContextuelles: {
+                        ...daData.cadre4_ExigencesContextuelles,
+                        periodesApplicatives: [
+                          ...daData.cadre4_ExigencesContextuelles.periodesApplicatives,
+                          {
+                            periode: "",
+                            dateDebut: "",
+                            dateFin: "",
+                            nuc_NombreUtilisateursConnectes: "",
+                            nrs_NombreRequetesSimultaneesParSec: "",
+                          },
+                        ],
+                      },
+                    });
+                  }}
+                >
+                  <span className="fr-icon-add-line" aria-hidden="true"></span>
+                  Ajouter une période
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
       {/* Temps de réponse */}
       <h3 className="fr-h3 fr-mt-6w">Temps de réponse</h3>
-      <Table
-        headers={["Type d'affichage/traitement", "Période Standard (s)", "Période de charge (s)"]}
-        data={[
-          [
-            "Affichage Page d'accueil",
-            <Input
-              key="accueil-std"
-              nativeInputProps={{
-                type: "text",
-                value: daData.cadre4_ExigencesContextuelles.tempsDeReponse.affichagePageAccueil_PeriodeStandard,
-                onChange: (e) =>
-                  setDAData({
-                    ...daData,
-                    cadre4_ExigencesContextuelles: {
-                      ...daData.cadre4_ExigencesContextuelles,
-                      tempsDeReponse: {
-                        ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
-                        affichagePageAccueil_PeriodeStandard: e.target.value,
-                      },
-                    },
-                  }),
-              }}
-            />,
-            <Input
-              key="accueil-charge"
-              nativeInputProps={{
-                type: "text",
-                value: daData.cadre4_ExigencesContextuelles.tempsDeReponse.affichagePageAccueil_PeriodeDeCharge,
-                onChange: (e) =>
-                  setDAData({
-                    ...daData,
-                    cadre4_ExigencesContextuelles: {
-                      ...daData.cadre4_ExigencesContextuelles,
-                      tempsDeReponse: {
-                        ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
-                        affichagePageAccueil_PeriodeDeCharge: e.target.value,
-                      },
-                    },
-                  }),
-              }}
-            />
-          ],
-          [
-            "Affichage Page simple",
-            <Input
-              key="simple-std"
-              nativeInputProps={{
-                type: "text",
-                value: daData.cadre4_ExigencesContextuelles.tempsDeReponse.affichagePageSimple_PeriodeStandard,
-                onChange: (e) =>
-                  setDAData({
-                    ...daData,
-                    cadre4_ExigencesContextuelles: {
-                      ...daData.cadre4_ExigencesContextuelles,
-                      tempsDeReponse: {
-                        ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
-                        affichagePageSimple_PeriodeStandard: e.target.value,
-                      },
-                    },
-                  }),
-              }}
-            />,
-            <Input
-              key="simple-charge"
-              nativeInputProps={{
-                type: "text",
-                value: daData.cadre4_ExigencesContextuelles.tempsDeReponse.affichagePageSimple_PeriodeDeCharge,
-                onChange: (e) =>
-                  setDAData({
-                    ...daData,
-                    cadre4_ExigencesContextuelles: {
-                      ...daData.cadre4_ExigencesContextuelles,
-                      tempsDeReponse: {
-                        ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
-                        affichagePageSimple_PeriodeDeCharge: e.target.value,
-                      },
-                    },
-                  }),
-              }}
-            />
-          ],
-          [
-            "Affichage Page complexe",
-            <Input
-              key="complexe-std"
-              nativeInputProps={{
-                type: "text",
-                value: daData.cadre4_ExigencesContextuelles.tempsDeReponse.affichagePageComplexe_PeriodeStandard,
-                onChange: (e) =>
-                  setDAData({
-                    ...daData,
-                    cadre4_ExigencesContextuelles: {
-                      ...daData.cadre4_ExigencesContextuelles,
-                      tempsDeReponse: {
-                        ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
-                        affichagePageComplexe_PeriodeStandard: e.target.value,
-                      },
-                    },
-                  }),
-              }}
-            />,
-            <Input
-              key="complexe-charge"
-              nativeInputProps={{
-                type: "text",
-                value: daData.cadre4_ExigencesContextuelles.tempsDeReponse.affichagePageComplexe_PeriodeDeCharge,
-                onChange: (e) =>
-                  setDAData({
-                    ...daData,
-                    cadre4_ExigencesContextuelles: {
-                      ...daData.cadre4_ExigencesContextuelles,
-                      tempsDeReponse: {
-                        ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
-                        affichagePageComplexe_PeriodeDeCharge: e.target.value,
-                      },
-                    },
-                  }),
-              }}
-            />
-          ],
-          [
-            "Traitement requête simple",
-            <Input
-              key="req-simple-std"
-              nativeInputProps={{
-                type: "text",
-                value: daData.cadre4_ExigencesContextuelles.tempsDeReponse.traitementRequeteSimple_PeriodeStandard,
-                onChange: (e) =>
-                  setDAData({
-                    ...daData,
-                    cadre4_ExigencesContextuelles: {
-                      ...daData.cadre4_ExigencesContextuelles,
-                      tempsDeReponse: {
-                        ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
-                        traitementRequeteSimple_PeriodeStandard: e.target.value,
-                      },
-                    },
-                  }),
-              }}
-            />,
-            <Input
-              key="req-simple-charge"
-              nativeInputProps={{
-                type: "text",
-                value: daData.cadre4_ExigencesContextuelles.tempsDeReponse.traitementRequeteSimple_PeriodeDeCharge,
-                onChange: (e) =>
-                  setDAData({
-                    ...daData,
-                    cadre4_ExigencesContextuelles: {
-                      ...daData.cadre4_ExigencesContextuelles,
-                      tempsDeReponse: {
-                        ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
-                        traitementRequeteSimple_PeriodeDeCharge: e.target.value,
-                      },
-                    },
-                  }),
-              }}
-            />
-          ],
-          [
-            "Traitement requête complexe",
-            <Input
-              key="req-complexe-std"
-              nativeInputProps={{
-                type: "text",
-                value: daData.cadre4_ExigencesContextuelles.tempsDeReponse.traitementRequeteComplexe_PeriodeStandard,
-                onChange: (e) =>
-                  setDAData({
-                    ...daData,
-                    cadre4_ExigencesContextuelles: {
-                      ...daData.cadre4_ExigencesContextuelles,
-                      tempsDeReponse: {
-                        ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
-                        traitementRequeteComplexe_PeriodeStandard: e.target.value,
-                      },
-                    },
-                  }),
-              }}
-            />,
-            <Input
-              key="req-complexe-charge"
-              nativeInputProps={{
-                type: "text",
-                value: daData.cadre4_ExigencesContextuelles.tempsDeReponse.traitementRequeteComplexe_PeriodeDeCharge,
-                onChange: (e) =>
-                  setDAData({
-                    ...daData,
-                    cadre4_ExigencesContextuelles: {
-                      ...daData.cadre4_ExigencesContextuelles,
-                      tempsDeReponse: {
-                        ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
-                        traitementRequeteComplexe_PeriodeDeCharge: e.target.value,
-                      },
-                    },
-                  }),
-              }}
-            />
-          ]
-        ]}
-      />
-      <Input
-        label="Précisions"
-        textArea
-        className="fr-mt-2w"
-        nativeTextAreaProps={{
-          rows: 3,
-          value: daData.cadre4_ExigencesContextuelles.tempsDeReponse.precisions,
-          onChange: (e) =>
+      <div className="fr-table fr-table--no-caption fr-table--bordered">
+        <div className="fr-table__wrapper">
+          <div className="fr-table__container">
+            <div className="fr-table__content">
+              <table>
+                <caption>Temps de réponse</caption>
+                <thead>
+                  <tr>
+                    <th scope="col" className="fr-col--md">Type d&apos;affichage/traitement</th>
+                    <th scope="col" className="fr-col--md">Période Standard (s)</th>
+                    <th scope="col" className="fr-col--md">Période de charge (s)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Affichage Page d&apos;accueil</td>
+                    <td>
+                      <input
+                        className="fr-input"
+                        type="text"
+                        value={daData.cadre4_ExigencesContextuelles.tempsDeReponse.affichagePageAccueil_PeriodeStandard}
+                        onChange={(e) =>
+                          setDAData({
+                            ...daData,
+                            cadre4_ExigencesContextuelles: {
+                              ...daData.cadre4_ExigencesContextuelles,
+                              tempsDeReponse: {
+                                ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
+                                affichagePageAccueil_PeriodeStandard: e.target.value,
+                              },
+                            },
+                          })
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        className="fr-input"
+                        type="text"
+                        value={daData.cadre4_ExigencesContextuelles.tempsDeReponse.affichagePageAccueil_PeriodeDeCharge}
+                        onChange={(e) =>
+                          setDAData({
+                            ...daData,
+                            cadre4_ExigencesContextuelles: {
+                              ...daData.cadre4_ExigencesContextuelles,
+                              tempsDeReponse: {
+                                ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
+                                affichagePageAccueil_PeriodeDeCharge: e.target.value,
+                              },
+                            },
+                          })
+                        }
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Affichage Page simple</td>
+                    <td>
+                      <input
+                        className="fr-input"
+                        type="text"
+                        value={daData.cadre4_ExigencesContextuelles.tempsDeReponse.affichagePageSimple_PeriodeStandard}
+                        onChange={(e) =>
+                          setDAData({
+                            ...daData,
+                            cadre4_ExigencesContextuelles: {
+                              ...daData.cadre4_ExigencesContextuelles,
+                              tempsDeReponse: {
+                                ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
+                                affichagePageSimple_PeriodeStandard: e.target.value,
+                              },
+                            },
+                          })
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        className="fr-input"
+                        type="text"
+                        value={daData.cadre4_ExigencesContextuelles.tempsDeReponse.affichagePageSimple_PeriodeDeCharge}
+                        onChange={(e) =>
+                          setDAData({
+                            ...daData,
+                            cadre4_ExigencesContextuelles: {
+                              ...daData.cadre4_ExigencesContextuelles,
+                              tempsDeReponse: {
+                                ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
+                                affichagePageSimple_PeriodeDeCharge: e.target.value,
+                              },
+                            },
+                          })
+                        }
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Affichage Page complexe</td>
+                    <td>
+                      <input
+                        className="fr-input"
+                        type="text"
+                        value={daData.cadre4_ExigencesContextuelles.tempsDeReponse.affichagePageComplexe_PeriodeStandard}
+                        onChange={(e) =>
+                          setDAData({
+                            ...daData,
+                            cadre4_ExigencesContextuelles: {
+                              ...daData.cadre4_ExigencesContextuelles,
+                              tempsDeReponse: {
+                                ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
+                                affichagePageComplexe_PeriodeStandard: e.target.value,
+                              },
+                            },
+                          })
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        className="fr-input"
+                        type="text"
+                        value={daData.cadre4_ExigencesContextuelles.tempsDeReponse.affichagePageComplexe_PeriodeDeCharge}
+                        onChange={(e) =>
+                          setDAData({
+                            ...daData,
+                            cadre4_ExigencesContextuelles: {
+                              ...daData.cadre4_ExigencesContextuelles,
+                              tempsDeReponse: {
+                                ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
+                                affichagePageComplexe_PeriodeDeCharge: e.target.value,
+                              },
+                            },
+                          })
+                        }
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Traitement requête simple</td>
+                    <td>
+                      <input
+                        className="fr-input"
+                        type="text"
+                        value={daData.cadre4_ExigencesContextuelles.tempsDeReponse.traitementRequeteSimple_PeriodeStandard}
+                        onChange={(e) =>
+                          setDAData({
+                            ...daData,
+                            cadre4_ExigencesContextuelles: {
+                              ...daData.cadre4_ExigencesContextuelles,
+                              tempsDeReponse: {
+                                ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
+                                traitementRequeteSimple_PeriodeStandard: e.target.value,
+                              },
+                            },
+                          })
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        className="fr-input"
+                        type="text"
+                        value={daData.cadre4_ExigencesContextuelles.tempsDeReponse.traitementRequeteSimple_PeriodeDeCharge}
+                        onChange={(e) =>
+                          setDAData({
+                            ...daData,
+                            cadre4_ExigencesContextuelles: {
+                              ...daData.cadre4_ExigencesContextuelles,
+                              tempsDeReponse: {
+                                ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
+                                traitementRequeteSimple_PeriodeDeCharge: e.target.value,
+                              },
+                            },
+                          })
+                        }
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Traitement requête complexe</td>
+                    <td>
+                      <input
+                        className="fr-input"
+                        type="text"
+                        value={daData.cadre4_ExigencesContextuelles.tempsDeReponse.traitementRequeteComplexe_PeriodeStandard}
+                        onChange={(e) =>
+                          setDAData({
+                            ...daData,
+                            cadre4_ExigencesContextuelles: {
+                              ...daData.cadre4_ExigencesContextuelles,
+                              tempsDeReponse: {
+                                ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
+                                traitementRequeteComplexe_PeriodeStandard: e.target.value,
+                              },
+                            },
+                          })
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        className="fr-input"
+                        type="text"
+                        value={daData.cadre4_ExigencesContextuelles.tempsDeReponse.traitementRequeteComplexe_PeriodeDeCharge}
+                        onChange={(e) =>
+                          setDAData({
+                            ...daData,
+                            cadre4_ExigencesContextuelles: {
+                              ...daData.cadre4_ExigencesContextuelles,
+                              tempsDeReponse: {
+                                ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
+                                traitementRequeteComplexe_PeriodeDeCharge: e.target.value,
+                              },
+                            },
+                          })
+                        }
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="fr-input-group fr-mt-2w">
+        <label className="fr-label" htmlFor="temps-precisions">Précisions</label>
+        <textarea
+          className="fr-input"
+          id="temps-precisions"
+          rows={3}
+          value={daData.cadre4_ExigencesContextuelles.tempsDeReponse.precisions}
+          onChange={(e) =>
             setDAData({
               ...daData,
               cadre4_ExigencesContextuelles: {
@@ -1029,150 +1186,183 @@ export default function Cadre4ExigencesContextuelles({ daData, setDAData }: Cadr
                   precisions: e.target.value,
                 },
               },
-            }),
-        }}
-      />
+            })
+          }
+        />
+      </div>
 
       {/* Traitements automatisés */}
       <h3 className="fr-h3 fr-mt-6w">Traitements automatisés</h3>
-      <Table
-        headers={["Batch(s) applicatifs", "Plage", "Fréquence", "Impact Métier", "Impact Charge", "Actions"]}
-        data={daData.cadre4_ExigencesContextuelles.traitementsAutomatises.map((item, index) => [
-          <Input
-            key={`batch-${index}`}
-            nativeInputProps={{
-              type: "text",
-              value: item.batchsApplicatifs,
-              onChange: (e) => {
-                const newItems = [...daData.cadre4_ExigencesContextuelles.traitementsAutomatises];
-                newItems[index].batchsApplicatifs = e.target.value;
-                setDAData({
-                  ...daData,
-                  cadre4_ExigencesContextuelles: {
-                    ...daData.cadre4_ExigencesContextuelles,
-                    traitementsAutomatises: newItems,
-                  },
-                });
-              },
-            }}
-          />,
-          <Input
-            key={`plage-${index}`}
-            nativeInputProps={{
-              type: "text",
-              value: item.plage,
-              onChange: (e) => {
-                const newItems = [...daData.cadre4_ExigencesContextuelles.traitementsAutomatises];
-                newItems[index].plage = e.target.value;
-                setDAData({
-                  ...daData,
-                  cadre4_ExigencesContextuelles: {
-                    ...daData.cadre4_ExigencesContextuelles,
-                    traitementsAutomatises: newItems,
-                  },
-                });
-              },
-            }}
-          />,
-          <Input
-            key={`freq-${index}`}
-            nativeInputProps={{
-              type: "text",
-              value: item.frequence,
-              onChange: (e) => {
-                const newItems = [...daData.cadre4_ExigencesContextuelles.traitementsAutomatises];
-                newItems[index].frequence = e.target.value;
-                setDAData({
-                  ...daData,
-                  cadre4_ExigencesContextuelles: {
-                    ...daData.cadre4_ExigencesContextuelles,
-                    traitementsAutomatises: newItems,
-                  },
-                });
-              },
-            }}
-          />,
-          <Input
-            key={`metier-${index}`}
-            nativeInputProps={{
-              type: "text",
-              value: item.impactMetier,
-              onChange: (e) => {
-                const newItems = [...daData.cadre4_ExigencesContextuelles.traitementsAutomatises];
-                newItems[index].impactMetier = e.target.value;
-                setDAData({
-                  ...daData,
-                  cadre4_ExigencesContextuelles: {
-                    ...daData.cadre4_ExigencesContextuelles,
-                    traitementsAutomatises: newItems,
-                  },
-                });
-              },
-            }}
-          />,
-          <Input
-            key={`charge-${index}`}
-            nativeInputProps={{
-              type: "text",
-              value: item.impactCharge,
-              onChange: (e) => {
-                const newItems = [...daData.cadre4_ExigencesContextuelles.traitementsAutomatises];
-                newItems[index].impactCharge = e.target.value;
-                setDAData({
-                  ...daData,
-                  cadre4_ExigencesContextuelles: {
-                    ...daData.cadre4_ExigencesContextuelles,
-                    traitementsAutomatises: newItems,
-                  },
-                });
-              },
-            }}
-          />,
-          <Button
-            key={`btn-${index}`}
-            priority="secondary"
-            size="small"
-            onClick={() => {
-              const newItems = daData.cadre4_ExigencesContextuelles.traitementsAutomatises.filter(
-                (_, i) => i !== index
-              );
-              setDAData({
-                ...daData,
-                cadre4_ExigencesContextuelles: {
-                  ...daData.cadre4_ExigencesContextuelles,
-                  traitementsAutomatises: newItems,
-                },
-              });
-            }}
-          >
-            Supprimer
-          </Button>
-        ])}
-      />
-      <Button
-        size="small"
-        className="fr-mt-2w"
-        onClick={() => {
-          setDAData({
-            ...daData,
-            cadre4_ExigencesContextuelles: {
-              ...daData.cadre4_ExigencesContextuelles,
-              traitementsAutomatises: [
-                ...daData.cadre4_ExigencesContextuelles.traitementsAutomatises,
-                {
-                  batchsApplicatifs: "",
-                  plage: "",
-                  frequence: "",
-                  impactMetier: "",
-                  impactCharge: "",
-                },
-              ],
-            },
-          });
-        }}
-      >
-        + Ajouter un traitement automatisé
-      </Button>
+      <div className="fr-table fr-table--no-caption fr-table--bordered">
+        <div className="fr-table__wrapper">
+          <div className="fr-table__container">
+            <div className="fr-table__content">
+              <table>
+                <caption>Traitements automatisés</caption>
+                <thead>
+                  <tr>
+                    <th scope="col" className="fr-col--md">Batch(s) applicatifs</th>
+                    <th scope="col" className="fr-col--sm">Plage</th>
+                    <th scope="col" className="fr-col--sm">Fréquence</th>
+                    <th scope="col" className="fr-col--md">Impact Métier</th>
+                    <th scope="col" className="fr-col--md">Impact Charge</th>
+                    <th scope="col" className="fr-col--xs" style={{ textAlign: 'right' }}></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {daData.cadre4_ExigencesContextuelles.traitementsAutomatises.map((item, index) => (
+                    <tr key={index}>
+                      <td>
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={item.batchsApplicatifs}
+                          onChange={(e) => {
+                            const newItems = [...daData.cadre4_ExigencesContextuelles.traitementsAutomatises];
+                            newItems[index].batchsApplicatifs = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre4_ExigencesContextuelles: {
+                                ...daData.cadre4_ExigencesContextuelles,
+                                traitementsAutomatises: newItems,
+                              },
+                            });
+                          }}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={item.plage}
+                          onChange={(e) => {
+                            const newItems = [...daData.cadre4_ExigencesContextuelles.traitementsAutomatises];
+                            newItems[index].plage = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre4_ExigencesContextuelles: {
+                                ...daData.cadre4_ExigencesContextuelles,
+                                traitementsAutomatises: newItems,
+                              },
+                            });
+                          }}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={item.frequence}
+                          onChange={(e) => {
+                            const newItems = [...daData.cadre4_ExigencesContextuelles.traitementsAutomatises];
+                            newItems[index].frequence = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre4_ExigencesContextuelles: {
+                                ...daData.cadre4_ExigencesContextuelles,
+                                traitementsAutomatises: newItems,
+                              },
+                            });
+                          }}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={item.impactMetier}
+                          onChange={(e) => {
+                            const newItems = [...daData.cadre4_ExigencesContextuelles.traitementsAutomatises];
+                            newItems[index].impactMetier = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre4_ExigencesContextuelles: {
+                                ...daData.cadre4_ExigencesContextuelles,
+                                traitementsAutomatises: newItems,
+                              },
+                            });
+                          }}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={item.impactCharge}
+                          onChange={(e) => {
+                            const newItems = [...daData.cadre4_ExigencesContextuelles.traitementsAutomatises];
+                            newItems[index].impactCharge = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre4_ExigencesContextuelles: {
+                                ...daData.cadre4_ExigencesContextuelles,
+                                traitementsAutomatises: newItems,
+                              },
+                            });
+                          }}
+                        />
+                      </td>
+                      <td style={{ textAlign: 'right' }}>
+                        <button
+                          className="fr-btn fr-btn--sm fr-btn--secondary"
+                          type="button"
+                          onClick={() => {
+                            const newItems = daData.cadre4_ExigencesContextuelles.traitementsAutomatises.filter(
+                              (_, i) => i !== index
+                            );
+                            setDAData({
+                              ...daData,
+                              cadre4_ExigencesContextuelles: {
+                                ...daData.cadre4_ExigencesContextuelles,
+                                traitementsAutomatises: newItems,
+                              },
+                            });
+                          }}
+                        >
+                          Supprimer
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div className="fr-table__footer">
+          <div className="fr-table__footer--end">
+            <ul className="fr-btns-group fr-btns-group--right fr-btns-group--inline-reverse fr-btns-group--inline-md">
+              <li>
+                <button
+                  className="fr-btn fr-btn--secondary"
+                  type="button"
+                  onClick={() => {
+                    setDAData({
+                      ...daData,
+                      cadre4_ExigencesContextuelles: {
+                        ...daData.cadre4_ExigencesContextuelles,
+                        traitementsAutomatises: [
+                          ...daData.cadre4_ExigencesContextuelles.traitementsAutomatises,
+                          {
+                            batchsApplicatifs: "",
+                            plage: "",
+                            frequence: "",
+                            impactMetier: "",
+                            impactCharge: "",
+                          },
+                        ],
+                      },
+                    });
+                  }}
+                >
+                  <span className="fr-icon-add-line" aria-hidden="true"></span>
+                  Ajouter un traitement automatisé
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

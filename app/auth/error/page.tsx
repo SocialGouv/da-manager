@@ -1,5 +1,3 @@
-import Button from "@codegouvfr/react-dsfr/Button";
-
 export default async function AuthError({
   searchParams,
 }: {
@@ -28,12 +26,9 @@ export default async function AuthError({
           </div>
 
           <div className="fr-mt-4w">
-            <Button
-              linkProps={{ href: "/auth/signin" }}
-              priority="secondary"
-            >
+            <a className="fr-btn fr-btn--secondary" href="/auth/signin">
               Retour à la page de connexion
-            </Button>
+            </a>
           </div>
         </div>
       </div>

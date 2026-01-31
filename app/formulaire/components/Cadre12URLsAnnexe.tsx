@@ -1,5 +1,3 @@
-import { Input } from "@codegouvfr/react-dsfr/Input";
-import { Button } from "@codegouvfr/react-dsfr/Button";
 import type { DAData } from "@/types/da.types";
 
 interface CadreProps {
@@ -32,118 +30,111 @@ export default function Cadre12URLsAnnexe({ daData, setDAData }: CadreProps) {
                   {daData.cadre12_URLs.urls.map((url, index) => (
                     <tr key={index}>
                       <td>
-                        <Input
-                          nativeInputProps={{
-                            type: "text",
-                            value: url.libelleURL,
-                            onChange: (e) => {
-                              const newURLs = [...daData.cadre12_URLs.urls];
-                              newURLs[index].libelleURL = e.target.value;
-                              setDAData({
-                                ...daData,
-                                cadre12_URLs: {
-                                  urls: newURLs,
-                                },
-                              });
-                            },
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={url.libelleURL}
+                          onChange={(e) => {
+                            const newURLs = [...daData.cadre12_URLs.urls];
+                            newURLs[index].libelleURL = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre12_URLs: {
+                                urls: newURLs,
+                              },
+                            });
                           }}
                         />
                       </td>
                       <td>
-                        <Input
-                          nativeInputProps={{
-                            type: "text",
-                            value: url.acteurAppelant,
-                            onChange: (e) => {
-                              const newURLs = [...daData.cadre12_URLs.urls];
-                              newURLs[index].acteurAppelant = e.target.value;
-                              setDAData({
-                                ...daData,
-                                cadre12_URLs: {
-                                  urls: newURLs,
-                                },
-                              });
-                            },
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={url.acteurAppelant}
+                          onChange={(e) => {
+                            const newURLs = [...daData.cadre12_URLs.urls];
+                            newURLs[index].acteurAppelant = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre12_URLs: {
+                                urls: newURLs,
+                              },
+                            });
                           }}
                         />
                       </td>
                       <td>
-                        <Input
-                          nativeInputProps={{
-                            type: "text",
-                            value: url.ressourceAppelee,
-                            onChange: (e) => {
-                              const newURLs = [...daData.cadre12_URLs.urls];
-                              newURLs[index].ressourceAppelee = e.target.value;
-                              setDAData({
-                                ...daData,
-                                cadre12_URLs: {
-                                  urls: newURLs,
-                                },
-                              });
-                            },
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={url.ressourceAppelee}
+                          onChange={(e) => {
+                            const newURLs = [...daData.cadre12_URLs.urls];
+                            newURLs[index].ressourceAppelee = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre12_URLs: {
+                                urls: newURLs,
+                              },
+                            });
                           }}
                         />
                       </td>
                       <td>
-                        <Input
-                          nativeInputProps={{
-                            type: "text",
-                            value: url.fonctionnaliteOuServiceFourni,
-                            onChange: (e) => {
-                              const newURLs = [...daData.cadre12_URLs.urls];
-                              newURLs[index].fonctionnaliteOuServiceFourni = e.target.value;
-                              setDAData({
-                                ...daData,
-                                cadre12_URLs: {
-                                  urls: newURLs,
-                                },
-                              });
-                            },
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={url.fonctionnaliteOuServiceFourni}
+                          onChange={(e) => {
+                            const newURLs = [...daData.cadre12_URLs.urls];
+                            newURLs[index].fonctionnaliteOuServiceFourni = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre12_URLs: {
+                                urls: newURLs,
+                              },
+                            });
                           }}
                         />
                       </td>
                       <td>
-                        <Input
-                          nativeInputProps={{
-                            type: "text",
-                            value: url.donneesTransitent,
-                            onChange: (e) => {
-                              const newURLs = [...daData.cadre12_URLs.urls];
-                              newURLs[index].donneesTransitent = e.target.value;
-                              setDAData({
-                                ...daData,
-                                cadre12_URLs: {
-                                  urls: newURLs,
-                                },
-                              });
-                            },
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={url.donneesTransitent}
+                          onChange={(e) => {
+                            const newURLs = [...daData.cadre12_URLs.urls];
+                            newURLs[index].donneesTransitent = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre12_URLs: {
+                                urls: newURLs,
+                              },
+                            });
                           }}
                         />
                       </td>
                       <td>
-                        <Input
-                          nativeInputProps={{
-                            type: "text",
-                            value: url.precisions,
-                            onChange: (e) => {
-                              const newURLs = [...daData.cadre12_URLs.urls];
-                              newURLs[index].precisions = e.target.value;
-                              setDAData({
-                                ...daData,
-                                cadre12_URLs: {
-                                  urls: newURLs,
-                                },
-                              });
-                            },
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={url.precisions}
+                          onChange={(e) => {
+                            const newURLs = [...daData.cadre12_URLs.urls];
+                            newURLs[index].precisions = e.target.value;
+                            setDAData({
+                              ...daData,
+                              cadre12_URLs: {
+                                urls: newURLs,
+                              },
+                            });
                           }}
                         />
                       </td>
                       <td>
-                        <Button
-                          priority="secondary"
-                          size="small"
-                          iconId="fr-icon-delete-line"
+                        <button
+                          className="fr-btn fr-btn--sm fr-btn--secondary"
+                          type="button"
                           title="Supprimer"
                           onClick={() => {
                             const newURLs = daData.cadre12_URLs.urls.filter((_, i) => i !== index);
@@ -154,7 +145,9 @@ export default function Cadre12URLsAnnexe({ daData, setDAData }: CadreProps) {
                               },
                             });
                           }}
-                        />
+                        >
+                          <span className="fr-icon-delete-line" aria-hidden="true"></span>
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -200,23 +193,27 @@ export default function Cadre12URLsAnnexe({ daData, setDAData }: CadreProps) {
       {/* Annexe : Suivi des changements */}
       <h3 className="fr-h3 fr-mt-6w">Annexe : Suivi des Changements</h3>
 
-      <Input
-        label="Versionnage (X.Y.Z.K)"
-        nativeInputProps={{
-          id: "versionnage",
-          type: "text",
-          placeholder: "1.0.0.0",
-          value: daData.annexe_SuiviChangements.versionnage,
-          onChange: (e) =>
+      <div className="fr-input-group">
+        <label className="fr-label" htmlFor="versionnage">
+          Versionnage (X.Y.Z.K)
+        </label>
+        <input
+          className="fr-input"
+          id="versionnage"
+          type="text"
+          placeholder="1.0.0.0"
+          value={daData.annexe_SuiviChangements.versionnage}
+          onChange={(e) =>
             setDAData({
               ...daData,
               annexe_SuiviChangements: {
                 ...daData.annexe_SuiviChangements,
                 versionnage: e.target.value,
               },
-            }),
-        }}
-      />
+            })
+          }
+        />
+      </div>
 
       <div className="fr-table">
         <div className="fr-table__wrapper">
@@ -237,106 +234,100 @@ export default function Cadre12URLsAnnexe({ daData, setDAData }: CadreProps) {
                   {daData.annexe_SuiviChangements.changements.map((changement, index) => (
                     <tr key={index}>
                       <td>
-                        <Input
-                          nativeInputProps={{
-                            type: "text",
-                            placeholder: "x.y.z",
-                            value: changement.version,
-                            onChange: (e) => {
-                              const newChangements = [...daData.annexe_SuiviChangements.changements];
-                              newChangements[index].version = e.target.value;
-                              setDAData({
-                                ...daData,
-                                annexe_SuiviChangements: {
-                                  ...daData.annexe_SuiviChangements,
-                                  changements: newChangements,
-                                },
-                              });
-                            },
+                        <input
+                          className="fr-input"
+                          type="text"
+                          placeholder="x.y.z"
+                          value={changement.version}
+                          onChange={(e) => {
+                            const newChangements = [...daData.annexe_SuiviChangements.changements];
+                            newChangements[index].version = e.target.value;
+                            setDAData({
+                              ...daData,
+                              annexe_SuiviChangements: {
+                                ...daData.annexe_SuiviChangements,
+                                changements: newChangements,
+                              },
+                            });
                           }}
                         />
                       </td>
                       <td>
-                        <Input
-                          nativeInputProps={{
-                            type: "date",
-                            value: changement.date,
-                            onChange: (e) => {
-                              const newChangements = [...daData.annexe_SuiviChangements.changements];
-                              newChangements[index].date = e.target.value;
-                              setDAData({
-                                ...daData,
-                                annexe_SuiviChangements: {
-                                  ...daData.annexe_SuiviChangements,
-                                  changements: newChangements,
-                                },
-                              });
-                            },
+                        <input
+                          className="fr-input"
+                          type="date"
+                          value={changement.date}
+                          onChange={(e) => {
+                            const newChangements = [...daData.annexe_SuiviChangements.changements];
+                            newChangements[index].date = e.target.value;
+                            setDAData({
+                              ...daData,
+                              annexe_SuiviChangements: {
+                                ...daData.annexe_SuiviChangements,
+                                changements: newChangements,
+                              },
+                            });
                           }}
                         />
                       </td>
                       <td>
-                        <Input
-                          nativeInputProps={{
-                            type: "text",
-                            value: changement.demandeurChangement,
-                            onChange: (e) => {
-                              const newChangements = [...daData.annexe_SuiviChangements.changements];
-                              newChangements[index].demandeurChangement = e.target.value;
-                              setDAData({
-                                ...daData,
-                                annexe_SuiviChangements: {
-                                  ...daData.annexe_SuiviChangements,
-                                  changements: newChangements,
-                                },
-                              });
-                            },
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={changement.demandeurChangement}
+                          onChange={(e) => {
+                            const newChangements = [...daData.annexe_SuiviChangements.changements];
+                            newChangements[index].demandeurChangement = e.target.value;
+                            setDAData({
+                              ...daData,
+                              annexe_SuiviChangements: {
+                                ...daData.annexe_SuiviChangements,
+                                changements: newChangements,
+                              },
+                            });
                           }}
                         />
                       </td>
                       <td>
-                        <Input
-                          nativeInputProps={{
-                            type: "text",
-                            value: changement.rapporteurChangement,
-                            onChange: (e) => {
-                              const newChangements = [...daData.annexe_SuiviChangements.changements];
-                              newChangements[index].rapporteurChangement = e.target.value;
-                              setDAData({
-                                ...daData,
-                                annexe_SuiviChangements: {
-                                  ...daData.annexe_SuiviChangements,
-                                  changements: newChangements,
-                                },
-                              });
-                            },
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={changement.rapporteurChangement}
+                          onChange={(e) => {
+                            const newChangements = [...daData.annexe_SuiviChangements.changements];
+                            newChangements[index].rapporteurChangement = e.target.value;
+                            setDAData({
+                              ...daData,
+                              annexe_SuiviChangements: {
+                                ...daData.annexe_SuiviChangements,
+                                changements: newChangements,
+                              },
+                            });
                           }}
                         />
                       </td>
                       <td>
-                        <Input
-                          nativeInputProps={{
-                            type: "text",
-                            value: changement.descriptionDetaillee,
-                            onChange: (e) => {
-                              const newChangements = [...daData.annexe_SuiviChangements.changements];
-                              newChangements[index].descriptionDetaillee = e.target.value;
-                              setDAData({
-                                ...daData,
-                                annexe_SuiviChangements: {
-                                  ...daData.annexe_SuiviChangements,
-                                  changements: newChangements,
-                                },
-                              });
-                            },
+                        <input
+                          className="fr-input"
+                          type="text"
+                          value={changement.descriptionDetaillee}
+                          onChange={(e) => {
+                            const newChangements = [...daData.annexe_SuiviChangements.changements];
+                            newChangements[index].descriptionDetaillee = e.target.value;
+                            setDAData({
+                              ...daData,
+                              annexe_SuiviChangements: {
+                                ...daData.annexe_SuiviChangements,
+                                changements: newChangements,
+                              },
+                            });
                           }}
                         />
                       </td>
                       <td>
-                        <Button
-                          priority="secondary"
-                          size="small"
-                          iconId="fr-icon-delete-line"
+                        <button
+                          className="fr-btn fr-btn--sm fr-btn--secondary"
+                          type="button"
                           title="Supprimer"
                           onClick={() => {
                             const newChangements = daData.annexe_SuiviChangements.changements.filter(
@@ -350,7 +341,9 @@ export default function Cadre12URLsAnnexe({ daData, setDAData }: CadreProps) {
                               },
                             });
                           }}
-                        />
+                        >
+                          <span className="fr-icon-delete-line" aria-hidden="true"></span>
+                        </button>
                       </td>
                     </tr>
                   ))}
