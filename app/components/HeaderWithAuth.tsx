@@ -65,6 +65,11 @@ export default async function HeaderWithAuth() {
           </div>
         </div>
       </div>
+      <div className="fr-header__menu fr-modal" id="modal-header-navigation" aria-labelledby="fr-btn-menu-mobile">
+        <div className="fr-container">
+          <div className="fr-header__menu-links" />
+        </div>
+      </div>
     </header>
   );
 }

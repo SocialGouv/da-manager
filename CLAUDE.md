@@ -20,8 +20,8 @@ pnpm lint         # Run ESLint
 
 ### Tech Stack
 - **Framework**: Next.js 16 (App Router)
-- **UI Library**: @codegouvfr/react-dsfr (French government design system)
-- **Styling**: Tailwind CSS + SASS
+- **Design System**: DSFR vanilla (pure HTML/CSS - no React library)
+- **Styling**: SASS + inline CSS
 - **Diagramming**: Excalidraw (for architecture schema editing)
 - **PDF Generation**: @react-pdf/renderer
 - **TypeScript**: Strict mode enabled
@@ -79,13 +79,22 @@ Each DA has 12 "cadres" (sections), managed as separate components in `app/formu
 - The home page is a server component that reads the filesystem
 - PDF generation happens server-side in an API route
 
-**DSFR Components:**
-- Uses French government design components (Button, Input, Stepper, SideMenu, etc.)
-- Always refer to DSFR documentation befor creating a component
-- Always use DSFR componant, never create custom componant
-- Never try to modify DSFR componant behaviour by adding custom styles or classes
-- Custom styling extensions in `app/dsfr-extensions.css` but try to avoid using custom CSS
-- DSFR provider wraps the entire app in layout.tsx
+**DSFR Usage Guidelines:**
+
+This project uses **vanilla DSFR** (pure HTML/CSS from @gouvfr/dsfr package).
+
+**Workflow for UI modifications (MANDATORY):**
+1. **ALWAYS consult the official DSFR documentation** at https://www.systeme-de-design.gouv.fr/ BEFORE any implementation
+2. Use existing DSFR components and classes (fr-btn, fr-input, etc.)
+3. Propose implementation to user before coding
+4. **ALWAYS verify the result in Chrome MCP** after modification to ensure correctness
+
+**DSFR structure:**
+- CSS: Bundled from node_modules/@gouvfr/dsfr/dist/dsfr.min.css
+- JavaScript: Loaded from public/dsfr/ (dsfr.module.min.js)
+- Assets: Fonts and icons in public/dsfr/
+
+Use native DSFR classes. Custom CSS (app/dsfr-extensions.css) should be exceptional.
 
 **Dynamic Imports:**
 - Excalidraw is loaded dynamically with `next/dynamic` to avoid SSR issues
@@ -109,6 +118,7 @@ Each DA has 12 "cadres" (sections), managed as separate components in `app/formu
 
 ## Development environment
 - We use Google Chrome MCP to access, read and test web pages
+- **All UI modifications must be verified in Chrome MCP** to ensure they render correctly with DSFR
 
 ## Documentation
 - DSFR Componants: https://www.systeme-de-design.gouv.fr/version-courante/fr/composants

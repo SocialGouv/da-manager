@@ -9,8 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@codegouvfr/react-dsfr": "^1.31.1",
     "@excalidraw/excalidraw": "^0.18.0",
+    "@gouvfr/dsfr": "^1.14.3",
     "@react-pdf/renderer": "^4.3.2",
     "nanoid": "^5.1.6",
     "next": "16.1.6",
@@ -20,14 +20,12 @@
     "sass": "^1.97.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
-    "tailwindcss": "^4",
     "typescript": "^5"
   }
 }

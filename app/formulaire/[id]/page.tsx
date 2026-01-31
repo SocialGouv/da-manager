@@ -122,6 +122,7 @@ export default function FormulaireDA() {
       {/* Sidebar gauche fixe */}
       <aside style={{
         width: '280px',
+        flexShrink: 0,
         backgroundColor: 'var(--background-default-grey)',
         display: 'flex',
         flexDirection: 'column',
@@ -151,7 +152,7 @@ export default function FormulaireDA() {
       </aside>
 
       {/* Contenu principal */}
-      <main style={{ flex: 1, padding: '2rem 3rem', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
+      <main style={{ flex: 1, padding: '2rem 3rem' }}>
         <h1 className="fr-h1">
           {daId && daId !== "new"
             ? `${daData.cadre1_ProjetActeurs.nomDuProjet || "Document d'Architecture"}`

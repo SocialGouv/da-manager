@@ -1,9 +1,7 @@
-import { DsfrHeadBase } from "@codegouvfr/react-dsfr/next-app-router/DsfrHead";
-import { createGetHtmlAttributes } from "@codegouvfr/react-dsfr/next-app-router/getHtmlAttributes";
-import { ClientDsfrProvider } from "./components/ClientDsfrProvider";
+import "@gouvfr/dsfr/dist/dsfr.min.css";
+import "@gouvfr/dsfr/dist/utility/utility.min.css";
+import Script from "next/script";
 import HeaderWithAuth from "./components/HeaderWithAuth";
-import { defaultColorScheme } from "./defaultColorScheme";
-import Link from "next/link";
 import type { Metadata } from "next";
 import "./globals.css";
 import "./dsfr-extensions.css";
@@ -13,31 +11,28 @@ export const metadata: Metadata = {
   description: "Formulaire pour créer des Documents d'Architecture (DA)",
 };
 
-const { getHtmlAttributes } = createGetHtmlAttributes({ defaultColorScheme });
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const lang = "fr";
-
   return (
-    <html {...getHtmlAttributes({ lang })}>
-      <head>
-        <DsfrHeadBase
-          Link={Link}
-          preloadFonts={[
-            "Marianne-Regular",
-            "Marianne-Bold"
-          ]}
-        />
-      </head>
+    <html lang="fr" data-fr-theme="light">
       <body>
-        <ClientDsfrProvider lang={lang}>
-          <HeaderWithAuth />
-          {children}
-        </ClientDsfrProvider>
+        <HeaderWithAuth />
+        {children}
+
+        {/* JavaScript DSFR */}
+        <Script
+          src="/dsfr/dsfr.module.min.js"
+          type="module"
+          strategy="afterInteractive"
+        />
+        <Script
+          src="/dsfr/dsfr.nomodule.min.js"
+          noModule
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
