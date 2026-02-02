@@ -1,0 +1,74 @@
+[
+  {
+    "id": "usr-001",
+    "nom": "Dupont",
+    "prenom": "Marie",
+    "email": "marie.dupont@modernisation.gouv.fr",
+    "role": "Architecte solution",
+    "direction": "DNUM",
+    "dateCreation": "2025-03-12"
+  },
+  {
+    "id": "usr-002",
+    "nom": "Martin",
+    "prenom": "Jean-Pierre",
+    "email": "jean-pierre.martin@finances.gouv.fr",
+    "role": "Chef de projet",
+    "direction": "DGFiP",
+    "dateCreation": "2025-04-01"
+  },
+  {
+    "id": "usr-003",
+    "nom": "Bernard",
+    "prenom": "Sophie",
+    "email": "sophie.bernard@interieur.gouv.fr",
+    "role": "Architecte technique",
+    "direction": "DNUM",
+    "dateCreation": "2025-05-18"
+  },
+  {
+    "id": "usr-004",
+    "nom": "Lefebvre",
+    "prenom": "Antoine",
+    "email": "antoine.lefebvre@sante.gouv.fr",
+    "role": "Responsable SSI",
+    "direction": "DNS",
+    "dateCreation": "2025-06-22"
+  },
+  {
+    "id": "usr-005",
+    "nom": "Moreau",
+    "prenom": "Camille",
+    "email": "camille.moreau@ecologie.gouv.fr",
+    "role": "Architecte fonctionnel",
+    "direction": "CGDD",
+    "dateCreation": "2025-07-10"
+  },
+  {
+    "id": "usr-006",
+    "nom": "Roux",
+    "prenom": "François",
+    "email": "francois.roux@education.gouv.fr",
+    "role": "Administrateur système",
+    "direction": "DNE",
+    "dateCreation": "2025-08-03"
+  },
+  {
+    "id": "usr-007",
+    "nom": "Petit",
+    "prenom": "Isabelle",
+    "email": "isabelle.petit@justice.gouv.fr",
+    "role": "Chef de projet",
+    "direction": "DNUM",
+    "dateCreation": "2025-09-15"
+  },
+  {
+    "id": "usr-008",
+    "nom": "Garcia",
+    "prenom": "Lucas",
+    "email": "lucas.garcia@culture.gouv.fr",
+    "role": "Architecte solution",
+    "direction": "SNUM",
+    "dateCreation": "2025-10-28"
+  }
+]
