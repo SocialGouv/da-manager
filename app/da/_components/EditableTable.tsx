@@ -107,7 +107,7 @@ export default function EditableTable<
                       <th
                         key={tc.key}
                         scope="col"
-                        className={i ? "fr-col--md" : "fr-col--lg"}
+                        // className={i ? "fr-col--md" : "fr-col--lg"}
                       >
                         {tc.label}
                       </th>
