@@ -224,6 +224,8 @@ export interface Cadre4_ExigencesContextuelles {
   periodesApplicatives: PeriodeApplicative[];
   tempsDeReponse: TempsDeReponse;
   traitementsAutomatises: TraitementAutomatise[];
+  impactMetierEnCasDAnomalie: string;
+  impactDeChargeSurPerformances: string;
 }
 
 export interface EchelleDICT {
@@ -289,7 +291,6 @@ export interface TempsDeReponse {
   traitementRequeteSimple_PeriodeDeCharge: number;
   traitementRequeteComplexe_PeriodeStandard: number;
   traitementRequeteComplexe_PeriodeDeCharge: number;
-  precisions: string;
 }
 
 export interface TraitementAutomatise {

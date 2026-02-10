@@ -168,9 +168,10 @@ export const initialData: DAData = {
       traitementRequeteSimple_PeriodeDeCharge: 0,
       traitementRequeteComplexe_PeriodeStandard: 0,
       traitementRequeteComplexe_PeriodeDeCharge: 0,
-      precisions: "",
     },
     traitementsAutomatises: Array(4).fill(null).map(() => ({ batchsApplicatifs: "", plage: "", frequence: "", impactMetier: "", impactCharge: "" })),
+    impactMetierEnCasDAnomalie: "",
+    impactDeChargeSurPerformances: "",
   },
   cadre5_ArchitectureActeurs: {
     description: "",

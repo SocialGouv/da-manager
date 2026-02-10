@@ -432,8 +432,7 @@
       "traitementRequeteSimple_PeriodeStandard": 0.5,
       "traitementRequeteSimple_PeriodeDeCharge": 1,
       "traitementRequeteComplexe_PeriodeStandard": 5,
-      "traitementRequeteComplexe_PeriodeDeCharge": 10,
-      "precisions": "Mesures côté serveur. Temps de réponse réseau non inclus."
+      "traitementRequeteComplexe_PeriodeDeCharge": 10
     },
     "traitementsAutomatises": [
       {
@@ -450,7 +449,9 @@
         "impactMetier": "Modéré",
         "impactCharge": "Faible"
       }
-    ]
+    ],
+    "impactMetierEnCasDAnomalie": "Une anomalie sur le traitement de purge provoque une saturation progressive de la base de données.",
+    "impactDeChargeSurPerformances": "La purge quotidienne génère une charge ponctuelle sur la base de données, compensée par l'amélioration des performances post-traitement."
   },
   "cadre5_ArchitectureActeurs": {
     "description": "Le portail RH est utilisé par les agents (consultation), les managers (validation) et les gestionnaires RH (administration). Il s'interface avec le SI Paie en tant que consommateur et avec l'annuaire LDAP en tant que fournisseur.",

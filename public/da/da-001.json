@@ -432,8 +432,7 @@
       "traitementRequeteSimple_PeriodeStandard": 0.5,
       "traitementRequeteSimple_PeriodeDeCharge": 1,
       "traitementRequeteComplexe_PeriodeStandard": 5,
-      "traitementRequeteComplexe_PeriodeDeCharge": 10,
-      "precisions": "Mesures côté serveur. Temps de réponse réseau non inclus."
+      "traitementRequeteComplexe_PeriodeDeCharge": 10
     },
     "traitementsAutomatises": [
       {
@@ -450,7 +449,9 @@
         "impactMetier": "Modéré",
         "impactCharge": "Faible"
       }
-    ]
+    ],
+    "impactMetierEnCasDAnomalie": "En cas d'anomalie sur le batch de paie, les bulletins ne sont pas générés et les agents ne sont pas payés à temps.",
+    "impactDeChargeSurPerformances": "Le batch de paie mensuel génère une charge importante sur la base de données pendant 2h, impactant les temps de réponse de l'application."
   },
   "cadre5_ArchitectureActeurs": {
     "description": "Le portail RH est utilisé par les agents (consultation), les managers (validation) et les gestionnaires RH (administration). Il s'interface avec le SI Paie en tant que consommateur et avec l'annuaire LDAP en tant que fournisseur.",

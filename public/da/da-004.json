@@ -432,8 +432,7 @@
       "traitementRequeteSimple_PeriodeStandard": 0.5,
       "traitementRequeteSimple_PeriodeDeCharge": 1,
       "traitementRequeteComplexe_PeriodeStandard": 5,
-      "traitementRequeteComplexe_PeriodeDeCharge": 10,
-      "precisions": "Mesures côté serveur. Temps de réponse réseau non inclus."
+      "traitementRequeteComplexe_PeriodeDeCharge": 10
     },
     "traitementsAutomatises": [
       {
@@ -450,7 +449,9 @@
         "impactMetier": "Modéré",
         "impactCharge": "Faible"
       }
-    ]
+    ],
+    "impactMetierEnCasDAnomalie": "En cas d'échec du traitement de synchronisation, les données entre les SI partenaires sont incohérentes.",
+    "impactDeChargeSurPerformances": "La synchronisation nocturne consomme 60% des I/O disque, rendant l'application peu réactive si des utilisateurs sont connectés."
   },
   "cadre5_ArchitectureActeurs": {
     "description": "Le portail RH est utilisé par les agents (consultation), les managers (validation) et les gestionnaires RH (administration). Il s'interface avec le SI Paie en tant que consommateur et avec l'annuaire LDAP en tant que fournisseur.",

@@ -1500,29 +1500,6 @@ export default function Cadre4ExigencesContextuelles({
           </div>
         </div>
       </div>
-      <div className="fr-input-group fr-mt-2w">
-        <label className="fr-label" htmlFor="temps-precisions">
-          Précisions
-        </label>
-        <textarea
-          className="fr-input"
-          id="temps-precisions"
-          rows={3}
-          value={daData.cadre4_ExigencesContextuelles.tempsDeReponse.precisions}
-          onChange={(e) =>
-            setDAData({
-              ...daData,
-              cadre4_ExigencesContextuelles: {
-                ...daData.cadre4_ExigencesContextuelles,
-                tempsDeReponse: {
-                  ...daData.cadre4_ExigencesContextuelles.tempsDeReponse,
-                  precisions: e.target.value,
-                },
-              },
-            })
-          }
-        />
-      </div>
 
       {/* Traitements automatisés */}
       <h3 className="fr-h3 fr-mt-6w">Traitements automatisés</h3>
@@ -1732,6 +1709,50 @@ export default function Cadre4ExigencesContextuelles({
             </ul>
           </div>
         </div>
+      </div>
+      <div className="fr-input-group fr-mt-2w">
+        <label className="fr-label" htmlFor="impact-metier-anomalie">
+          Impact métier en cas d&apos;anomalie
+        </label>
+        <textarea
+          className="fr-input"
+          id="impact-metier-anomalie"
+          rows={3}
+          value={
+            daData.cadre4_ExigencesContextuelles.impactMetierEnCasDAnomalie
+          }
+          onChange={(e) =>
+            setDAData({
+              ...daData,
+              cadre4_ExigencesContextuelles: {
+                ...daData.cadre4_ExigencesContextuelles,
+                impactMetierEnCasDAnomalie: e.target.value,
+              },
+            })
+          }
+        />
+      </div>
+      <div className="fr-input-group fr-mt-2w">
+        <label className="fr-label" htmlFor="impact-charge-performances">
+          Impact de charge sur les performances de l&apos;application
+        </label>
+        <textarea
+          className="fr-input"
+          id="impact-charge-performances"
+          rows={3}
+          value={
+            daData.cadre4_ExigencesContextuelles.impactDeChargeSurPerformances
+          }
+          onChange={(e) =>
+            setDAData({
+              ...daData,
+              cadre4_ExigencesContextuelles: {
+                ...daData.cadre4_ExigencesContextuelles,
+                impactDeChargeSurPerformances: e.target.value,
+              },
+            })
+          }
+        />
       </div>
     </div>
   );
