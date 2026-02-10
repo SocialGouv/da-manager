@@ -423,16 +423,16 @@
       }
     ],
     "tempsDeReponse": {
-      "affichagePageAccueil_PeriodeStandard": "< 1s",
-      "affichagePageAccueil_PeriodeDeCharge": "< 2s",
-      "affichagePageSimple_PeriodeStandard": "< 2s",
-      "affichagePageSimple_PeriodeDeCharge": "< 3s",
-      "affichagePageComplexe_PeriodeStandard": "< 3s",
-      "affichagePageComplexe_PeriodeDeCharge": "< 5s",
-      "traitementRequeteSimple_PeriodeStandard": "< 500ms",
-      "traitementRequeteSimple_PeriodeDeCharge": "< 1s",
-      "traitementRequeteComplexe_PeriodeStandard": "< 5s",
-      "traitementRequeteComplexe_PeriodeDeCharge": "< 10s",
+      "affichagePageAccueil_PeriodeStandard": 1,
+      "affichagePageAccueil_PeriodeDeCharge": 2,
+      "affichagePageSimple_PeriodeStandard": 2,
+      "affichagePageSimple_PeriodeDeCharge": 3,
+      "affichagePageComplexe_PeriodeStandard": 3,
+      "affichagePageComplexe_PeriodeDeCharge": 5,
+      "traitementRequeteSimple_PeriodeStandard": 0.5,
+      "traitementRequeteSimple_PeriodeDeCharge": 1,
+      "traitementRequeteComplexe_PeriodeStandard": 5,
+      "traitementRequeteComplexe_PeriodeDeCharge": 10,
       "precisions": "Mesures côté serveur. Temps de réponse réseau non inclus."
     },
     "traitementsAutomatises": [

@@ -279,16 +279,16 @@ export interface PeriodeApplicative {
 }
 
 export interface TempsDeReponse {
-  affichagePageAccueil_PeriodeStandard: string;
-  affichagePageAccueil_PeriodeDeCharge: string;
-  affichagePageSimple_PeriodeStandard: string;
-  affichagePageSimple_PeriodeDeCharge: string;
-  affichagePageComplexe_PeriodeStandard: string;
-  affichagePageComplexe_PeriodeDeCharge: string;
-  traitementRequeteSimple_PeriodeStandard: string;
-  traitementRequeteSimple_PeriodeDeCharge: string;
-  traitementRequeteComplexe_PeriodeStandard: string;
-  traitementRequeteComplexe_PeriodeDeCharge: string;
+  affichagePageAccueil_PeriodeStandard: number;
+  affichagePageAccueil_PeriodeDeCharge: number;
+  affichagePageSimple_PeriodeStandard: number;
+  affichagePageSimple_PeriodeDeCharge: number;
+  affichagePageComplexe_PeriodeStandard: number;
+  affichagePageComplexe_PeriodeDeCharge: number;
+  traitementRequeteSimple_PeriodeStandard: number;
+  traitementRequeteSimple_PeriodeDeCharge: number;
+  traitementRequeteComplexe_PeriodeStandard: number;
+  traitementRequeteComplexe_PeriodeDeCharge: number;
   precisions: string;
 }
 

@@ -16,7 +16,7 @@ export default function Cadre3ContraintesVolumetrie({ daData, setDAData }: Cadre
         <textarea
           className="fr-input"
           id="contraintesLegales"
-          rows={6}
+          rows={5}
           value={daData.cadre3_ContraintesVolumetrie.contraintesLegales}
           onChange={(e) =>
             setDAData({
@@ -38,7 +38,7 @@ export default function Cadre3ContraintesVolumetrie({ daData, setDAData }: Cadre
         <textarea
           className="fr-input"
           id="contraintesMetiers"
-          rows={8}
+          rows={5}
           value={daData.cadre3_ContraintesVolumetrie.contraintesMetiers}
           onChange={(e) =>
             setDAData({
@@ -54,7 +54,7 @@ export default function Cadre3ContraintesVolumetrie({ daData, setDAData }: Cadre
 
       {/* Dépendances avec d'autres SI */}
       <h3 className="fr-h3 fr-mt-6w">Dépendances avec d'autres SI</h3>
-      <div className="fr-table fr-table--no-caption fr-table--bordered fr-table--sm">
+      <div className="fr-table fr-table--no-scroll fr-table--no-caption fr-table--bordered fr-table--sm">
         <div className="fr-table__wrapper">
           <div className="fr-table__container">
             <div className="fr-table__content">
@@ -65,15 +65,15 @@ export default function Cadre3ContraintesVolumetrie({ daData, setDAData }: Cadre
                     <th scope="col" className="fr-col--lg">Système d'information</th>
                     <th scope="col" className="fr-col--sm" style={{ textAlign: 'center' }}>Fournisseur</th>
                     <th scope="col" className="fr-col--sm" style={{ textAlign: 'center' }}>Consommateur</th>
-                    <th scope="col" className="fr-col--xs" style={{ textAlign: 'right' }}>Actions</th>
+                    <th scope="col" className="fr-col--xs" style={{ textAlign: 'right' }}></th>
                   </tr>
                 </thead>
                 <tbody>
                   {daData.cadre3_ContraintesVolumetrie.dependancesAvecDautresSI.map((item, index) => (
                     <tr key={index}>
-                      <td>
+                      <td className="fr-bg-info">
                         <input
-                          className="fr-input"
+                          className="fr-table-input"
                           type="text"
                           value={item.systemeInformation}
                           onChange={(e) => {
@@ -125,8 +125,9 @@ export default function Cadre3ContraintesVolumetrie({ daData, setDAData }: Cadre
                       </td>
                       <td style={{ textAlign: 'right' }}>
                         <button
-                          className="fr-btn fr-btn--sm fr-btn--secondary"
+                          className="fr-btn fr-btn--tertiary-no-outline"
                           type="button"
+                          title="Supprimer"
                           onClick={() => {
                             const newItems = daData.cadre3_ContraintesVolumetrie.dependancesAvecDautresSI.filter(
                               (_, i) => i !== index
@@ -140,7 +141,7 @@ export default function Cadre3ContraintesVolumetrie({ daData, setDAData }: Cadre
                             });
                           }}
                         >
-                          Supprimer
+                          <span className="fr-icon-close-line" aria-hidden="true"></span>
                         </button>
                       </td>
                     </tr>
@@ -186,7 +187,7 @@ export default function Cadre3ContraintesVolumetrie({ daData, setDAData }: Cadre
         <textarea
           className="fr-input"
           id="dependancesAvecLePosteDeTravail"
-          rows={4}
+          rows={5}
           value={daData.cadre3_ContraintesVolumetrie.dependancesAvecLePosteDeTravail}
           onChange={(e) =>
             setDAData({
@@ -287,7 +288,7 @@ export default function Cadre3ContraintesVolumetrie({ daData, setDAData }: Cadre
         <textarea
           className="fr-input"
           id="tablette-precisions"
-          rows={3}
+          rows={5}
           value={
             daData.cadre3_ContraintesVolumetrie
               .niveauUtilisabiliteSecuriteEnModeTablette.precisions
@@ -395,7 +396,7 @@ export default function Cadre3ContraintesVolumetrie({ daData, setDAData }: Cadre
         <textarea
           className="fr-input"
           id="smartphone-precisions"
-          rows={3}
+          rows={5}
           value={
             daData.cadre3_ContraintesVolumetrie
               .niveauUtilisabiliteSecuriteEnModeSmartphone.precisions
@@ -724,7 +725,7 @@ export default function Cadre3ContraintesVolumetrie({ daData, setDAData }: Cadre
             <textarea
               className="fr-input"
               id="commentaires-volumetrie"
-              rows={3}
+              rows={5}
               value={
                 daData.cadre3_ContraintesVolumetrie.volumetrieDonneesDuSIApplicatif.commentaires
               }
