@@ -27,7 +27,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ vars.REGISTRY_URL }}/${{ vars.PROJECT_NAME }}/${{ github.event.repository.name }}/app
+          images: ${{ vars.REGISTRY_URL }}/fabrique/${{ github.event.repository.name }}/app
           tags: |
             type=sha,prefix=persist-,format=long,enable=${{
               github.ref_name == 'dev' ||
