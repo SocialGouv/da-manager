@@ -223,16 +223,11 @@ export default function ExcalidrawSchemaEditor({
   // Styles conditionnels selon le mode
   const containerStyle: React.CSSProperties = isFullscreen ? {
     position: "fixed",
-    top: "110px",
-    left: "280px",
-    right: 0,
-    bottom: 0,
+    inset: 0,
     zIndex: 1000,
     backgroundColor: isDark ? "#1e1e1e" : "#ffffff",
     display: "flex",
     flexDirection: "column",
-    boxShadow: "-4px 0 8px rgba(0, 0, 0, 0.1)",
-    borderTop: isDark ? "1px solid #444" : "1px solid #ddd",
   } : {
     height: "800px",
     border: isDark ? "1px solid #444" : "1px solid #ddd",
