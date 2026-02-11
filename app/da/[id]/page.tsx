@@ -17,7 +17,6 @@ import Cadre9ServeursComposants from "../_components/Cadre9ServeursComposants";
 import Cadre10MatricesFlux from "../_components/Cadre10MatricesFlux";
 import Cadre11Dimensionnement from "../_components/Cadre11Dimensionnement";
 import Cadre12URLsAnnexe from "../_components/Cadre12URLsAnnexe";
-import FormAccessManager from "../_components/FormAccessManager";
 import VersionManager from "../_components/VersionManager";
 
 type SaveStatus = "idle" | "saving" | "saved" | "error" | "conflict";
@@ -381,15 +380,10 @@ export default function FormulaireDA() {
               Remplissez tous les champs du Document d&apos;Architecture
             </p>
 
-            {/* Actions admin et versionnement */}
-            {formId && (
+            {/* Versionnement */}
+            {formId && userAccess !== "viewer" && (
               <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-                {userAccess === "admin" && (
-                  <FormAccessManager formId={formId} />
-                )}
-                {userAccess !== "viewer" && (
-                  <VersionManager formId={formId} onRestore={setDAData} />
-                )}
+                <VersionManager formId={formId} onRestore={setDAData} />
               </div>
             )}
 
