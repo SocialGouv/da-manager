@@ -87,6 +87,17 @@ export async function updateUserAdmin(userId: string, isAdmin: boolean) {
 }
 
 /**
+ * Compte le nombre d'administrateurs.
+ */
+export async function countAdmins(): Promise<number> {
+  const [{ value }] = await db
+    .select({ value: count() })
+    .from(users)
+    .where(eq(users.isAdmin, true));
+  return value;
+}
+
+/**
  * Supprime un utilisateur.
  */
 export async function deleteUser(userId: string) {

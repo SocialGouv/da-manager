@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { updateUserAdmin, deleteUser, getUserById } from "@/lib/db/queries/users";
+import {
+  updateUserAdmin,
+  deleteUser,
+  getUserById,
+  countAdmins,
+} from "@/lib/db/queries/users";
 
 /**
  * PUT /api/users/[id] — Modifier un utilisateur (admin uniquement)
@@ -32,6 +37,20 @@ export async function PUT(
         { error: "Vous ne pouvez pas retirer vos propres droits administrateur" },
         { status: 400 },
       );
+    }
+
+    // Empêcher de retirer le dernier admin
+    if (!body.isAdmin) {
+      const adminCount = await countAdmins();
+      if (adminCount <= 1) {
+        return NextResponse.json(
+          {
+            error:
+              "Impossible de retirer les droits admin : il doit rester au moins un administrateur",
+          },
+          { status: 400 },
+        );
+      }
     }
 
     const updated = await updateUserAdmin(id, body.isAdmin);
@@ -85,6 +104,17 @@ export async function DELETE(
       { error: "Utilisateur introuvable" },
       { status: 404 },
     );
+  }
+
+  // Empêcher de supprimer le dernier admin
+  if (user.isAdmin) {
+    const adminCount = await countAdmins();
+    if (adminCount <= 1) {
+      return NextResponse.json(
+        { error: "Impossible de supprimer le dernier administrateur" },
+        { status: 400 },
+      );
+    }
   }
 
   await deleteUser(id);
