@@ -11,6 +11,6 @@ export const config = {
      * - public assets (hero-api.svg, etc.)
      * - auth pages
      */
-    "/((?!api/auth|_next/static|_next/image|favicon.ico|.*\\.svg|auth).*)",
+    "/((?!api/auth|_next/static|_next/image|favicon.ico|.*\\.svg|auth|dsfr).*)",
   ],
 };

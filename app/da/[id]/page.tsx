@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import type { DAData } from "@/types/da.types";
@@ -17,6 +17,10 @@ import Cadre9ServeursComposants from "../_components/Cadre9ServeursComposants";
 import Cadre10MatricesFlux from "../_components/Cadre10MatricesFlux";
 import Cadre11Dimensionnement from "../_components/Cadre11Dimensionnement";
 import Cadre12URLsAnnexe from "../_components/Cadre12URLsAnnexe";
+import FormAccessManager from "../_components/FormAccessManager";
+import VersionManager from "../_components/VersionManager";
+
+type SaveStatus = "idle" | "saving" | "saved" | "error" | "conflict";
 
 export default function FormulaireDA() {
   const params = useParams();
@@ -26,7 +30,16 @@ export default function FormulaireDA() {
   const [daData, setDAData] = useState<DAData>(initialData);
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [saveStatus, setSaveStatus] = useState<SaveStatus>("idle");
+  const [formId, setFormId] = useState<string | null>(null);
+  const [userAccess, setUserAccess] = useState<string | null>(null);
+  const [lastUpdatedAt, setLastUpdatedAt] = useState<string | null>(null);
 
+  // Refs pour l'auto-save
+  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const isFirstLoad = useRef(true);
+
+  // Charger le DA
   useEffect(() => {
     const loadDA = async () => {
       if (!daId) {
@@ -35,40 +48,154 @@ export default function FormulaireDA() {
       }
 
       if (daId === "new") {
-        setIsLoading(false);
-        return;
+        // Créer un nouveau DA via l'API
+        try {
+          const response = await fetch("/api/da", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nom: "Nouveau Document d'Architecture" }),
+          });
+          if (response.ok) {
+            const newForm = await response.json();
+            // Rediriger vers le DA créé
+            router.replace(`/da/${newForm.id}`);
+            return;
+          } else {
+            const error = await response.json();
+            console.error("Erreur lors de la création du DA:", error);
+            alert(error.error || "Erreur lors de la création du DA");
+            router.push("/");
+            return;
+          }
+        } catch (error) {
+          console.error("Erreur lors de la création du DA:", error);
+          router.push("/");
+          return;
+        }
       }
 
+      // Charger un DA existant depuis l'API
       try {
-        const response = await fetch(`/da/${daId}.json`);
+        const response = await fetch(`/api/da/${daId}`);
         if (response.ok) {
-          const data = await response.json();
+          const result = await response.json();
+          let data = result.data as DAData;
+
           // Migration: convert old cadre11 resource format (object) to new format (array)
-          if (data.cadre11_Dimensionnement?.justificationsAllocationsRessourcesMaterielles &&
-              !Array.isArray(data.cadre11_Dimensionnement.justificationsAllocationsRessourcesMaterielles)) {
-            const old = data.cadre11_Dimensionnement.justificationsAllocationsRessourcesMaterielles;
-            data.cadre11_Dimensionnement.justificationsAllocationsRessourcesMaterielles = [{
-              nom: "",
-              detailsHypotheses: [old.detailsCalculs, old.nombreCPU, old.nombreServeurs].filter(Boolean).join("\n"),
-              nombreCPU: "",
-              nombreServeurs: "",
-            }];
+          if (
+            data.cadre11_Dimensionnement
+              ?.justificationsAllocationsRessourcesMaterielles &&
+            !Array.isArray(
+              data.cadre11_Dimensionnement
+                .justificationsAllocationsRessourcesMaterielles,
+            )
+          ) {
+            const old = data.cadre11_Dimensionnement
+              .justificationsAllocationsRessourcesMaterielles as any;
+            data = {
+              ...data,
+              cadre11_Dimensionnement: {
+                ...data.cadre11_Dimensionnement,
+                justificationsAllocationsRessourcesMaterielles: [
+                  {
+                    nom: "",
+                    detailsHypotheses: [
+                      old.detailsCalculs,
+                      old.nombreCPU,
+                      old.nombreServeurs,
+                    ]
+                      .filter(Boolean)
+                      .join("\n"),
+                    nombreCPU: "",
+                    nombreServeurs: "",
+                  },
+                ],
+              },
+            };
           }
+
           setDAData(data);
-          console.log(`✅ DA ${daId} chargé avec succès !`);
+          setFormId(result.id);
+          setUserAccess(result.access);
+          setLastUpdatedAt(result.updatedAt);
+          isFirstLoad.current = true;
           setIsLoading(false);
+        } else if (response.status === 403) {
+          alert("Vous n'avez pas accès à ce document.");
+          router.push("/");
         } else {
-          console.error(`❌ DA ${daId} introuvable`);
+          console.error(`DA ${daId} introuvable`);
           router.push("/");
         }
       } catch (error) {
-        console.error("❌ Erreur lors du chargement du DA:", error);
+        console.error("Erreur lors du chargement du DA:", error);
         router.push("/");
       }
     };
 
     loadDA();
   }, [daId, router]);
+
+  // Auto-save debounced
+  const saveToServer = useCallback(
+    async (data: DAData) => {
+      if (!formId) return;
+
+      setSaveStatus("saving");
+      try {
+        const response = await fetch(`/api/da/${formId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ data, updatedAt: lastUpdatedAt }),
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          setLastUpdatedAt(result.updatedAt);
+          setSaveStatus("saved");
+          // Revenir à "idle" après 3 secondes
+          setTimeout(() => setSaveStatus("idle"), 3000);
+        } else if (response.status === 409) {
+          setSaveStatus("conflict");
+        } else {
+          setSaveStatus("error");
+        }
+      } catch {
+        setSaveStatus("error");
+      }
+    },
+    [formId, lastUpdatedAt],
+  );
+
+  // Déclencher l'auto-save quand daData change
+  useEffect(() => {
+    // Ne pas sauvegarder au premier chargement
+    if (isFirstLoad.current) {
+      isFirstLoad.current = false;
+      return;
+    }
+
+    if (!formId) return;
+
+    // Stopper l'auto-save en cas de conflit
+    if (saveStatus === "conflict") return;
+
+    // Annuler le timeout précédent
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current);
+    }
+
+    // Programmer une sauvegarde dans 2 secondes
+    saveTimeoutRef.current = setTimeout(() => {
+      saveToServer(daData);
+    }, 2000);
+
+    return () => {
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
+      }
+    };
+  }, [daData, formId, saveToServer, saveStatus]);
 
   const steps = [
     { id: 1, title: "Projet - Acteurs" },
@@ -105,6 +232,57 @@ export default function FormulaireDA() {
       setCurrentStep(stepId);
       window.scrollTo({ top: 0, behavior: "smooth" });
     };
+  };
+
+  const renderSaveStatus = () => {
+    switch (saveStatus) {
+      case "saving":
+        return (
+          <span className="fr-text--xs" style={{ color: "#666" }}>
+            Sauvegarde en cours...
+          </span>
+        );
+      case "saved":
+        return (
+          <span className="fr-text--xs" style={{ color: "#18753c" }}>
+            <span
+              className="fr-icon-check-line fr-icon--sm"
+              aria-hidden="true"
+            ></span>{" "}
+            Sauvegardé
+          </span>
+        );
+      case "error":
+        return (
+          <span className="fr-text--xs" style={{ color: "#ce0500" }}>
+            <span
+              className="fr-icon-error-line fr-icon--sm"
+              aria-hidden="true"
+            ></span>{" "}
+            Erreur de sauvegarde
+          </span>
+        );
+      case "conflict":
+        return (
+          <div
+            className="fr-alert fr-alert--error fr-alert--sm"
+            style={{ marginTop: "0.5rem" }}
+          >
+            <p>
+              Ce document a été modifié par un autre utilisateur.
+            </p>
+            <button
+              type="button"
+              className="fr-btn fr-btn--sm fr-btn--secondary fr-mt-1w"
+              onClick={() => window.location.reload()}
+            >
+              Recharger
+            </button>
+          </div>
+        );
+      default:
+        return null;
+    }
   };
 
   const renderMenuItems = () => {
@@ -155,13 +333,22 @@ export default function FormulaireDA() {
                   Dans cette rubrique
                 </button>
                 <div className="fr-collapse" id="sidemenu-collapse-1">
-                  <p
-                    className="fr-sidemenu__title fr-mb-1w"
-                    id="sidemenu-title"
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
                   >
-                    {daData.cadre1_ProjetActeurs.nomDuProjet ||
-                      "Document d'Architecture"}
-                  </p>
+                    <p
+                      className="fr-sidemenu__title fr-mb-1w"
+                      id="sidemenu-title"
+                    >
+                      {daData.cadre1_ProjetActeurs.nomDuProjet ||
+                        "Document d'Architecture"}
+                    </p>
+                  </div>
+                  <div className="fr-mb-1w">{renderSaveStatus()}</div>
                   <ul className="fr-sidemenu__list">{renderMenuItems()}</ul>
                 </div>
               </div>
@@ -169,13 +356,26 @@ export default function FormulaireDA() {
           </div>
           <div className="content-editorial fr-col-12 fr-col-md-8 fr-mt-2w">
             <h1 className="fr-h1">
-              {daId && daId !== "new"
+              {formId
                 ? `${daData.cadre1_ProjetActeurs.nomDuProjet || "Document d'Architecture"}`
                 : "Formulaire Document d'Architecture (DA)"}
             </h1>
             <p className="fr-text--sm fr-mb-2w">
               Remplissez tous les champs du Document d&apos;Architecture
             </p>
+
+            {/* Actions admin et versionnement */}
+            {formId && (
+              <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                {userAccess === "admin" && (
+                  <FormAccessManager formId={formId} />
+                )}
+                {userAccess !== "viewer" && (
+                  <VersionManager formId={formId} onRestore={setDAData} />
+                )}
+              </div>
+            )}
+
             {isLoading && (
               <div className="fr-callout fr-callout--info fr-mb-4w">
                 <p className="fr-callout__text">Chargement du DA...</p>

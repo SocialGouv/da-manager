@@ -90,20 +90,22 @@ export default async function HeaderWithAuth() {
             aria-label="Menu principal"
           >
             <ul className="fr-nav__list">
-              <li className="fr-nav__item">
-                <Link
-                  id="navigation-item-2"
-                  type="link"
-                  href="/users"
-                  className="fr-nav__link"
-                >
-                  <span
-                    className="fr-icon-account-line fr-mr-1w"
-                    aria-hidden="true"
-                  ></span>
-                  Gestion des utilisateurs
-                </Link>
-              </li>
+              {session?.user?.isAdmin && (
+                <li className="fr-nav__item">
+                  <Link
+                    id="navigation-item-2"
+                    type="link"
+                    href="/users"
+                    className="fr-nav__link"
+                  >
+                    <span
+                      className="fr-icon-account-line fr-mr-1w"
+                      aria-hidden="true"
+                    ></span>
+                    Gestion des utilisateurs
+                  </Link>
+                </li>
+              )}
             </ul>
           </nav>
         </div>

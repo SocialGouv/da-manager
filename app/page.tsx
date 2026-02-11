@@ -1,31 +1,16 @@
-import { promises as fs } from "fs";
-import path from "path";
 import Image from "next/image";
 import Link from "next/link";
 import { auth } from "@/auth";
+import { getFormsForUser } from "@/lib/db/queries/forms";
 import ProConnectLoginButton from "./_components/ProConnectLoginButton";
-
-interface DA {
-  id: string;
-  nom: string;
-  dateCreation: string;
-  dateModification: string;
-}
-
-async function getDAList(): Promise<DA[]> {
-  try {
-    const filePath = path.join(process.cwd(), "public/da/index.json");
-    const fileContents = await fs.readFile(filePath, "utf8");
-    return JSON.parse(fileContents);
-  } catch (error) {
-    console.error("Erreur lors du chargement de la liste des DA:", error);
-    return [];
-  }
-}
 
 export default async function Home() {
   const session = await auth();
-  const daList = session?.user ? await getDAList() : [];
+
+  const daList =
+    session?.user?.dbUserId
+      ? await getFormsForUser(session.user.dbUserId, session.user.isAdmin)
+      : [];
 
   return (
     <>
@@ -46,10 +31,12 @@ export default async function Home() {
             </p>
 
             {session?.user ? (
-              <Link href="/da/new" className="fr-btn fr-btn--lg">
-                <span className="fr-icon-add-line" aria-hidden="true"></span>
-                Créer un nouveau DA
-              </Link>
+              session.user.isAdmin && (
+                <Link href="/da/new" className="fr-btn fr-btn--lg">
+                  <span className="fr-icon-add-line" aria-hidden="true"></span>
+                  Créer un nouveau DA
+                </Link>
+              )
             ) : (
               <ProConnectLoginButton />
             )}
@@ -115,7 +102,7 @@ export default async function Home() {
                                 className="fr-col--xs"
                                 style={{ textAlign: "right" }}
                               >
-                                {new Date(da.dateCreation).toLocaleDateString(
+                                {new Date(da.createdAt).toLocaleDateString(
                                   "fr-FR",
                                 )}
                               </td>
@@ -123,9 +110,9 @@ export default async function Home() {
                                 className="fr-col--xs"
                                 style={{ textAlign: "right" }}
                               >
-                                {new Date(
-                                  da.dateModification,
-                                ).toLocaleDateString("fr-FR")}
+                                {new Date(da.updatedAt).toLocaleDateString(
+                                  "fr-FR",
+                                )}
                               </td>
                               <td
                                 className="fr-col--sm"
@@ -171,8 +158,9 @@ export default async function Home() {
               ) : (
                 <div className="fr-callout fr-callout--info fr-mt-6w">
                   <p className="fr-callout__text">
-                    Aucun document d&apos;architecture trouvé. Créez votre
-                    premier DA !
+                    {session.user.isAdmin
+                      ? "Aucun document d'architecture trouvé. Créez votre premier DA !"
+                      : "Aucun document d'architecture ne vous a été partagé pour le moment."}
                   </p>
                 </div>
               )}

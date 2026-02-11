@@ -1,39 +1,132 @@
-import { promises as fs } from "fs";
-import path from "path";
+"use client";
+
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 interface User {
   id: string;
-  nom: string;
-  prenom: string;
+  proconnectSub: string;
   email: string;
-  role: string;
-  direction: string;
-  dateCreation: string;
+  givenName: string | null;
+  usualName: string | null;
+  isAdmin: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
-async function getUserList(): Promise<User[]> {
-  try {
-    const filePath = path.join(process.cwd(), "public/users/index.json");
-    const fileContents = await fs.readFile(filePath, "utf8");
-    return JSON.parse(fileContents);
-  } catch (error) {
-    console.error(
-      "Erreur lors du chargement de la liste des utilisateurs:",
-      error,
+export default function Users() {
+  const router = useRouter();
+  const [users, setUsers] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const loadUsers = async () => {
+    try {
+      const response = await fetch("/api/users");
+      if (response.status === 403) {
+        router.push("/");
+        return;
+      }
+      if (!response.ok) {
+        throw new Error("Erreur lors du chargement des utilisateurs");
+      }
+      const data = await response.json();
+      setUsers(data);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Erreur inconnue",
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadUsers();
+  }, []);
+
+  const handleToggleAdmin = async (userId: string, currentIsAdmin: boolean) => {
+    try {
+      const response = await fetch(`/api/users/${userId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isAdmin: !currentIsAdmin }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        alert(data.error || "Erreur lors de la modification");
+        return;
+      }
+
+      // Recharger la liste
+      await loadUsers();
+    } catch {
+      alert("Erreur lors de la modification de l'utilisateur");
+    }
+  };
+
+  const handleDelete = async (userId: string, userName: string) => {
+    if (
+      !confirm(
+        `Êtes-vous sûr de vouloir supprimer l'utilisateur "${userName}" ? Cette action est irréversible.`,
+      )
+    ) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/users/${userId}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        alert(data.error || "Erreur lors de la suppression");
+        return;
+      }
+
+      // Recharger la liste
+      await loadUsers();
+    } catch {
+      alert("Erreur lors de la suppression de l'utilisateur");
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="fr-container fr-my-4w">
+        <p>Chargement des utilisateurs...</p>
+      </div>
     );
-    return [];
   }
-}
 
-export default async function Users() {
-  const users = await getUserList();
+  if (error) {
+    return (
+      <div className="fr-container fr-my-4w">
+        <div className="fr-callout fr-callout--red-marianne">
+          <p className="fr-callout__text">{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="fr-container">
       <div className="fr-grid-row fr-grid-row--middle fr-my-4w">
         <div className="fr-col-12">
           <h1 className="fr-h1">Gestion des utilisateurs</h1>
-          <p className="fr-text--lead">Liste des utilisateurs du système</p>
+          <p className="fr-text--lead">
+            Liste des utilisateurs du système ({users.length} utilisateur
+            {users.length > 1 ? "s" : ""})
+          </p>
+          <div className="fr-callout fr-callout--blue-ecume fr-mb-3w">
+            <p className="fr-callout__text">
+              Les utilisateurs sont automatiquement créés lors de leur première
+              connexion via ProConnect. Vous pouvez gérer leurs droits
+              d&apos;administration ici.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -48,70 +141,86 @@ export default async function Users() {
                     <th scope="col">Nom</th>
                     <th scope="col">Email</th>
                     <th scope="col">Rôle</th>
-                    <th scope="col">Direction</th>
-                    <th scope="col">Date de création</th>
-                    <th
-                      scope="col"
-                      style={{ textAlign: "right" }}
-                    ></th>
+                    <th scope="col">Date d&apos;inscription</th>
+                    <th scope="col" style={{ textAlign: "right" }}>
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {users.map((user) => (
                     <tr key={user.id}>
                       <td>
-                        {user.prenom} {user.nom}
+                        {user.givenName} {user.usualName}
                       </td>
                       <td>{user.email}</td>
-                      <td>{user.role}</td>
-                      <td>{user.direction}</td>
                       <td>
-                        {new Date(user.dateCreation).toLocaleDateString(
-                          "fr-FR",
+                        {user.isAdmin ? (
+                          <span className="fr-badge fr-badge--info">
+                            Administrateur
+                          </span>
+                        ) : (
+                          <span className="fr-badge fr-badge--new">
+                            Utilisateur
+                          </span>
                         )}
                       </td>
+                      <td>
+                        {new Date(user.createdAt).toLocaleDateString("fr-FR")}
+                      </td>
                       <td style={{ textAlign: "right" }}>
-                        <button
-                          className="fr-btn fr-btn--tertiary-no-outline"
-                          type="button"
-                          title="Modifier"
+                        <div
+                          style={{
+                            display: "flex",
+                            gap: "0.5rem",
+                            justifyContent: "flex-end",
+                          }}
                         >
-                          <span
-                            className="fr-icon-edit-line"
-                            aria-hidden="true"
-                          ></span>
-                        </button>
-                        <button
-                          className="fr-btn fr-btn--tertiary-no-outline"
-                          type="button"
-                          title="Supprimer"
-                        >
-                          <span
-                            className="fr-icon-delete-line"
-                            aria-hidden="true"
-                          ></span>
-                        </button>
+                          <button
+                            className={`fr-btn fr-btn--sm ${user.isAdmin ? "fr-btn--secondary" : ""}`}
+                            type="button"
+                            title={
+                              user.isAdmin
+                                ? "Retirer les droits admin"
+                                : "Passer administrateur"
+                            }
+                            onClick={() =>
+                              handleToggleAdmin(user.id, user.isAdmin)
+                            }
+                          >
+                            <span
+                              className={
+                                user.isAdmin
+                                  ? "fr-icon-subtract-line"
+                                  : "fr-icon-shield-line"
+                              }
+                              aria-hidden="true"
+                            ></span>
+                            {user.isAdmin ? "Retirer admin" : "Passer admin"}
+                          </button>
+                          <button
+                            className="fr-btn fr-btn--sm fr-btn--tertiary-no-outline"
+                            type="button"
+                            title="Supprimer"
+                            onClick={() =>
+                              handleDelete(
+                                user.id,
+                                `${user.givenName} ${user.usualName}`,
+                              )
+                            }
+                          >
+                            <span
+                              className="fr-icon-delete-line"
+                              aria-hidden="true"
+                            ></span>
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-          </div>
-        </div>
-        <div className="fr-table__footer">
-          <div className="fr-table__footer--end">
-            <ul className="fr-btns-group fr-btns-group--right fr-btns-group--inline-reverse fr-btns-group--inline-md">
-              <li>
-                <button className="fr-btn fr-btn--secondary">
-                  <span
-                    className="fr-icon-add-line"
-                    aria-hidden="true"
-                  ></span>
-                  Ajouter un utilisateur
-                </button>
-              </li>
-            </ul>
           </div>
         </div>
       </div>

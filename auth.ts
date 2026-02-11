@@ -1,4 +1,39 @@
 import NextAuth from "next-auth";
+import Credentials from "next-auth/providers/credentials";
+import { findOrCreateUser } from "@/lib/db/queries/users";
+
+const isDev = process.env.NODE_ENV === "development";
+
+// Provider de dev pour bypasser ProConnect quand l'instance de test est indisponible
+const devProvider = Credentials({
+  id: "dev-login",
+  name: "Dev Login",
+  credentials: {
+    email: { label: "Email", type: "email" },
+    name: { label: "Nom", type: "text" },
+  },
+  async authorize(credentials) {
+    if (!isDev) return null;
+
+    const email = (credentials.email as string) || "dev@test.fr";
+    const name = (credentials.name as string) || "Utilisateur Dev";
+    const parts = name.split(" ");
+    const givenName = parts[0] || "Utilisateur";
+    const usualName = parts.slice(1).join(" ") || "Dev";
+    const proconnectSub = `dev-${email}`;
+
+    // Créer/retrouver l'utilisateur en DB (même logique que ProConnect)
+    await findOrCreateUser(proconnectSub, email, givenName, usualName);
+
+    return {
+      id: proconnectSub,
+      email,
+      name,
+      givenName,
+      usualName,
+    };
+  },
+});
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -20,19 +55,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         // Fetch additional user info from userinfo endpoint
         if (tokens.access_token) {
           try {
-            const userInfoResponse = await fetch(`${process.env.PROCONNECT_ISSUER}/userinfo`, {
-              headers: {
-                Authorization: `Bearer ${tokens.access_token}`,
+            const userInfoResponse = await fetch(
+              `${process.env.PROCONNECT_ISSUER}/userinfo`,
+              {
+                headers: {
+                  Authorization: `Bearer ${tokens.access_token}`,
+                },
               },
-            });
+            );
             const responseText = await userInfoResponse.text();
 
             let userInfo;
             // ProConnect returns a JWT, not plain JSON
-            if (responseText.startsWith('eyJ')) {
+            if (responseText.startsWith("eyJ")) {
               // It's a JWT, decode the payload (second part)
-              const payload = responseText.split('.')[1];
-              const decoded = Buffer.from(payload, 'base64').toString('utf-8');
+              const payload = responseText.split(".")[1];
+              const decoded = Buffer.from(payload, "base64").toString("utf-8");
               userInfo = JSON.parse(decoded);
             } else {
               // Plain JSON
@@ -41,7 +79,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
             return {
               id: userInfo.sub || profile.sub,
-              name: `${userInfo.given_name || ''} ${userInfo.usual_name || ''}`.trim(),
+              name: `${userInfo.given_name || ""} ${userInfo.usual_name || ""}`.trim(),
               email: userInfo.email,
               givenName: userInfo.given_name,
               usualName: userInfo.usual_name,
@@ -53,13 +91,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         return {
           id: profile.sub,
-          name: `${profile.given_name || ''} ${profile.usual_name || ''}`.trim(),
+          name: `${profile.given_name || ""} ${profile.usual_name || ""}`.trim(),
           email: profile.email,
           givenName: profile.given_name,
           usualName: profile.usual_name,
         };
       },
     },
+    // Provider de dev uniquement en développement
+    ...(isDev ? [devProvider] : []),
   ],
   callbacks: {
     authorized({ request, auth }) {
@@ -68,25 +108,58 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (pathname === "/") return true; // Allow home page without auth
       return !!auth;
     },
-    async jwt({ token, account, profile }) {
-      if (account && profile) {
-        token.id = profile.sub;
-        token.givenName = (profile as any).given_name;
-        token.usualName = (profile as any).usual_name;
+    async jwt({ token, user, account, profile }) {
+      // À la connexion initiale : créer/retrouver l'utilisateur en DB
+      if (account && user) {
+        // Pour ProConnect : profile.sub, pour Credentials : user.id (= "dev-{email}")
+        const proconnectSub =
+          account.provider === "dev-login"
+            ? (user.id as string)
+            : (profile?.sub as string) || (user.id as string);
+        const email = user.email || "";
+        const givenName = user.givenName;
+        const usualName = user.usualName;
+
+        try {
+          const dbUser = await findOrCreateUser(
+            proconnectSub,
+            email,
+            givenName,
+            usualName,
+          );
+
+          token.id = proconnectSub;
+          token.dbUserId = dbUser.id;
+          token.isAdmin = dbUser.isAdmin;
+          token.givenName = givenName;
+          token.usualName = usualName;
+        } catch (error) {
+          console.error(
+            "Erreur lors de la création/récupération de l'utilisateur en DB:",
+            error,
+          );
+          // Fallback : continuer sans les infos DB
+          token.id = proconnectSub;
+          token.givenName = givenName;
+          token.usualName = usualName;
+        }
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
         session.user.id = token.id as string;
+        session.user.dbUserId = token.dbUserId as string;
+        session.user.isAdmin = token.isAdmin ?? false;
         session.user.name = token.name as string;
         session.user.email = token.email as string;
-        (session.user as any).givenName = token.givenName;
-        (session.user as any).usualName = token.usualName;
+        session.user.givenName = token.givenName;
+        session.user.usualName = token.usualName;
       }
       return session;
     },
   },
+  session: { strategy: "jwt" },
   pages: {
     signIn: "/auth/signin",
     error: "/auth/error",
