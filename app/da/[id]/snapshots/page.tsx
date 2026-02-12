@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface SnapshotEntry {
@@ -10,38 +12,41 @@ interface SnapshotEntry {
   createdAt: string;
 }
 
-interface SnapshotManagerProps {
-  formId: string;
-}
-
-export default function SnapshotManager({ formId }: SnapshotManagerProps) {
+export default function SnapshotsPage() {
+  const params = useParams();
   const router = useRouter();
+  const formId = params.id as string;
+
+  const [daNom, setDaNom] = useState<string>("");
   const [snapshots, setSnapshots] = useState<SnapshotEntry[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [newSnapshotName, setNewSnapshotName] = useState("");
   const [isCreating, setIsCreating] = useState(false);
 
-  const loadSnapshots = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(`/api/da/${formId}/versions`);
-      if (response.ok) {
-        const data = await response.json();
-        setSnapshots(data);
-      }
-    } catch (error) {
-      console.error("Erreur lors du chargement des snapshots:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    if (isOpen) {
-      loadSnapshots();
-    }
-  }, [isOpen, formId]);
+    const load = async () => {
+      setIsLoading(true);
+      try {
+        const [daRes, snapRes] = await Promise.all([
+          fetch(`/api/da/${formId}`),
+          fetch(`/api/da/${formId}/versions`),
+        ]);
+        if (daRes.ok) {
+          const da = await daRes.json();
+          setDaNom(da.nom);
+        }
+        if (snapRes.ok) {
+          const data = await snapRes.json();
+          setSnapshots(data);
+        }
+      } catch (error) {
+        console.error("Erreur lors du chargement:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    load();
+  }, [formId]);
 
   const handleCreate = async () => {
     if (!newSnapshotName.trim()) return;
@@ -56,7 +61,10 @@ export default function SnapshotManager({ formId }: SnapshotManagerProps) {
 
       if (response.ok) {
         setNewSnapshotName("");
-        await loadSnapshots();
+        const snapRes = await fetch(`/api/da/${formId}/versions`);
+        if (snapRes.ok) {
+          setSnapshots(await snapRes.json());
+        }
       } else {
         const data = await response.json();
         alert(data.error || "Erreur lors de la création du snapshot");
@@ -109,7 +117,7 @@ export default function SnapshotManager({ formId }: SnapshotManagerProps) {
         { method: "DELETE" },
       );
       if (response.ok) {
-        await loadSnapshots();
+        setSnapshots((prev) => prev.filter((s) => s.id !== snapshotId));
       } else {
         const data = await response.json();
         alert(data.error || "Erreur lors de la suppression");
@@ -120,68 +128,74 @@ export default function SnapshotManager({ formId }: SnapshotManagerProps) {
   };
 
   return (
-    <div>
-      <button
-        className="fr-btn fr-btn--tertiary fr-btn--sm fr-btn--icon-left fr-icon-git-branch-line"
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        Snapshots
-      </button>
+    <main className="fr-container fr-my-6w">
+      <div className="fr-grid-row fr-grid-row--center">
+        <div className="fr-col-12 fr-col-md-10 fr-col-lg-8">
+          <Link href="/" className="fr-link fr-icon-arrow-left-line fr-link--icon-left fr-mb-3w" style={{ display: "inline-block" }}>
+            Retour à la liste des DA
+          </Link>
 
-      {isOpen && (
-        <div
-          className="fr-mt-2w fr-p-3w"
-          style={{
-            border: "1px solid var(--border-default-grey)",
-            borderRadius: "0.25rem",
-          }}
-        >
-          <h3 className="fr-h6 fr-mb-2w">Snapshots</h3>
+          <h1 className="fr-h2 fr-mb-1w">Snapshots</h1>
+          {daNom && (
+            <p className="fr-text--lg fr-text--bold fr-mb-4w">{daNom}</p>
+          )}
 
           {/* Formulaire de création */}
           <div
-            className="fr-mb-3w"
+            className="fr-mb-4w fr-p-3w"
             style={{
-              display: "flex",
-              gap: "0.5rem",
-              alignItems: "flex-end",
+              border: "1px solid var(--border-default-grey)",
+              borderRadius: "0.25rem",
+              background: "var(--background-alt-grey)",
             }}
           >
-            <div className="fr-input-group" style={{ flex: 1 }}>
-              <label className="fr-label" htmlFor={`snapshot-name-${formId}`}>
-                Créer un snapshot
-              </label>
-              <input
-                className="fr-input"
-                type="text"
-                id={`snapshot-name-${formId}`}
-                placeholder="Ex: V1 - Validation comité"
-                value={newSnapshotName}
-                onChange={(e) => setNewSnapshotName(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") handleCreate();
-                }}
-              />
-            </div>
-            <button
-              className="fr-btn fr-btn--sm"
-              type="button"
-              onClick={handleCreate}
-              disabled={!newSnapshotName.trim() || isCreating}
+            <h2 className="fr-h6 fr-mb-2w">Créer un snapshot</h2>
+            <div
+              style={{
+                display: "flex",
+                gap: "0.5rem",
+                alignItems: "flex-end",
+              }}
             >
-              {isCreating ? "Création..." : "Créer"}
-            </button>
+              <div className="fr-input-group" style={{ flex: 1, marginBottom: 0 }}>
+                <label className="fr-label" htmlFor="snapshot-name">
+                  Nom du snapshot
+                </label>
+                <input
+                  className="fr-input"
+                  type="text"
+                  id="snapshot-name"
+                  placeholder="Ex: V1 - Validation comité"
+                  value={newSnapshotName}
+                  onChange={(e) => setNewSnapshotName(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleCreate();
+                  }}
+                />
+              </div>
+              <button
+                className="fr-btn"
+                type="button"
+                onClick={handleCreate}
+                disabled={!newSnapshotName.trim() || isCreating}
+              >
+                {isCreating ? "Création..." : "Créer"}
+              </button>
+            </div>
           </div>
 
+          {/* Liste des snapshots */}
           {isLoading ? (
             <p>Chargement...</p>
           ) : snapshots.length > 0 ? (
             <div>
+              <h2 className="fr-h6 fr-mb-2w">
+                Snapshots existants ({snapshots.length})
+              </h2>
               {snapshots.map((snapshot) => (
                 <div
                   key={snapshot.id}
-                  className="fr-p-2w fr-mb-1w"
+                  className="fr-p-3w fr-mb-2w"
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
@@ -198,12 +212,13 @@ export default function SnapshotManager({ formId }: SnapshotManagerProps) {
                       {new Date(snapshot.createdAt).toLocaleString("fr-FR")}
                     </span>
                   </div>
-                  <div style={{ display: "flex", gap: "0.25rem" }}>
+                  <div style={{ display: "flex", gap: "0.5rem" }}>
                     <button
                       className="fr-btn fr-btn--sm fr-btn--tertiary"
                       type="button"
-                      onClick={() => handleRestore(snapshot.id, snapshot.name)}
-                      title="Restaurer ce snapshot"
+                      onClick={() =>
+                        handleRestore(snapshot.id, snapshot.name)
+                      }
                     >
                       <span
                         className="fr-icon-refresh-line"
@@ -214,11 +229,13 @@ export default function SnapshotManager({ formId }: SnapshotManagerProps) {
                     <button
                       className="fr-btn fr-btn--sm fr-btn--tertiary-no-outline"
                       type="button"
-                      onClick={() => handleDelete(snapshot.id, snapshot.name)}
+                      onClick={() =>
+                        handleDelete(snapshot.id, snapshot.name)
+                      }
                       title="Supprimer ce snapshot"
                     >
                       <span
-                        className="fr-icon-delete-line fr-icon--sm"
+                        className="fr-icon-delete-line"
                         aria-hidden="true"
                       ></span>
                     </button>
@@ -227,12 +244,14 @@ export default function SnapshotManager({ formId }: SnapshotManagerProps) {
               ))}
             </div>
           ) : (
-            <p className="fr-text--sm fr-text--mention-grey">
-              Aucun snapshot. Créez-en un pour figer une version du document.
-            </p>
+            <div className="fr-callout fr-callout--info">
+              <p className="fr-callout__text">
+                Aucun snapshot. Créez-en un pour figer une version du document.
+              </p>
+            </div>
           )}
         </div>
-      )}
-    </div>
+      </div>
+    </main>
   );
 }

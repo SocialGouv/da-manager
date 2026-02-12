@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
+import Link from "next/link";
 
 interface AccessEntry {
   id: string;
@@ -20,11 +22,11 @@ interface AvailableUser {
   isAdmin: boolean;
 }
 
-interface FormAccessManagerProps {
-  formId: string;
-}
+export default function AccessPage() {
+  const params = useParams();
+  const formId = params.id as string;
 
-export default function FormAccessManager({ formId }: FormAccessManagerProps) {
+  const [daNom, setDaNom] = useState<string>("");
   const [accessList, setAccessList] = useState<AccessEntry[]>([]);
   const [availableUsers, setAvailableUsers] = useState<AvailableUser[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -32,28 +34,32 @@ export default function FormAccessManager({ formId }: FormAccessManagerProps) {
   const [selectedRole, setSelectedRole] = useState<"editor" | "viewer">(
     "editor",
   );
-  const [isOpen, setIsOpen] = useState(false);
 
-  const loadAccess = async () => {
+  const loadData = async () => {
     try {
-      const response = await fetch(`/api/da/${formId}/access`);
-      if (response.ok) {
-        const data = await response.json();
+      const [daRes, accessRes] = await Promise.all([
+        fetch(`/api/da/${formId}`),
+        fetch(`/api/da/${formId}/access`),
+      ]);
+      if (daRes.ok) {
+        const da = await daRes.json();
+        setDaNom(da.nom);
+      }
+      if (accessRes.ok) {
+        const data = await accessRes.json();
         setAccessList(data.accessList);
         setAvailableUsers(data.availableUsers);
       }
     } catch (error) {
-      console.error("Erreur lors du chargement des accès:", error);
+      console.error("Erreur lors du chargement:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    if (isOpen) {
-      loadAccess();
-    }
-  }, [isOpen, formId]);
+    loadData();
+  }, [formId]);
 
   const handleGrant = async () => {
     if (!selectedUserId) return;
@@ -67,7 +73,7 @@ export default function FormAccessManager({ formId }: FormAccessManagerProps) {
 
       if (response.ok) {
         setSelectedUserId("");
-        await loadAccess();
+        await loadData();
       } else {
         const data = await response.json();
         alert(data.error || "Erreur lors de l'attribution de l'accès");
@@ -79,9 +85,7 @@ export default function FormAccessManager({ formId }: FormAccessManagerProps) {
 
   const handleRevoke = async (userId: string, userName: string) => {
     if (
-      !confirm(
-        `Retirer l'accès de "${userName}" à ce document ?`,
-      )
+      !confirm(`Retirer l'accès de "${userName}" à ce document ?`)
     ) {
       return;
     }
@@ -92,7 +96,7 @@ export default function FormAccessManager({ formId }: FormAccessManagerProps) {
       });
 
       if (response.ok) {
-        await loadAccess();
+        await loadData();
       } else {
         const data = await response.json();
         alert(data.error || "Erreur lors de la révocation de l'accès");
@@ -103,24 +107,17 @@ export default function FormAccessManager({ formId }: FormAccessManagerProps) {
   };
 
   return (
-    <div className="fr-mb-4w">
-      <button
-        className="fr-btn fr-btn--tertiary fr-btn--sm fr-btn--icon-left fr-icon-team-line"
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        Gérer les accès
-      </button>
+    <main className="fr-container fr-my-6w">
+      <div className="fr-grid-row fr-grid-row--center">
+        <div className="fr-col-12 fr-col-md-10 fr-col-lg-8">
+          <Link href="/" className="fr-link fr-icon-arrow-left-line fr-link--icon-left fr-mb-3w" style={{ display: "inline-block" }}>
+            Retour à la liste des DA
+          </Link>
 
-      {isOpen && (
-        <div
-          className="fr-mt-2w fr-p-3w"
-          style={{
-            border: "1px solid var(--border-default-grey)",
-            borderRadius: "0.25rem",
-          }}
-        >
-          <h3 className="fr-h6 fr-mb-2w">Accès au document</h3>
+          <h1 className="fr-h2 fr-mb-1w">Gestion des accès</h1>
+          {daNom && (
+            <p className="fr-text--lg fr-text--bold fr-mb-4w">{daNom}</p>
+          )}
 
           {isLoading ? (
             <p>Chargement...</p>
@@ -128,7 +125,7 @@ export default function FormAccessManager({ formId }: FormAccessManagerProps) {
             <>
               {/* Liste des accès existants */}
               {accessList.length > 0 ? (
-                <div className="fr-table fr-table--sm fr-table--no-caption fr-mb-3w">
+                <div className="fr-table fr-table--no-caption fr-mb-4w">
                   <div className="fr-table__wrapper">
                     <div className="fr-table__container">
                       <div className="fr-table__content">
@@ -190,17 +187,25 @@ export default function FormAccessManager({ formId }: FormAccessManagerProps) {
                   </div>
                 </div>
               ) : (
-                <p className="fr-text--sm fr-mb-3w">
-                  Aucun utilisateur n&apos;a accès à ce document pour le moment.
-                </p>
+                <div className="fr-callout fr-callout--info fr-mb-4w">
+                  <p className="fr-callout__text">
+                    Aucun utilisateur n&apos;a accès à ce document pour le
+                    moment.
+                  </p>
+                </div>
               )}
 
               {/* Formulaire d'ajout d'accès */}
               {availableUsers.length > 0 && (
-                <div>
-                  <h4 className="fr-text--bold fr-mb-1w">
-                    Ajouter un utilisateur
-                  </h4>
+                <div
+                  className="fr-p-3w"
+                  style={{
+                    border: "1px solid var(--border-default-grey)",
+                    borderRadius: "0.25rem",
+                    background: "var(--background-alt-grey)",
+                  }}
+                >
+                  <h2 className="fr-h6 fr-mb-2w">Ajouter un utilisateur</h2>
                   <div
                     style={{
                       display: "flex",
@@ -210,10 +215,7 @@ export default function FormAccessManager({ formId }: FormAccessManagerProps) {
                     }}
                   >
                     <div className="fr-select-group" style={{ flex: 1 }}>
-                      <label
-                        className="fr-label"
-                        htmlFor="user-select"
-                      >
+                      <label className="fr-label" htmlFor="user-select">
                         Utilisateur
                       </label>
                       <select
@@ -251,7 +253,7 @@ export default function FormAccessManager({ formId }: FormAccessManagerProps) {
                       </select>
                     </div>
                     <button
-                      className="fr-btn fr-btn--sm"
+                      className="fr-btn"
                       type="button"
                       onClick={handleGrant}
                       disabled={!selectedUserId}
@@ -268,7 +270,7 @@ export default function FormAccessManager({ formId }: FormAccessManagerProps) {
             </>
           )}
         </div>
-      )}
-    </div>
+      </div>
+    </main>
   );
 }

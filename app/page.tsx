@@ -4,9 +4,6 @@ import { auth } from "@/auth";
 import { getFormsForUser } from "@/lib/db/queries/forms";
 import ProConnectLoginButton from "./_components/ProConnectLoginButton";
 import DeleteDAButton from "./_components/DeleteDAButton";
-import FormAccessManager from "./da/_components/FormAccessManager";
-import SnapshotManager from "./_components/SnapshotManager";
-import EditLogViewer from "./_components/EditLogViewer";
 
 export default async function Home() {
   const session = await auth();
@@ -131,13 +128,28 @@ export default async function Home() {
                                     PDF
                                   </Link>
                                   {session.user.isAdmin && (
-                                    <SnapshotManager formId={da.id} />
+                                    <Link
+                                      href={`/da/${da.id}/snapshots`}
+                                      className="fr-btn fr-btn--sm fr-btn--tertiary fr-btn--icon-left fr-icon-git-branch-line"
+                                    >
+                                      Snapshots
+                                    </Link>
                                   )}
                                   {session.user.isAdmin && (
-                                    <EditLogViewer formId={da.id} />
+                                    <Link
+                                      href={`/da/${da.id}/logs`}
+                                      className="fr-btn fr-btn--sm fr-btn--tertiary fr-btn--icon-left fr-icon-time-line"
+                                    >
+                                      Historique
+                                    </Link>
                                   )}
                                   {session.user.isAdmin && (
-                                    <FormAccessManager formId={da.id} />
+                                    <Link
+                                      href={`/da/${da.id}/access`}
+                                      className="fr-btn fr-btn--sm fr-btn--tertiary fr-btn--icon-left fr-icon-team-line"
+                                    >
+                                      Accès
+                                    </Link>
                                   )}
                                   {session.user.isAdmin && (
                                     <DeleteDAButton
