@@ -77,7 +77,9 @@ export default async function Home() {
                           {daList.map((da) => (
                             <tr key={da.id}>
                               <td>
-                                <strong>{da.nom}</strong>
+                                <Link href={`/view/${da.id}`}>
+                                  <strong>{da.nom}</strong>
+                                </Link>
                               </td>
                               <td
                                 className="fr-col--xs"

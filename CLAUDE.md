@@ -31,9 +31,10 @@ pnpm lint         # Run ESLint
 
 ### Data Persistence
 
-- DA documents are stored as JSON files in `public/da/{id}.json`
-- The DA index is maintained in `public/da/index.json`
-- This is a **file-based system** with no database - all data operations use the filesystem
+- DA documents are stored in **PostgreSQL** via **Drizzle ORM**
+- Form data is stored as JSON in the `forms` table
+- Access control via `formAccess` table (roles: admin, editor, viewer)
+- Auth: NextAuth v5 with ProConnect OIDC + dev credentials fallback
 
 ### Application Structure
 
@@ -42,7 +43,10 @@ pnpm lint         # Run ESLint
 - `/` - Home page displaying list of DA documents (app/page.tsx)
 - `/da/[id]` - DA form editor with 12-step stepper (app/da/[id]/page.tsx)
   - Uses `id="new"` for creating new documents
-  - Loads existing documents from `/da/{id}.json`
+- `/view/[id]` - Readonly view of a DA (app/view/[id]/page.tsx)
+  - Server component, accessible to all authenticated users (admin, editor, viewer)
+  - Displays all 12 cadres sequentially with sidebar navigation
+  - Diagrams rendered as PNG images (no Excalidraw editor)
 - `/api/export-pdf/[id]` - PDF export endpoint (app/api/export-pdf/[id]/route.ts)
 
 **12-Step Form Structure:**
@@ -114,8 +118,7 @@ Use native DSFR classes. Custom CSS (app/dsfr-extensions.css) should be exceptio
 
 ## Important Notes
 
-- **No Backend**: This application has no server-side database or API backend beyond Next.js routes
-- **File Operations**: DA creation/updates would need filesystem write operations (not yet implemented in the current codebase)
+- **Backend**: PostgreSQL database via Drizzle ORM, NextAuth v5 for authentication
 - **French Language**: All UI text, comments, and data structures are in French
 - **Government Context**: This follows French government architecture documentation standards (DICT, EBIOS, PCA/PRA, etc.)
 - **React Compiler**: The project uses the experimental React Compiler (babel-plugin-react-compiler)
@@ -130,8 +133,50 @@ Use native DSFR classes. Custom CSS (app/dsfr-extensions.css) should be exceptio
 
 ## Development environment
 
-- We use Google Chrome MCP to access, read and test web pages
+### Chrome DevTools MCP (chrome-devtools-mcp)
+
+On utilise `chrome-devtools-mcp` pour tester et vérifier le rendu des pages dans Chrome.
+
+**Prérequis : L'utilisateur doit lancer Chrome avec le profil de debug AVANT la session Claude Code.**
+
+```bash
+# Lancer Chrome avec remote debugging activé (profil dédié MCP)
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+  --remote-debugging-port=9222 \
+  --user-data-dir="$HOME/.chrome-mcp-profile" \
+  --no-first-run --no-default-browser-check &
+```
+
+**⚠️ IMPORTANT — Profil dédié MCP (`~/.chrome-mcp-profile`) :**
+- Chrome 136+ exige `--user-data-dir` pour activer le remote debugging
+- Utiliser un profil **séparé et léger**, dédié uniquement au debug MCP (`~/.chrome-mcp-profile`)
+- Ne PAS réutiliser le profil de navigation quotidien (trop d'onglets → timeout MCP)
+- Ce profil persiste les sessions de login entre les redémarrages
+- Si le profil accumule trop d'onglets (>5), le supprimer et relancer : `rm -rf ~/.chrome-mcp-profile`
+
+**Alias recommandé** (à ajouter dans `~/.zshrc`) :
+```bash
+alias chrome:debug='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 --user-data-dir="$HOME/.chrome-mcp-profile" --no-first-run --no-default-browser-check > /dev/null 2>&1 &'
+```
+
+**Vérification de la connexion :**
+```bash
+curl -s http://127.0.0.1:9222/json/version
+# Doit retourner du JSON avec la version de Chrome
+```
+
+**En cas de problème de connexion MCP (timeout) :**
+1. Vérifier que Chrome tourne avec le bon port : `curl -s http://127.0.0.1:9222/json/version`
+2. Si pas de réponse → Chrome n'est pas lancé avec le bon flag. Le fermer (`pkill -9 "Google Chrome"`) et relancer avec la commande ci-dessus
+3. Si timeout malgré la réponse JSON → trop d'onglets ouverts. Supprimer le profil : `rm -rf ~/.chrome-mcp-profile` et relancer
+4. Ne JAMAIS lancer Chrome via `open -a` (les flags ne passent pas correctement)
+5. Tuer les processus zombies si nécessaire : `pkill -f "chrome-devtools-mcp"`
+
+### Vérification UI
+
 - **All UI modifications must be verified in Chrome MCP** to ensure they render correctly with DSFR
+- Utiliser `mcp__chrome-devtools__take_screenshot` pour vérifier le rendu visuel
+- Utiliser `mcp__chrome-devtools__take_snapshot` pour inspecter l'arbre d'accessibilité
 
 ## Documentation
 

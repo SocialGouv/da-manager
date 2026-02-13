@@ -130,6 +130,10 @@
   padding-right: 0 !important;
 }
 
+.fr-sidemenu--sticky-full-height .fr-sidemenu__inner {
+  overflow-x: hidden;
+}
+
 .fr-sidemenu__title {
   padding-left: 1.5rem !important;
 }
