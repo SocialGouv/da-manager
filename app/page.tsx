@@ -5,6 +5,7 @@ import { getFormsForUser, getAllForms } from "@/lib/db/queries/forms";
 import { getVersionCountsForForms } from "@/lib/db/queries/versions";
 import ProConnectLoginButton from "./_components/ProConnectLoginButton";
 import AdminDATable from "./_components/AdminDATable";
+import CreateDAModal from "./_components/CreateDAModal";
 
 export default async function Home() {
   const session = await auth();
@@ -50,13 +51,7 @@ export default async function Home() {
                     <h1 className="fr-h1" style={{ marginBottom: 0 }}>
                       Documents d&apos;Architecture
                     </h1>
-                    <Link href="/da/new" className="fr-btn">
-                      <span
-                        className="fr-icon-add-line"
-                        aria-hidden="true"
-                      ></span>
-                      Créer un nouveau DA
-                    </Link>
+                    <CreateDAModal />
                   </div>
                   {daList.length > 0 ? (
                     <AdminDATable

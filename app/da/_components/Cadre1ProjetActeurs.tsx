@@ -1,4 +1,3 @@
-import { useState, useEffect, useRef } from "react";
 import type { DAData } from "@/types/da.types";
 import EditableTable from "./EditableTable";
 
@@ -8,68 +7,24 @@ interface CadreProps {
   formId?: string | null;
 }
 
-export default function Cadre1ProjetActeurs({ daData, setDAData, formId }: CadreProps) {
-  const [nameError, setNameError] = useState<string | null>(null);
-  const checkTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
+export default function Cadre1ProjetActeurs({ daData, setDAData }: CadreProps) {
   const nomDuProjet = daData.cadre1_ProjetActeurs.nomDuProjet;
-
-  useEffect(() => {
-    if (checkTimeoutRef.current) {
-      clearTimeout(checkTimeoutRef.current);
-    }
-
-    if (!nomDuProjet.trim()) {
-      setNameError(null);
-      return;
-    }
-
-    checkTimeoutRef.current = setTimeout(async () => {
-      try {
-        const params = new URLSearchParams({ nom: nomDuProjet.trim() });
-        if (formId) params.set("excludeId", formId);
-        const res = await fetch(`/api/da/check-name?${params}`);
-        if (res.ok) {
-          const { taken } = await res.json();
-          setNameError(taken ? "Un DA avec ce nom existe déjà" : null);
-        }
-      } catch {
-        // Silencieux en cas d'erreur réseau
-      }
-    }, 500);
-
-    return () => {
-      if (checkTimeoutRef.current) {
-        clearTimeout(checkTimeoutRef.current);
-      }
-    };
-  }, [nomDuProjet, formId]);
 
   return (
     <div>
       <h3 className="fr-h4 fr-mt-4w">Nom du projet applicatif</h3>
-      <div className={`fr-input-group${nameError ? " fr-input-group--error" : ""}`}>
+      <div className="fr-input-group">
         <input
-          className={`fr-input fr-text--sm${nameError ? " fr-input--error" : ""}`}
+          className="fr-input fr-text--sm"
           id="nomDuProjet"
           type="text"
-          aria-describedby={nameError ? "nomDuProjet-error" : undefined}
           value={nomDuProjet}
-          onChange={(e) =>
-            setDAData({
-              ...daData,
-              cadre1_ProjetActeurs: {
-                ...daData.cadre1_ProjetActeurs,
-                nomDuProjet: e.target.value,
-              },
-            })
-          }
+          readOnly
+          disabled
         />
-        {nameError && (
-          <p id="nomDuProjet-error" className="fr-error-text">
-            {nameError}
-          </p>
-        )}
+        <p className="fr-hint-text">
+          Le nom du projet est défini à la création du DA
+        </p>
       </div>
 
       <h3 className="fr-h4 fr-mt-6w">Contexte projet applicatif</h3>
