@@ -50,6 +50,8 @@ jobs:
           dockerfile: "Dockerfile"
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            NEXTAUTH_URL=https://${{ steps.env.outputs.subdomain }}.ovh.fabrique.social.gouv.fr
           registry: "${{ vars.REGISTRY_URL }}"
           registry-username: "${{ secrets.REGISTRY_USERNAME }}"
           registry-password: "${{ secrets.REGISTRY_PASSWORD }}"

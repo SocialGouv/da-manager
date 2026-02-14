@@ -28,6 +28,10 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
+# NextAuth URL (injectée au build pour le callback OAuth)
+ARG NEXTAUTH_URL
+ENV NEXTAUTH_URL=$NEXTAUTH_URL
+
 # Build de l'application
 RUN pnpm build
 
