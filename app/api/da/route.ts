@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { createForm, getFormsForUser } from "@/lib/db/queries/forms";
+import { createForm, getFormsForUser, isFormNameTaken } from "@/lib/db/queries/forms";
 import { initialData } from "@/app/da/initialData";
 
 /**
@@ -44,6 +44,14 @@ export async function POST(request: NextRequest) {
   }
 
   const nom = body.nom || "Nouveau Document d'Architecture";
+
+  const nameTaken = await isFormNameTaken(nom);
+  if (nameTaken) {
+    return NextResponse.json(
+      { error: "Un DA avec ce nom existe déjà" },
+      { status: 409 },
+    );
+  }
 
   const data = {
     ...initialData,

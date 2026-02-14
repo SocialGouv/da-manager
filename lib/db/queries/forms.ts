@@ -1,7 +1,29 @@
 import { db } from "@/lib/db";
 import { forms, formAccess, users } from "@/lib/db/schema";
-import { eq, desc, sql } from "drizzle-orm";
+import { eq, desc, sql, and, ne } from "drizzle-orm";
 import type { DAData } from "@/types/da.types";
+
+/**
+ * Vérifie si un nom de DA est déjà utilisé (insensible à la casse).
+ * Exclut optionnellement un DA (pour l'édition).
+ */
+export async function isFormNameTaken(
+  nom: string,
+  excludeFormId?: string,
+): Promise<boolean> {
+  const conditions = [sql`LOWER(${forms.nom}) = LOWER(${nom})`];
+  if (excludeFormId) {
+    conditions.push(ne(forms.id, excludeFormId));
+  }
+
+  const result = await db
+    .select({ id: forms.id })
+    .from(forms)
+    .where(and(...conditions))
+    .limit(1);
+
+  return result.length > 0;
+}
 
 /**
  * Crée un nouveau DA.

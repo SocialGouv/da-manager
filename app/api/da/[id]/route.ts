@@ -5,6 +5,7 @@ import {
   updateFormData,
   deleteForm,
   checkFormAccess,
+  isFormNameTaken,
 } from "@/lib/db/queries/forms";
 import type { DAData } from "@/types/da.types";
 import { createEditLog } from "@/lib/db/queries/editLogs";
@@ -90,6 +91,17 @@ export async function PUT(
     return NextResponse.json(
       { error: "Les données du DA sont requises" },
       { status: 400 },
+    );
+  }
+
+  // Vérifier l'unicité du nom
+  const nom =
+    body.data.cadre1_ProjetActeurs?.nomDuProjet || "Document d'Architecture";
+  const nameTaken = await isFormNameTaken(nom, id);
+  if (nameTaken) {
+    return NextResponse.json(
+      { error: "Un DA avec ce nom existe déjà", nameTaken: true },
+      { status: 409 },
     );
   }
 

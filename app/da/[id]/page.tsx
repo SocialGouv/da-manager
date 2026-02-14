@@ -18,7 +18,7 @@ import Cadre10MatricesFlux from "../_components/Cadre10MatricesFlux";
 import Cadre11Dimensionnement from "../_components/Cadre11Dimensionnement";
 import Cadre12URLsAnnexe from "../_components/Cadre12URLsAnnexe";
 
-type SaveStatus = "idle" | "saving" | "saved" | "error" | "conflict";
+type SaveStatus = "idle" | "saving" | "saved" | "error" | "conflict" | "name_taken";
 
 export default function FormulaireDA() {
   const params = useParams();
@@ -161,8 +161,14 @@ export default function FormulaireDA() {
             saveStatusRef.current = "idle";
           }, 3000);
         } else if (response.status === 409) {
-          setSaveStatus("conflict");
-          saveStatusRef.current = "conflict";
+          const errorBody = await response.json();
+          if (errorBody.nameTaken) {
+            setSaveStatus("name_taken");
+            saveStatusRef.current = "name_taken";
+          } else {
+            setSaveStatus("conflict");
+            saveStatusRef.current = "conflict";
+          }
         } else {
           setSaveStatus("error");
           saveStatusRef.current = "error";
@@ -268,6 +274,16 @@ export default function FormulaireDA() {
               aria-hidden="true"
             ></span>{" "}
             Erreur de sauvegarde
+          </span>
+        );
+      case "name_taken":
+        return (
+          <span className="fr-text--xs" style={{ color: "#ce0500" }}>
+            <span
+              className="fr-icon-error-line fr-icon--sm"
+              aria-hidden="true"
+            ></span>{" "}
+            Nom déjà utilisé
           </span>
         );
       case "conflict":
@@ -404,7 +420,7 @@ export default function FormulaireDA() {
 
             <div className="fr-mt-4w">
               {currentStep === 1 && (
-                <Cadre1ProjetActeurs daData={daData} setDAData={setDAData} />
+                <Cadre1ProjetActeurs daData={daData} setDAData={setDAData} formId={formId} />
               )}
               {currentStep === 2 && (
                 <Cadre2FonctionnalitesDonnees
