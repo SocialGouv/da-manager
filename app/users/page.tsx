@@ -193,19 +193,6 @@ export default function Users() {
                     </button>
                   </div>
                 </th>
-                <th scope="col">
-                  <div className="fr-cell--sort">
-                    Rôle
-                    <button
-                      type="button"
-                      className={sortButtonClass("role")}
-                      aria-sort={sortAria("role")}
-                      onClick={() => handleSort("role")}
-                    >
-                      Trier
-                    </button>
-                  </div>
-                </th>
                 <th scope="col" style={{ textAlign: "right" }}>
                   <div
                     className="fr-cell--sort"
@@ -222,11 +209,18 @@ export default function Users() {
                     </button>
                   </div>
                 </th>
-                <th
-                  scope="col"
-                  style={{ textAlign: "right" }}
-                >
-                  Actions
+                <th scope="col">
+                  <div className="fr-cell--sort">
+                    Admin
+                    <button
+                      type="button"
+                      className={sortButtonClass("role")}
+                      aria-sort={sortAria("role")}
+                      onClick={() => handleSort("role")}
+                    >
+                      Trier
+                    </button>
+                  </div>
                 </th>
               </tr>
             </thead>
@@ -237,33 +231,35 @@ export default function Users() {
                     {user.givenName} {user.usualName}
                   </td>
                   <td>{user.email}</td>
-                  <td>
-                    {user.isAdmin ? (
-                      <span className="fr-badge fr-badge--info">
-                        Administrateur
-                      </span>
-                    ) : (
-                      <span className="fr-badge fr-badge--new">
-                        Utilisateur
-                      </span>
-                    )}
-                  </td>
                   <td style={{ textAlign: "right" }}>
                     {new Date(user.createdAt).toLocaleDateString("fr-FR")}
                   </td>
-                  <td style={{ textAlign: "right" }}>
-                    <button
-                      className={`fr-btn fr-btn--sm fr-btn--tertiary-no-outline ${user.isAdmin ? "fr-icon-subtract-line" : "fr-icon-shield-line"}`}
-                      type="button"
-                      title={
-                        user.isAdmin
-                          ? "Retirer les droits admin"
-                          : "Passer administrateur"
-                      }
-                      onClick={() =>
-                        handleToggleAdmin(user.id, user.isAdmin)
-                      }
-                    />
+                  <td className="fr-td--toggle">
+                    <div className="fr-toggle">
+                      <input
+                        type="checkbox"
+                        className="fr-toggle__input"
+                        id={`toggle-admin-${user.id}`}
+                        checked={user.isAdmin}
+                        onChange={() =>
+                          handleToggleAdmin(user.id, user.isAdmin)
+                        }
+                      />
+                      <label
+                        className="fr-toggle__label"
+                        htmlFor={`toggle-admin-${user.id}`}
+                      >
+                        {user.isAdmin ? (
+                          <span className="fr-badge fr-badge--info">
+                            Administrateur
+                          </span>
+                        ) : (
+                          <span className="fr-badge fr-badge--new">
+                            Utilisateur
+                          </span>
+                        )}
+                      </label>
+                    </div>
                   </td>
                 </tr>
               ))}
