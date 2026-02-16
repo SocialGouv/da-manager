@@ -24,7 +24,7 @@ jobs:
         id: token
         uses: SocialGouv/token-bureau@main
         with:
-          url: https://token-bureau.fabrique.social.gouv.fr
+          token-bureau-url: https://token-bureau.fabrique.social.gouv.fr
 
       - uses: actions/checkout@v5
         with:
