@@ -1,0 +1,50 @@
+name: 🔖 Release
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - alpha
+      - beta
+      - next
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.ref }}
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get token
+        id: token
+        uses: SocialGouv/token-bureau@main
+        with:
+          url: https://token-bureau.fabrique.social.gouv.fr
+
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          token: ${{ steps.token.outputs.token }}
+
+      - name: Cleanup orphaned git notes and tags
+        run: |
+          git fetch --prune origin '+refs/notes/*:refs/notes/*'
+          git notes --ref semantic-release list 2>/dev/null | while read -r line; do
+            sha=$(echo "$line" | awk '{print $2}')
+            if ! git cat-file -e "$sha" 2>/dev/null; then
+              git notes --ref semantic-release remove "$sha" 2>/dev/null || true
+            fi
+          done
+        continue-on-error: true
+
+      - name: Release
+        uses: SocialGouv/actions/autodevops-release@v1
+        with:
+          author-name: ${{ secrets.SOCIALGROOVYBOT_NAME }}
+          author-email: ${{ secrets.SOCIALGROOVYBOT_EMAIL }}
+          github-token: ${{ steps.token.outputs.token }}

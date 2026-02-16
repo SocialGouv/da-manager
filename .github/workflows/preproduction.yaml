@@ -1,13 +1,9 @@
-name: 👓 Review
+name: 🚀 Preproduction
 on:
   workflow_dispatch:
   push:
     branches:
-      - "feat/**"
-      - "feature/**"
-      - "fix/**"
-      - "hotfix/**"
-      - "**/review/**"
+      - main
 
 concurrency:
   cancel-in-progress: true
@@ -15,7 +11,7 @@ concurrency:
 
 jobs:
   build-app:
-    environment: build-review-auto
+    environment: build-preproduction
     outputs:
       tags: ${{ steps.meta.outputs.tags }}
     runs-on: ubuntu-latest
@@ -29,19 +25,8 @@ jobs:
         with:
           images: ${{ vars.REGISTRY_URL }}/fabrique/${{ github.event.repository.name }}/app
           tags: |
-            type=sha,prefix=persist-,format=long,enable=${{
-              github.ref_name == 'dev' ||
-              github.ref_name == 'develop' ||
-              github.ref_name == 'preprod' ||
-              github.ref_name == 'main' ||
-              github.ref_name == 'master'
-            }},priority=840
-            type=sha,prefix=sha-,format=long,priority=890
-            type=ref,event=branch,priority=600
-
-      - name: Env
-        id: env
-        uses: socialgouv/kontinuous/.github/actions/env@v1
+            type=sha,prefix=preprod-,format=long,priority=890
+            type=sha,prefix=sha-,format=long,priority=880
 
       - name: 📦 Build and push Docker image
         uses: socialgouv/workflows/actions/buildkit@v1
@@ -51,7 +36,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            AUTH_URL=https://${{ steps.env.outputs.subdomain }}.ovh.fabrique.social.gouv.fr
+            AUTH_URL=https://da-manager-preprod.ovh.fabrique.social.gouv.fr
             NEXT_PUBLIC_ENABLE_DEV_LOGIN=true
           registry: "${{ vars.REGISTRY_URL }}"
           registry-username: "${{ secrets.REGISTRY_USERNAME }}"
@@ -64,6 +49,6 @@ jobs:
 
   kontinuous:
     needs: [build-app]
-    name: "Deploy on Kubernetes 🐳"
-    uses: socialgouv/workflows/.github/workflows/use-ks-gh-review-auto-atlas.yaml@v1
+    name: "Deploy Preproduction 🐳"
+    uses: socialgouv/workflows/.github/workflows/use-ks-gh-preproduction-atlas.yaml@v1
     secrets: inherit

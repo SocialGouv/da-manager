@@ -1,0 +1,7 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: da-manager
+data:
+  ALLOWED_EMAIL_DOMAINS: "sg.social.gouv.fr,beta.gouv.fr,yopmail.com,test.fr"
+  ENABLE_DEV_LOGIN: "true"
