@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
-import { formAccess, users } from "@/lib/db/schema";
-import { eq, and, notInArray } from "drizzle-orm";
+import { formAccess, forms, users } from "@/lib/db/schema";
+import { eq, and, notInArray, desc } from "drizzle-orm";
 
 /**
  * Liste les utilisateurs ayant accès à un DA, avec leurs infos.
@@ -51,6 +51,24 @@ export async function revokeAccess(formId: string, userId: string) {
     .where(
       and(eq(formAccess.formId, formId), eq(formAccess.userId, userId)),
     );
+}
+
+/**
+ * Liste les DA partagés à un utilisateur via formAccess.
+ */
+export async function getSharedDAsForUser(userId: string) {
+  return db
+    .select({
+      id: forms.id,
+      nom: forms.nom,
+      createdAt: forms.createdAt,
+      updatedAt: forms.updatedAt,
+      sharedAt: formAccess.createdAt,
+    })
+    .from(formAccess)
+    .innerJoin(forms, eq(formAccess.formId, forms.id))
+    .where(eq(formAccess.userId, userId))
+    .orderBy(desc(forms.updatedAt));
 }
 
 /**

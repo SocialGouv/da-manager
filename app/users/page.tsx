@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface User {
   id: string;
@@ -228,7 +229,9 @@ export default function Users() {
               {sortedUsers.map((user) => (
                 <tr key={user.id}>
                   <td>
-                    {user.givenName} {user.usualName}
+                    <Link href={`/admin/users/${user.id}/activity`} className="fr-link">
+                      {user.givenName} {user.usualName}
+                    </Link>
                   </td>
                   <td>{user.email}</td>
                   <td style={{ textAlign: "right" }}>

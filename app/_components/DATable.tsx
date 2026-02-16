@@ -338,14 +338,14 @@ function ExpandableRow({
                 />
               )}
             </span>
-            <Link href={`/view/${da.id}`}>
+            <Link href={`/view/${da.id}`} className="fr-link">
               <strong>{da.nom}</strong>
             </Link>
           </div>
         </td>
         <td>{formatAuthorName(da)}</td>
         <td style={{ textAlign: "right" }}>
-          <Link href={`/da/${da.id}/logs`}>
+          <Link href={`/da/${da.id}/logs`} className="fr-link">
             {new Date(da.updatedAt).toLocaleString("fr-FR")}
           </Link>
         </td>
@@ -414,7 +414,7 @@ function ExpandableRow({
                 <td style={{ paddingLeft: "3rem" }}>
                   <Link
                     href={`/view/${da.id}/versions/${v.id}`}
-                    className="fr-text--sm"
+                    className="fr-link fr-text--sm"
                   >
                     {versionLabel}
                   </Link>
