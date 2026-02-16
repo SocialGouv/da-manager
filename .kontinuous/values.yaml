@@ -1,40 +1,17 @@
 app:
   ~chart: app
+  ~needs: [pg]
   probesPath: /api/healthz
+  envFrom:
+    - secretRef:
+        name: pg-app
+    - secretRef:
+        name: proconnect
+    - configMapRef:
+        name: da-manager
   env:
     - name: PROCONNECT_ISSUER
       value: "https://fca.integ01.dev-agentconnect.fr/api/v2"
-    - name: PROCONNECT_CLIENT_ID
-      valueFrom:
-        secretKeyRef:
-          name: proconnect
-          key: PROCONNECT_CLIENT_ID
-    - name: PROCONNECT_CLIENT_SECRET
-      valueFrom:
-        secretKeyRef:
-          name: proconnect
-          key: PROCONNECT_CLIENT_SECRET
-    - name: AUTH_SECRET
-      valueFrom:
-        secretKeyRef:
-          name: proconnect
-          key: AUTH_SECRET
-    - name: ALLOWED_EMAIL_DOMAINS
-      valueFrom:
-        configMapKeyRef:
-          name: da-manager
-          key: ALLOWED_EMAIL_DOMAINS
-    - name: ENABLE_DEV_LOGIN
-      valueFrom:
-        configMapKeyRef:
-          name: da-manager
-          key: ENABLE_DEV_LOGIN
-          optional: true
-    - name: DATABASE_URL
-      valueFrom:
-        secretKeyRef:
-          name: pg-app
-          key: DATABASE_URL
 
 pg:
   ~chart: pg
