@@ -242,6 +242,31 @@ export async function updateFormData(
 }
 
 /**
+ * Renomme un DA (met à jour forms.nom ET data.cadre1_ProjetActeurs.nomDuProjet).
+ */
+export async function renameForm(formId: string, newNom: string) {
+  const form = await getFormById(formId);
+  if (!form) return null;
+
+  const updatedData = { ...form.data } as DAData;
+  if (updatedData.cadre1_ProjetActeurs) {
+    updatedData.cadre1_ProjetActeurs.nomDuProjet = newNom;
+  }
+
+  const [result] = await db
+    .update(forms)
+    .set({
+      nom: newNom,
+      data: updatedData,
+      updatedAt: new Date(),
+    })
+    .where(eq(forms.id, formId))
+    .returning();
+
+  return result ?? null;
+}
+
+/**
  * Supprime un DA.
  */
 export async function deleteForm(formId: string) {

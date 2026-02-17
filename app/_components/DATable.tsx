@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import DeleteDAButton from "./DeleteDAButton";
+import RenameDAModal from "./RenameDAModal";
 
 export interface DAItem {
   id: string;
@@ -382,6 +383,7 @@ function ExpandableRow({
                   className="fr-btn fr-btn--sm fr-btn--tertiary fr-icon-team-line"
                   title="Accès"
                 />
+                <RenameDAModal daId={da.id} currentNom={da.nom} />
                 <DeleteDAButton daId={da.id} daNom={da.nom} />
               </>
             )}

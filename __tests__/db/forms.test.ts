@@ -7,6 +7,7 @@ import {
   updateFormData,
   deleteForm,
   isFormNameTaken,
+  renameForm,
 } from "@/lib/db/queries/forms";
 import { db } from "@/lib/db";
 import { versions, formAccess, editLogs } from "@/lib/db/schema";
@@ -305,5 +306,73 @@ describe("isFormNameTaken", () => {
     const formB = await createTestForm(user.id, { nom: "Beta" });
 
     expect(await isFormNameTaken("Alpha", formB.id)).toBe(true);
+  });
+});
+
+describe("renameForm", () => {
+  it("updates both nom and data.cadre1_ProjetActeurs.nomDuProjet", async () => {
+    const user = await createTestUser();
+    const form = await createTestForm(user.id, { nom: "Old Name" });
+
+    const updated = await renameForm(form.id, "New Name");
+
+    expect(updated).not.toBeNull();
+    expect(updated!.nom).toBe("New Name");
+    expect(
+      (updated!.data as { cadre1_ProjetActeurs?: { nomDuProjet?: string } })
+        .cadre1_ProjetActeurs?.nomDuProjet,
+    ).toBe("New Name");
+  });
+
+  it("persists the rename in the database", async () => {
+    const user = await createTestUser();
+    const form = await createTestForm(user.id, { nom: "Before" });
+
+    await renameForm(form.id, "After");
+
+    const found = await getFormById(form.id);
+    expect(found).not.toBeNull();
+    expect(found!.nom).toBe("After");
+    expect(
+      (found!.data as { cadre1_ProjetActeurs?: { nomDuProjet?: string } })
+        .cadre1_ProjetActeurs?.nomDuProjet,
+    ).toBe("After");
+  });
+
+  it("updates the updatedAt timestamp", async () => {
+    const user = await createTestUser();
+    const form = await createTestForm(user.id, { nom: "Timestamp Test" });
+    const originalUpdatedAt = form.updatedAt;
+
+    await new Promise((resolve) => setTimeout(resolve, 10));
+
+    const updated = await renameForm(form.id, "Renamed");
+
+    expect(updated).not.toBeNull();
+    expect(updated!.updatedAt.getTime()).toBeGreaterThan(
+      originalUpdatedAt.getTime(),
+    );
+  });
+
+  it("returns null for non-existent formId", async () => {
+    const result = await renameForm(
+      "00000000-0000-0000-0000-000000000000",
+      "Whatever",
+    );
+    expect(result).toBeNull();
+  });
+
+  it("preserves other data fields when renaming", async () => {
+    const user = await createTestUser();
+    const data = makeDAData({ nomDuProjet: "Original" });
+    const form = await createTestForm(user.id, { nom: "Original", data });
+
+    const updated = await renameForm(form.id, "Renamed");
+
+    expect(updated).not.toBeNull();
+    // The rest of cadre1_ProjetActeurs and other cadres should remain intact
+    const updatedData = updated!.data as Record<string, unknown>;
+    expect(updatedData.cadre2_FonctionnalitesDonnees).toBeDefined();
+    expect(updatedData.cadre3_ContraintesVolumetrie).toBeDefined();
   });
 });
