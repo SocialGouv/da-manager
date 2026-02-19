@@ -186,4 +186,16 @@ On utilise l'extension **"Claude in Chrome"** (MCP SDK) pour tester et vérifier
 
 ## Documentation
 
-- DSFR Componants: https://www.systeme-de-design.gouv.fr/version-courante/fr/composants
+- DSFR Composants: https://www.systeme-de-design.gouv.fr/version-courante/fr/composants
+
+### Consultation de la doc DSFR
+
+**Utiliser le MCP server `dsfr`** (configuré dans `.mcp.json`) pour consulter la documentation DSFR :
+
+- `mcp__dsfr__list_components` — Lister tous les composants disponibles
+- `mcp__dsfr__get_component_doc(name, section)` — Lire la doc d'un composant (sections: `code`, `overview`, `design`, `accessibility`, `demo`)
+- `mcp__dsfr__search_components(query)` — Rechercher par mot-clé (nom, classe CSS, description)
+
+La section `code` est la plus utile : elle contient la structure HTML, les classes CSS, et les variantes.
+
+**Note :** Le site systeme-de-design.gouv.fr bloque WebFetch/curl (Cloudflare 403). Le MCP server fournit la même doc en local. Pour les pages non couvertes par le MCP (exemples interactifs, Storybook), utiliser Chrome MCP.
