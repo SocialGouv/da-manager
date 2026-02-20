@@ -341,33 +341,33 @@ export default function FormulaireDA() {
               role="navigation"
               aria-labelledby="sidemenu-title"
             >
-              <div className="fr-sidemenu__inner">
-                <ul className="fr-btns-group fr-mt-2w">
+              <ul className="fr-btns-group fr-mt-2w">
+                <li>
+                  <Link href="/" className="fr-btn fr-btn--sm">
+                    <span
+                      className="fr-icon-arrow-left-line"
+                      aria-hidden="true"
+                    ></span>
+                    Retour
+                  </Link>
+                </li>
+                {formId && (
                   <li>
-                    <Link href="/" className="fr-btn fr-btn--sm">
+                    <Link
+                      href={`/api/export-pdf/${formId}`}
+                      target="_blank"
+                      className="fr-btn fr-btn--sm fr-btn--tertiary"
+                    >
                       <span
-                        className="fr-icon-arrow-left-line"
+                        className="fr-icon-download-line"
                         aria-hidden="true"
                       ></span>
-                      Retour
+                      PDF
                     </Link>
                   </li>
-                  {formId && (
-                    <li>
-                      <Link
-                        href={`/api/export-pdf/${formId}`}
-                        target="_blank"
-                        className="fr-btn fr-btn--sm fr-btn--tertiary"
-                      >
-                        <span
-                          className="fr-icon-download-line"
-                          aria-hidden="true"
-                        ></span>
-                        PDF
-                      </Link>
-                    </li>
-                  )}
-                </ul>
+                )}
+              </ul>
+              <div className="fr-sidemenu__inner">
                 <button
                   aria-expanded="false"
                   aria-controls="sidemenu-collapse-1"
