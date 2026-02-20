@@ -55,4 +55,4 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           branch_prefix: "feat/claude-"
-          claude_args: '--max-turns 30 --allowedTools "Bash(pnpm build),Bash(pnpm lint),Bash(mkdir *),Bash(mv *),Bash(cp *)"'
+          claude_args: '--max-turns 50 --allowedTools "Bash(pnpm build),Bash(pnpm lint),Bash(mkdir *),Bash(mv *),Bash(cp *)"'
