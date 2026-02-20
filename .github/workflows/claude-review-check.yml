@@ -79,7 +79,7 @@ jobs:
           steps.count.outputs.skip != 'true' &&
           steps.health.outputs.ready == 'true'
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           REVIEW_URL: ${{ steps.health.outputs.review_url }}
           PR_NUMBER: ${{ steps.pr.outputs.number }}
           ITERATION: ${{ steps.count.outputs.count }}
