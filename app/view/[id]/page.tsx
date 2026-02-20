@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { auth } from "@/auth";
 import { getFormById, checkFormAccess } from "@/lib/db/queries/forms";
 import type { DAData } from "@/types/da.types";
@@ -39,6 +40,13 @@ export default async function ViewDA({
         <div className="fr-grid-row fr-grid-row--gutters fr-grid-row--center">
           <ReadonlySidemenu id={id} canEdit={canEdit} projectName={projectName} />
           <div className="content-editorial fr-col-12 fr-col-md-9 fr-mt-2w">
+            <Link
+              href="/"
+              className="fr-link fr-icon-arrow-left-line fr-link--icon-left fr-mb-3w"
+              style={{ display: "inline-block" }}
+            >
+              Retour à la liste des DA
+            </Link>
             <h1 className="fr-h1">{projectName}</h1>
             <p className="fr-text--sm fr-mb-4w" style={{ color: "#666" }}>
               Dernière modification :{" "}

@@ -399,6 +399,13 @@ export default function FormulaireDA() {
             </nav>
           </div>
           <div className="content-editorial fr-col-12 fr-col-md-9 fr-mt-2w">
+            <Link
+              href="/"
+              className="fr-link fr-icon-arrow-left-line fr-link--icon-left fr-mb-3w"
+              style={{ display: "inline-block" }}
+            >
+              Retour à la liste des DA
+            </Link>
             <h1 className="fr-h1">
               {formId
                 ? `${daData.cadre1_ProjetActeurs.nomDuProjet || "Document d'Architecture"}`

@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { auth } from "@/auth";
 import { getVersionById } from "@/lib/db/queries/versions";
 import type { DAData } from "@/types/da.types";
@@ -37,6 +38,13 @@ export default async function ViewVersion({
             pdfUrl={`/api/export-pdf/${id}/versions/${versionId}`}
           />
           <div className="content-editorial fr-col-12 fr-col-md-9 fr-mt-2w">
+            <Link
+              href="/"
+              className="fr-link fr-icon-arrow-left-line fr-link--icon-left fr-mb-3w"
+              style={{ display: "inline-block" }}
+            >
+              Retour à la liste des DA
+            </Link>
             <div className="fr-callout fr-callout--brown-caramel fr-mb-3w">
               <p className="fr-callout__text">
                 Version {version.name ? `« ${version.name} »` : `v${version.versionNumber}`}
