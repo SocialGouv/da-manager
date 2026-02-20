@@ -342,32 +342,6 @@ export default function FormulaireDA() {
               aria-labelledby="sidemenu-title"
             >
               <div className="fr-sidemenu__inner">
-                <ul className="fr-btns-group fr-mt-2w">
-                  <li>
-                    <Link href="/" className="fr-btn fr-btn--sm">
-                      <span
-                        className="fr-icon-arrow-left-line"
-                        aria-hidden="true"
-                      ></span>
-                      Retour
-                    </Link>
-                  </li>
-                  {formId && (
-                    <li>
-                      <Link
-                        href={`/api/export-pdf/${formId}`}
-                        target="_blank"
-                        className="fr-btn fr-btn--sm fr-btn--tertiary"
-                      >
-                        <span
-                          className="fr-icon-download-line"
-                          aria-hidden="true"
-                        ></span>
-                        PDF
-                      </Link>
-                    </li>
-                  )}
-                </ul>
                 <button
                   aria-expanded="false"
                   aria-controls="sidemenu-collapse-1"
@@ -377,6 +351,32 @@ export default function FormulaireDA() {
                   Sommaire
                 </button>
                 <div className="fr-collapse" id="sidemenu-collapse-1">
+                  <ul className="fr-btns-group fr-mt-2w fr-mb-1w">
+                    <li>
+                      <Link href="/" className="fr-btn fr-btn--sm">
+                        <span
+                          className="fr-icon-arrow-left-line"
+                          aria-hidden="true"
+                        ></span>
+                        Retour
+                      </Link>
+                    </li>
+                    {formId && (
+                      <li>
+                        <Link
+                          href={`/api/export-pdf/${formId}`}
+                          target="_blank"
+                          className="fr-btn fr-btn--sm fr-btn--tertiary"
+                        >
+                          <span
+                            className="fr-icon-download-line"
+                            aria-hidden="true"
+                          ></span>
+                          PDF
+                        </Link>
+                      </li>
+                    )}
+                  </ul>
                   <div
                     style={{
                       display: "flex",
