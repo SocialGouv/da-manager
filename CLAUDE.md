@@ -228,7 +228,7 @@ Quand l'environnement review est déployé, un commentaire `@claude Review :` es
 2. Écrire un script Playwright qui teste les changements spécifiques
 3. Exécuter le script et analyser les résultats
 4. Si un problème est détecté : corriger le code et pousser
-5. Si tout est OK : approuver la PR (`gh pr review --approve`) et la marquer ready for review (`gh pr ready`)
+5. Si tout est OK : poster un commentaire confirmant la réussite
 
 **Pattern Playwright pour la vérification review :**
 

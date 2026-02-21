@@ -134,4 +134,4 @@ jobs:
 
           **URL :** $REVIEW_URL$ISSUE_LINE
 
-          Vérifie que l'app fonctionne et que les changements sont effectifs. Si tout est OK, approuve la PR (\`gh pr review --approve\`) et marque-la ready for review."
+          Vérifie que l'app fonctionne et que les changements sont effectifs."
