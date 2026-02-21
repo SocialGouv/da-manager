@@ -44,7 +44,7 @@ jobs:
         run: |
           COUNT=$(gh api \
             "repos/${{ github.repository }}/issues/${{ steps.pr.outputs.number }}/comments" \
-            --jq '[.[] | select(.body | contains("@claude")) | select(.body | contains("environnement review est déployé"))] | length')
+            --jq '[.[] | select(.body | contains("@claude Review :"))] | length')
           echo "count=$COUNT" >> "$GITHUB_OUTPUT"
           if [ "$COUNT" -ge 3 ]; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
@@ -98,11 +98,14 @@ jobs:
           REVIEW_URL: ${{ steps.health.outputs.review_url }}
           PR_NUMBER: ${{ steps.pr.outputs.number }}
           ISSUE_NUMBER: ${{ steps.pr.outputs.issue }}
-          ITERATION: ${{ steps.count.outputs.count }}
         run: |
-          ITER=$((ITERATION + 1))
-          ISSUE_REF=""
+          ISSUE_LINE=""
           if [ -n "$ISSUE_NUMBER" ]; then
-            ISSUE_REF=" (issue #$ISSUE_NUMBER)"
+            ISSUE_LINE="
+          **Issue :** #$ISSUE_NUMBER"
           fi
-          gh pr comment "$PR_NUMBER" --body "@claude Environnement review déployé (vérification $ITER/3) : $REVIEW_URL — Vérifie que l'application fonctionne et que les changements$ISSUE_REF sont effectifs. Si tout est OK, marque la PR ready for review."
+          gh pr comment "$PR_NUMBER" --body "@claude Review :
+
+          **URL :** $REVIEW_URL$ISSUE_LINE
+
+          Vérifie que l'app fonctionne et que les changements sont effectifs. Si tout est OK, marque la PR ready for review."
