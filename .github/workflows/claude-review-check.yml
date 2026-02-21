@@ -3,16 +3,19 @@ name: Claude Review Check
 on:
   deployment_status:
 
+concurrency:
+  group: claude-review-${{ github.event.deployment.ref }}
+  cancel-in-progress: true
+
 jobs:
   notify:
     # Déploiements réussis sur des branches Claude uniquement.
-    # Pas de filtre sur le nom d'environnement : les workflows review
-    # et review-auto couvrent des cas différents mais ne sont jamais
-    # simultanés sur une même PR. Le health check confirme que
-    # l'app est réellement prête.
+    # Le concurrency group par branche dédoublonne les deployment_status
+    # multiples que Kontinuous peut émettre pour un même déploiement.
     if: >
       github.event.deployment_status.state == 'success' &&
-      startsWith(github.event.deployment.ref, 'feat/claude-')
+      startsWith(github.event.deployment.ref, 'feat/claude-') &&
+      !startsWith(github.event.deployment.environment, 'build-')
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -88,23 +91,46 @@ jobs:
           token-bureau-url: https://token-bureau.fabrique.social.gouv.fr
           audience: socialgouv
 
-      - name: Post @claude comment
+      - name: Check if already reviewed this commit
         if: >
           steps.pr.outputs.number != '' &&
           steps.count.outputs.skip != 'true' &&
           steps.health.outputs.ready == 'true'
+        id: dedup
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          SHA: ${{ github.event.deployment.sha }}
+        run: |
+          ALREADY=$(gh api \
+            "repos/${{ github.repository }}/issues/$PR_NUMBER/comments" \
+            --jq "[.[] | select(.body | contains(\"$SHA\"))] | length")
+          if [ "$ALREADY" -gt 0 ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "Review already posted for commit $SHA. Skipping."
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Post @claude comment
+        if: >
+          steps.pr.outputs.number != '' &&
+          steps.count.outputs.skip != 'true' &&
+          steps.health.outputs.ready == 'true' &&
+          steps.dedup.outputs.skip != 'true'
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           REVIEW_URL: ${{ steps.health.outputs.review_url }}
           PR_NUMBER: ${{ steps.pr.outputs.number }}
           ISSUE_NUMBER: ${{ steps.pr.outputs.issue }}
+          SHA: ${{ github.event.deployment.sha }}
         run: |
           ISSUE_LINE=""
           if [ -n "$ISSUE_NUMBER" ]; then
             ISSUE_LINE="
           **Issue :** #$ISSUE_NUMBER"
           fi
-          gh pr comment "$PR_NUMBER" --body "@claude Review :
+          gh pr comment "$PR_NUMBER" --body "@claude Review : \`${SHA:0:7}\`
 
           **URL :** $REVIEW_URL$ISSUE_LINE
 
