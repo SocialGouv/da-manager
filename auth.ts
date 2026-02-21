@@ -127,6 +127,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       const { pathname } = request.nextUrl;
       if (pathname.startsWith("/auth")) return true;
       if (pathname === "/") return true; // Allow home page without auth
+      if (pathname === "/declaration-accessibilite") return true; // Page publique
       return !!auth;
     },
     async jwt({ token, user, account, profile }) {
