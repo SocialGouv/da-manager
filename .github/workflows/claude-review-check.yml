@@ -103,15 +103,6 @@ jobs:
           ITER=$((ITERATION + 1))
           ISSUE_REF=""
           if [ -n "$ISSUE_NUMBER" ]; then
-            ISSUE_REF="
-          - [ ] Changements de l'issue #$ISSUE_NUMBER vérifiés"
+            ISSUE_REF=" (issue #$ISSUE_NUMBER)"
           fi
-          BODY="@claude L'environnement review est déployé (vérification $ITER/3) : $REVIEW_URL
-
-          ## Vérification review
-
-          - [ ] Health check (\`/api/healthz\` → 200)
-          - [ ] Dev login fonctionnel$ISSUE_REF
-
-          Vérifie l'environnement et coche les critères en éditant ce commentaire. Pour le dernier point, réfère-toi à l'issue source et au diff de la PR pour déterminer quoi tester. Si un problème est détecté, corrige et pousse."
-          gh pr comment "$PR_NUMBER" --body "$BODY"
+          gh pr comment "$PR_NUMBER" --body "@claude Environnement review déployé (vérification $ITER/3) : $REVIEW_URL — Vérifie que l'application fonctionne et que les changements$ISSUE_REF sont effectifs. Si tout est OK, marque la PR ready for review."
