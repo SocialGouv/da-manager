@@ -26,7 +26,7 @@ export default async function HeaderWithAuth() {
                   </p>
                 </Link>
                 <p className="fr-header__service-tagline">
-                  Outil de création et gestion des DA
+                  Outil de création et de gestion des DA
                 </p>
               </div>
             </div>
