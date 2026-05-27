@@ -41,6 +41,7 @@
         export no_proxy="127.0.0.1,localhost,${no_proxy:-}" NO_PROXY="127.0.0.1,localhost,${NO_PROXY:-}"
       fi
       apk add --no-cache curl >/dev/null
+      [ -n "${BUILDKIT_HTTP_PROXY:-}" ] && apk add --no-cache socat >/dev/null
 
       # 1. buildctl (client buildkit)
       curl -fsSL "https://github.com/moby/buildkit/releases/download/${BUILDCTL_VERSION}/buildkit-${BUILDCTL_VERSION}.linux-amd64.tar.gz" \
@@ -68,6 +69,19 @@
       fi
       echo "buildkitd: $ADDR"
 
+      # 4b. Tunnel TCP via proxy HTTP CONNECT (buildctl ne gère pas le proxy nativement).
+      #     Le SAN du cert daemon couvre *.buildkit.atlas.fabrique... -> --tlsservername OK.
+      TLS_SRV=""
+      if [ -n "${BUILDKIT_HTTP_PROXY:-}" ]; then
+        BK="${ADDR#tcp://}"; BKHOST="${BK%%:*}"; BKPORT="${BK##*:}"
+        PHOST="${BUILDKIT_HTTP_PROXY%%:*}"; PPORT="${BUILDKIT_HTTP_PROXY##*:}"
+        socat TCP-LISTEN:18080,fork,reuseaddr "PROXY:${PHOST}:${BKHOST}:${BKPORT},proxyport=${PPORT}" &
+        sleep 2
+        TLS_SRV="--tlsservername ${BKHOST}"
+        ADDR="tcp://127.0.0.1:18080"
+        echo "tunnel via ${PHOST}:${PPORT} -> ${BKHOST}:${BKPORT} (servername ${BKHOST})"
+      fi
+
       # 5. build-args (multi-lignes "K=V") -> "--opt build-arg:K=V ..."
       OPT_ARGS="$(printf '%s\n' "$BUILDKIT_BUILD_ARGS" | awk 'NF{printf " --opt build-arg:%s", $0}')"
 
@@ -79,7 +93,7 @@
 
       # 6. build + push (cache registre import/export)
       # shellcheck disable=SC2086
-      buildctl --addr "$ADDR" \
+      buildctl --addr "$ADDR" $TLS_SRV \
         --tlscacert "$CERT_DIR/ca.pem" --tlscert "$CERT_DIR/cert.pem" --tlskey "$CERT_DIR/key.pem" \
         build \
         --frontend dockerfile.v0 \
