@@ -43,6 +43,7 @@ build:
   stage: build
   extends: .buildkit-build
   interruptible: true
+  allow_failure: true   # SMOKE-TEST ONLY: valider publish/deploy/render sans buildkit (egress KO)
   variables:
     BUILDKIT_IMAGE: "$CI_REGISTRY_IMAGE/app"
     BUILDKIT_TAGS: "sha-$CI_COMMIT_SHA,$CI_COMMIT_REF_SLUG"
