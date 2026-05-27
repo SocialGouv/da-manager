@@ -95,7 +95,14 @@
       TGT=""
       [ -n "$BUILDKIT_TARGET" ] && TGT="--opt target=$BUILDKIT_TARGET"
 
-      # 6. build + push (cache registre import/export)
+      # tag de cache registre (fallback) ; slug si la branche par défaut contient '/'
+      DEFBR="$(printf '%s' "${CI_DEFAULT_BRANCH:-main}" | tr '/' '-')"
+
+      # 6. build + push
+      #   Cache PRIMAIRE = cache LOCAL du daemon persistant (pod chaud via modulo) : automatique.
+      #   Cache FALLBACK = registre (import own-branch + default-branch ; export own-branch).
+      #     -> sert quand l'autoscale / le remap 3s place le build sur un pod froid.
+      #     export mode=max = cache complet (toutes stages) ; incrémental après le 1er push.
       # shellcheck disable=SC2086
       buildctl --addr "$ADDR" $TLS_SRV \
         --tlscacert "$CERT_DIR/ca.pem" --tlscert "$CERT_DIR/cert.pem" --tlskey "$CERT_DIR/key.pem" \
@@ -106,6 +113,9 @@
         --opt filename="./$BUILDKIT_DOCKERFILE" \
         --opt platform="$BUILDKIT_PLATFORMS" \
         $OPT_ARGS $TGT \
+        --import-cache "type=registry,ref=${BUILDKIT_IMAGE}:cache-${CI_COMMIT_REF_SLUG}" \
+        --import-cache "type=registry,ref=${BUILDKIT_IMAGE}:cache-${DEFBR}" \
+        --export-cache "type=registry,mode=max,image-manifest=true,ignore-error=true,ref=${BUILDKIT_IMAGE}:cache-${CI_COMMIT_REF_SLUG}" \
         --output "type=image,\"name=${NAMES}\",push=${BUILDKIT_PUSH}"
 
       # 7. dotenv pour le downstream (publish/deploy)
