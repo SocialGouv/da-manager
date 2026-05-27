@@ -38,10 +38,12 @@
       if [ -n "${BUILDKIT_HTTP_PROXY:-}" ]; then
         export http_proxy="http://${BUILDKIT_HTTP_PROXY}" https_proxy="http://${BUILDKIT_HTTP_PROXY}"
         export HTTP_PROXY="$http_proxy" HTTPS_PROXY="$https_proxy"
-        export no_proxy="127.0.0.1,localhost,${no_proxy:-}" NO_PROXY="127.0.0.1,localhost,${NO_PROXY:-}"
+        # buildctl (TCP/gRPC) vers buildkit en DIRECT : on exclut l'hôte buildkit + l'interne du proxy.
+        NP="127.0.0.1,localhost,${CI_REGISTRY:-},${CI_SERVER_HOST:-},.atlas.fabrique.social.gouv.fr,${no_proxy:-}"
+        export no_proxy="$NP" NO_PROXY="$NP"
       fi
       apk add --no-cache curl >/dev/null
-      [ -n "${BUILDKIT_HTTP_PROXY:-}" ] && apk add --no-cache socat >/dev/null
+      [ -n "${BUILDKIT_TUNNEL:-}" ] && apk add --no-cache socat >/dev/null
 
       # 1. buildctl (client buildkit)
       curl -fsSL "https://github.com/moby/buildkit/releases/download/${BUILDCTL_VERSION}/buildkit-${BUILDCTL_VERSION}.linux-amd64.tar.gz" \
@@ -69,10 +71,12 @@
       fi
       echo "buildkitd: $ADDR"
 
-      # 4b. Tunnel TCP via proxy HTTP CONNECT (buildctl ne gère pas le proxy nativement).
-      #     Le SAN du cert daemon couvre *.buildkit.atlas.fabrique... -> --tlsservername OK.
+      # 4b. Connexion buildctl -> buildkitd.
+      #   Par défaut : DIRECT (le runner a un egress direct vers le LB public buildkit).
+      #   Si BUILDKIT_TUNNEL=1 : tunnel TCP via proxy HTTP CONNECT (souvent bloqué hors 443).
+      #   SAN du cert daemon : *.buildkit.atlas.fabrique... -> --tlsservername OK.
       TLS_SRV=""
-      if [ -n "${BUILDKIT_HTTP_PROXY:-}" ]; then
+      if [ -n "${BUILDKIT_TUNNEL:-}" ] && [ -n "${BUILDKIT_HTTP_PROXY:-}" ]; then
         BK="${ADDR#tcp://}"; BKHOST="${BK%%:*}"; BKPORT="${BK##*:}"
         PHOST="${BUILDKIT_HTTP_PROXY%%:*}"; PPORT="${BUILDKIT_HTTP_PROXY##*:}"
         socat TCP-LISTEN:18080,fork,reuseaddr "PROXY:${PHOST}:${BKHOST}:${BKPORT},proxyport=${PPORT}" &
