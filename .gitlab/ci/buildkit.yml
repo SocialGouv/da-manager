@@ -7,9 +7,15 @@
 # cache registre. Voir docs/15-build-ci/buildkit-mutualise.md.
 #
 # Variables CI/CD requises (groupe/projet GitLab PIC) :
-#   BUILDKIT_DAEMON_ADDRESS  ex: tcp://buildkit.<...>:1234
-#   BUILDKIT_SVC_COUNT       nombre de réplicas (distribution modulo)
-#   BUILDKIT_CERT_CA / BUILDKIT_CERT / BUILDKIT_CERT_KEY  (mTLS inline, masqués/protégés)
+#   BUILDKIT_DAEMON_ADDRESS  ex: tcp://buildkit.atlas.fabrique.social.gouv.fr:1234
+#   BUILDKIT_SVC_COUNT       nombre de réplicas (distribution modulo, ex: 6)
+#   BUILDKIT_CERT_CA / BUILDKIT_CERT / BUILDKIT_CERT_KEY  (mTLS inline)
+# Optionnel (runners PIC derrière proxy intranet) :
+#   BUILDKIT_HTTP_PROXY      ex: proxyweb.intranet.social.gouv.fr:8002
+#     -> utilisé pour les TÉLÉCHARGEMENTS (buildctl/github, apk).
+#     NB: la connexion buildctl -> buildkitd (TCP/mTLS) suppose un egress DIRECT vers
+#     le LB public buildkit. Si l'egress est proxy-only, un tunnel TCP sera nécessaire
+#     (attention au SAN du cert : --addr doit matcher le SAN ou prévoir tlsservername).
 # Registre : variables natives $CI_REGISTRY*.
 # ============================================================================
 
@@ -28,6 +34,12 @@
   script:
     - |
       set -eu
+      # Proxy intranet (optionnel) : pour les téléchargements (github/buildctl, apk).
+      if [ -n "${BUILDKIT_HTTP_PROXY:-}" ]; then
+        export http_proxy="http://${BUILDKIT_HTTP_PROXY}" https_proxy="http://${BUILDKIT_HTTP_PROXY}"
+        export HTTP_PROXY="$http_proxy" HTTPS_PROXY="$https_proxy"
+        export no_proxy="127.0.0.1,localhost,${no_proxy:-}" NO_PROXY="127.0.0.1,localhost,${NO_PROXY:-}"
+      fi
       apk add --no-cache curl >/dev/null
 
       # 1. buildctl (client buildkit)

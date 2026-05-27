@@ -1,0 +1,39 @@
+name: Mirror to GitLab PIC
+
+# Miroir GitHub -> GitLab PIC (déploiement immédiat de la CD côté GitLab).
+# pic.sg.social.gouv.fr est public : push direct depuis les runners GitHub (pas de proxy ici).
+# Secret requis : GITLAB_MIRROR_TOKEN (project access token write_repository sur tooling/da-manager).
+
+on:
+  push:
+    branches:
+      - main
+      - "feat/**"
+      - "fix/**"
+      - "chore/**"
+      - "migration/**"
+    tags:
+      - "v*"
+
+concurrency:
+  group: gitlab-mirror-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Push ref to GitLab PIC
+        env:
+          GL_TOKEN: ${{ secrets.GITLAB_MIRROR_TOKEN }}
+        run: |
+          set -e
+          REMOTE="https://oauth2:${GL_TOKEN}@pic.sg.social.gouv.fr/socialgouv/produits-dnum/tooling/da-manager.git"
+          if [ -n "${GITHUB_REF_NAME}" ] && [ "${GITHUB_REF_TYPE}" = "tag" ]; then
+            git push -f "$REMOTE" "refs/tags/${GITHUB_REF_NAME}"
+          else
+            git push -f "$REMOTE" "HEAD:refs/heads/${GITHUB_REF_NAME}"
+          fi
