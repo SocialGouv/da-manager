@@ -1,0 +1,7 @@
+# pnpm 10 : les réglages ont migré du champ "pnpm" de package.json vers ce fichier.
+# Autorise les scripts de build des dépendances natives (sinon ERR_PNPM_IGNORED_BUILDS).
+onlyBuiltDependencies:
+  - "@parcel/watcher"
+  - esbuild
+  - sharp
+  - unrs-resolver
