@@ -7,7 +7,8 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 WORKDIR /app
 
 # Copier les fichiers de configuration des dépendances
-COPY package.json pnpm-lock.yaml ./
+# (pnpm-workspace.yaml porte les réglages pnpm 10, dont onlyBuiltDependencies)
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 # Installer les dépendances de production et de dev
 RUN pnpm install --frozen-lockfile
