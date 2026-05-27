@@ -1,0 +1,11 @@
+da-manager déployé ({{ include "da-manager.fullname" . }}).
+
+Image    : {{ include "da-manager.image" . }}
+{{- if .Values.ingress.enabled }}
+URL      : https://{{ .Values.ingress.host }}
+{{- end }}
+
+Migrations Drizzle : exécutées automatiquement au démarrage de l'app (instrumentation.ts).
+Secrets attendus (fournis par ExternalSecrets côté gitops) :
+  - {{ .Values.secrets.proconnect }} : PROCONNECT_CLIENT_ID, PROCONNECT_CLIENT_SECRET, AUTH_SECRET
+  - {{ .Values.secrets.database }} : DATABASE_URL

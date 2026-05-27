@@ -1,0 +1,76 @@
+# Default values — platform-agnostic. Environment-specific values live in the gitops repo.
+# No secrets here: secrets are referenced BY NAME and provided by ExternalSecrets (gitops).
+
+global:
+  # Registry prefix for the image, e.g. "pic-registry.sg.social.gouv.fr/socialgouv/.../da-manager".
+  imageRegistry: ""
+  imagePullSecrets: []        # e.g. [{ name: registry-pull-secret }]
+  extraLabels: {}
+
+image:
+  repository: app             # final ref = <global.imageRegistry>/<repository>:<tag>
+  tag: ""                     # defaults to .Chart.AppVersion when empty
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 1
+
+service:
+  port: 80
+  targetPort: 3000
+
+ingress:
+  enabled: true
+  className: ""
+  host: ""                    # set per environment (gitops)
+  annotations: {}
+  tls:
+    enabled: true
+    secretName: ""            # empty → ingress controller / cert-manager default
+
+probes:
+  path: /api/healthz
+  port: 3000
+
+resources:
+  requests:
+    cpu: "100m"
+    memory: "512Mi"
+  limits:
+    cpu: "1"
+    memory: "1Gi"
+
+# Non-secret env injected directly (also see configMap.data for env-specific config).
+env:
+  PROCONNECT_ISSUER: "https://fca.integ01.dev-agentconnect.fr/api/v2"
+
+# Rendered into a ConfigMap (name = fullname) and loaded via envFrom.
+# Per-env keys (gitops): ALLOWED_EMAIL_DOMAINS, ENABLE_DEV_LOGIN, AUTH_URL, ...
+configMap:
+  data: {}
+
+# Names of pre-existing Secrets (created by ExternalSecrets in the gitops repo), loaded via envFrom.
+secrets:
+  proconnect: proconnect      # PROCONNECT_CLIENT_ID, PROCONNECT_CLIENT_SECRET, AUTH_SECRET
+  database: pg-app            # DATABASE_URL
+
+serviceAccount:
+  create: true
+  name: ""
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
+
+podDisruptionBudget:
+  enabled: false
+  minAvailable: 1
+
+podAnnotations: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}

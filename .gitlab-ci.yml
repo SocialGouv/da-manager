@@ -1,0 +1,138 @@
+# ============================================================================
+# da-manager — CD sur GitLab PIC (repo mirroré depuis GitHub ; la CI de CODE
+# tests/lint/release reste sur GitHub). Ici : build image (BuildKit mutualisé)
+# -> publication chart OCI -> déploiement d'un env de REVIEW par branche
+# (à la vao : valeurs seedées à partir du slug de branche sanitizé).
+# Déploiement : Atlas v2 via ArgoCD synchronisant da-manager-gitops.
+# Voir docs/30-migrations/da-manager.md.
+#
+# Variables CI/CD à fournir (en plus des BUILDKIT_* du template) :
+#   GITOPS_TOKEN   token d'écriture sur da-manager-gitops (masqué)
+#   REVIEW_DOMAIN  domaine review de la zone Atlas (ex: review.<zone>.<atlas-domain>)
+# ============================================================================
+
+include:
+  - local: .gitlab/ci/buildkit.yml
+
+variables:
+  CHART_DIR: charts/da-manager
+  GITOPS_REPO: "socialgouv/produits-dnum/tooling/da-manager-gitops"
+  GITOPS_BRANCH: main
+  REVIEW_TEMPLATE: "templates/da-manager-review"
+  REVIEW_DOMAIN: "CHANGEME-review.atlas-domain"   # TODO: domaine review de la zone Atlas
+  # dev-login activé en review (build-arg NEXT_PUBLIC_* => build-time ; cf. docs).
+  NEXT_PUBLIC_ENABLE_DEV_LOGIN: "true"
+
+stages:
+  - build
+  - publish
+  - deploy
+
+workflow:
+  auto_cancel:
+    on_new_commit: interruptible
+  rules:
+    - if: $CI_COMMIT_BRANCH
+
+# Branches qui déclenchent un environnement de review
+.review-rules: &review-rules
+  - if: $CI_COMMIT_BRANCH =~ /^(feat|fix|chore|migration)\//
+  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+build:
+  stage: build
+  extends: .buildkit-build
+  interruptible: true
+  variables:
+    BUILDKIT_IMAGE: "$CI_REGISTRY_IMAGE/app"
+    BUILDKIT_TAGS: "sha-$CI_COMMIT_SHA,$CI_COMMIT_REF_SLUG"
+    BUILDKIT_BUILD_ARGS: |
+      NEXT_PUBLIC_ENABLE_DEV_LOGIN=$NEXT_PUBLIC_ENABLE_DEV_LOGIN
+  rules: *review-rules
+
+# Publier le chart Helm en artefact OCI (snapshot SHA). appVersion = tag image immuable
+# -> le chart résout l'image automatiquement.
+publish-chart:
+  stage: publish
+  image:
+    name: alpine/helm:3.17
+    entrypoint: [""]
+  needs: ["build"]
+  rules: *review-rules
+  script:
+    - apk add --no-cache yq >/dev/null
+    - |
+      set -eu
+      VER="0.0.0-sha.${CI_COMMIT_SHORT_SHA}"
+      yq -i ".version = \"$VER\"" "$CHART_DIR/Chart.yaml"
+      yq -i ".appVersion = \"sha-${CI_COMMIT_SHA}\"" "$CHART_DIR/Chart.yaml"
+      helm registry login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+      helm package "$CHART_DIR" -d /tmp/pkg
+      helm push "/tmp/pkg/da-manager-${VER}.tgz" "oci://${CI_REGISTRY}/${CI_PROJECT_PATH}/charts"
+
+# Créer/mettre à jour l'app review dans le gitops (copie du template + seed du host).
+deploy-review:
+  stage: deploy
+  image:
+    name: alpine/helm:3.17
+    entrypoint: [""]
+  needs: ["publish-chart"]
+  variables:
+    GIT_STRATEGY: none
+  rules: *review-rules
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    url: https://da-manager-$CI_COMMIT_REF_SLUG.$REVIEW_DOMAIN
+    on_stop: stop-review
+    auto_stop_in: 1 week
+  script:
+    - apk add --no-cache git yq >/dev/null
+    - |
+      set -eu
+      VER="0.0.0-sha.${CI_COMMIT_SHORT_SHA}"
+      SLUG="$CI_COMMIT_REF_SLUG"
+      HOST="da-manager-${SLUG}.${REVIEW_DOMAIN}"
+      git config --global user.email "ci@da-manager.deploy"
+      git config --global user.name "da-manager CI"
+      git clone --depth 1 --branch "$GITOPS_BRANCH" \
+        "https://gitlab-ci-token:${GITOPS_TOKEN}@${CI_SERVER_HOST}/${GITOPS_REPO}.git" /tmp/gitops
+      cd /tmp/gitops
+      APP="apps/da-manager-review-${SLUG}"
+      rm -rf "$APP"
+      cp -r "$REVIEW_TEMPLATE" "$APP"
+      yq -i "(.dependencies[] | select(.name == \"da-manager\")).version = \"$VER\"" "$APP/Chart.yaml"
+      printf 'da-manager:\n  ingress:\n    host: "%s"\n' "$HOST" > "$APP/values.deploy.yaml"
+      git add -A
+      git diff --cached --quiet || git commit -m "deploy(review/${SLUG}): da-manager ${VER}"
+      git push origin "$GITOPS_BRANCH"
+
+# Détruire l'app review (manuel / auto_stop).
+stop-review:
+  stage: deploy
+  image: alpine:3.20
+  variables:
+    GIT_STRATEGY: none
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^(feat|fix|chore|migration)\//
+      when: manual
+      allow_failure: true
+  environment:
+    name: review/$CI_COMMIT_REF_SLUG
+    action: stop
+  script:
+    - apk add --no-cache git >/dev/null
+    - |
+      set -eu
+      SLUG="$CI_COMMIT_REF_SLUG"
+      git config --global user.email "ci@da-manager.deploy"
+      git config --global user.name "da-manager CI"
+      git clone --depth 1 --branch "$GITOPS_BRANCH" \
+        "https://gitlab-ci-token:${GITOPS_TOKEN}@${CI_SERVER_HOST}/${GITOPS_REPO}.git" /tmp/gitops
+      cd /tmp/gitops
+      APP="apps/da-manager-review-${SLUG}"
+      if [ -d "$APP" ]; then
+        rm -rf "$APP"
+        git add -A
+        git commit -m "destroy(review/${SLUG})"
+        git push origin "$GITOPS_BRANCH"
+      fi

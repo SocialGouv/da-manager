@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "da-manager.fullname" . }}
+  labels:
+    {{- include "da-manager.labels" . | nindent 4 }}
+data:
+  {{- $data := .Values.configMap.data | default dict }}
+  {{- if and (not (hasKey $data "AUTH_URL")) .Values.ingress.host }}
+  # AUTH_URL dérivé du host (NextAuth, runtime) — surchargé si fourni explicitement.
+  AUTH_URL: {{ printf "https://%s" .Values.ingress.host | quote }}
+  {{- end }}
+  {{- range $k, $v := $data }}
+  {{ $k }}: {{ $v | quote }}
+  {{- end }}
