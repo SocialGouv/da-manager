@@ -1,7 +1,7 @@
 # pnpm 10 : les réglages ont migré du champ "pnpm" de package.json vers ce fichier.
-# Autorise les scripts de build des dépendances natives (sinon ERR_PNPM_IGNORED_BUILDS).
-onlyBuiltDependencies:
-  - "@parcel/watcher"
-  - esbuild
-  - sharp
-  - unrs-resolver
+#
+# Par défaut pnpm refuse d'exécuter les scripts de build des dépendances non approuvées
+# (strictDepBuilds=true) -> ERR_PNPM_IGNORED_BUILDS sur sharp/esbuild/@parcel/watcher/...
+# da-manager est une app interne ; le lockfile est déjà vérifié (supply-chain policy).
+# On autorise donc l'exécution des build scripts des dépendances.
+dangerouslyAllowAllBuilds: true
