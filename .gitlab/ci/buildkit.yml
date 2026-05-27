@@ -95,6 +95,9 @@
       TGT=""
       [ -n "$BUILDKIT_TARGET" ] && TGT="--opt target=$BUILDKIT_TARGET"
 
+      # tag de cache (la branche par défaut peut contenir des '/': on slugifie pour un tag valide)
+      DEFBR="$(printf '%s' "${CI_DEFAULT_BRANCH:-main}" | tr '/' '-')"
+
       # 6. build + push (cache registre import/export)
       # shellcheck disable=SC2086
       buildctl --addr "$ADDR" $TLS_SRV \
@@ -106,7 +109,7 @@
         --opt filename="./$BUILDKIT_DOCKERFILE" \
         --opt platform="$BUILDKIT_PLATFORMS" \
         $OPT_ARGS $TGT \
-        --import-cache "type=registry,ref=${BUILDKIT_IMAGE}:cache-${CI_DEFAULT_BRANCH}" \
+        --import-cache "type=registry,ref=${BUILDKIT_IMAGE}:cache-${DEFBR}" \
         --export-cache "type=registry,mode=max,image-manifest=true,ignore-error=true,ref=${BUILDKIT_IMAGE}:cache-${CI_COMMIT_REF_SLUG}" \
         --output "type=image,\"name=${NAMES}\",push=${BUILDKIT_PUSH}"
 
