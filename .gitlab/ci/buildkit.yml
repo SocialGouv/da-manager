@@ -110,7 +110,7 @@
         --opt platform="$BUILDKIT_PLATFORMS" \
         $OPT_ARGS $TGT \
         --import-cache "type=registry,ref=${BUILDKIT_IMAGE}:cache-${DEFBR}" \
-        --export-cache "type=registry,mode=max,image-manifest=true,ignore-error=true,ref=${BUILDKIT_IMAGE}:cache-${CI_COMMIT_REF_SLUG}" \
+        --export-cache "type=registry,mode=min,image-manifest=true,ignore-error=true,ref=${BUILDKIT_IMAGE}:cache-${CI_COMMIT_REF_SLUG}" \
         --output "type=image,\"name=${NAMES}\",push=${BUILDKIT_PUSH}"
 
       # 7. dotenv pour le downstream (publish/deploy)
