@@ -72,44 +72,6 @@ export default function ReadonlySidemenu({
         aria-labelledby="sidemenu-title"
       >
         <div className="fr-sidemenu__inner">
-          <ul className="fr-btns-group fr-mt-2w">
-            <li>
-              <Link href="/" className="fr-btn fr-btn--sm">
-                <span
-                  className="fr-icon-arrow-left-line"
-                  aria-hidden="true"
-                ></span>
-                Retour
-              </Link>
-            </li>
-            {canEdit && (
-              <li>
-                <Link
-                  href={`/da/${id}`}
-                  className="fr-btn fr-btn--sm fr-btn--secondary"
-                >
-                  <span
-                    className="fr-icon-edit-line"
-                    aria-hidden="true"
-                  ></span>
-                  Éditer
-                </Link>
-              </li>
-            )}
-            <li>
-              <Link
-                href={pdfUrl || `/api/export-pdf/${id}`}
-                target="_blank"
-                className="fr-btn fr-btn--sm fr-btn--tertiary"
-              >
-                <span
-                  className="fr-icon-download-line"
-                  aria-hidden="true"
-                ></span>
-                PDF
-              </Link>
-            </li>
-          </ul>
           <button
             aria-expanded="false"
             aria-controls="sidemenu-collapse-view"
@@ -119,6 +81,44 @@ export default function ReadonlySidemenu({
             Sommaire
           </button>
           <div className="fr-collapse" id="sidemenu-collapse-view">
+            <ul className="fr-btns-group fr-mt-2w fr-mb-1w">
+              <li>
+                <Link href="/" className="fr-btn fr-btn--sm">
+                  <span
+                    className="fr-icon-arrow-left-line"
+                    aria-hidden="true"
+                  ></span>
+                  Retour
+                </Link>
+              </li>
+              {canEdit && (
+                <li>
+                  <Link
+                    href={`/da/${id}`}
+                    className="fr-btn fr-btn--sm fr-btn--secondary"
+                  >
+                    <span
+                      className="fr-icon-edit-line"
+                      aria-hidden="true"
+                    ></span>
+                    Éditer
+                  </Link>
+                </li>
+              )}
+              <li>
+                <Link
+                  href={pdfUrl || `/api/export-pdf/${id}`}
+                  target="_blank"
+                  className="fr-btn fr-btn--sm fr-btn--tertiary"
+                >
+                  <span
+                    className="fr-icon-download-line"
+                    aria-hidden="true"
+                  ></span>
+                  PDF
+                </Link>
+              </li>
+            </ul>
             <p
               className="fr-sidemenu__title fr-mb-1w"
               id="sidemenu-title"
