@@ -124,12 +124,12 @@ export default function RootLayout({
                   Sauf mention explicite de propriété intellectuelle détenue par
                   des tiers, les contenus de ce site sont proposés sous{" "}
                   <a
-                    href="https://github.com/etalab/licence-ouverte/blob/master/LO.md"
+                    href="https://opensource.org/licenses/MIT"
                     target="_blank"
                     rel="noopener external"
-                    title="Licence etalab-2.0 - nouvelle fenêtre"
+                    title="Licence MIT - nouvelle fenêtre"
                   >
-                    licence etalab-2.0
+                    licence MIT
                   </a>
                 </p>
               </div>
