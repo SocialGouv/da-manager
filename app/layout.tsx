@@ -104,7 +104,10 @@ export default function RootLayout({
             <div className="fr-footer__bottom">
               <ul className="fr-footer__bottom-list">
                 <li className="fr-footer__bottom-item">
-                  <a href="#" className="fr-footer__bottom-link">
+                  <a
+                    href="/declaration-accessibilite"
+                    className="fr-footer__bottom-link"
+                  >
                     Accessibilité : non conforme
                   </a>
                 </li>
