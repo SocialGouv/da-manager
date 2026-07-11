@@ -130,7 +130,20 @@
   padding-right: 0 !important;
 }
 
+/* Fix #7: bouton "Retour" hors du conteneur scrollable pour qu'il reste toujours accessible */
+.fr-sidemenu--sticky-full-height {
+  display: flex;
+  flex-direction: column;
+}
+
+.fr-sidemenu--sticky-full-height > .fr-btns-group {
+  flex-shrink: 0;
+}
+
 .fr-sidemenu--sticky-full-height .fr-sidemenu__inner {
+  flex: 1;
+  min-height: 0;
+  height: auto;
   overflow-x: hidden;
 }
 
