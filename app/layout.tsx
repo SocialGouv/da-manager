@@ -109,13 +109,16 @@ export default function RootLayout({
                   </a>
                 </li>
                 <li className="fr-footer__bottom-item">
-                  <a href="#" className="fr-footer__bottom-link">
+                  <a href="/mentions-legales" className="fr-footer__bottom-link">
                     Mentions légales
                   </a>
                 </li>
                 <li className="fr-footer__bottom-item">
-                  <a href="#" className="fr-footer__bottom-link">
-                    Données personnelles
+                  <a
+                    href="/politique-de-confidentialite"
+                    className="fr-footer__bottom-link"
+                  >
+                    Politique de confidentialité
                   </a>
                 </li>
               </ul>
